@@ -1,0 +1,19 @@
+{
+  "name": "resources",
+  "version": "1.0.0",
+  "description": "A compository of resources for users of the Komodo ecosystem",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "export NODE_ENV=test && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KomodoPlatform/resources.git"
+  },
+  "author": "Komodo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KomodoPlatform/resources/issues"
+  },
+  "homepage": "https://github.com/KomodoPlatform/resources#readme"
+}
