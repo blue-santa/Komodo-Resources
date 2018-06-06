@@ -6,7 +6,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/marco", (req, res, next) => {
-  res.send(`polo: ${process.env.megasecret}`);
+  res.send(`polo: ${process.env.secretTest}`);
 });
 
 module.exports = router;
