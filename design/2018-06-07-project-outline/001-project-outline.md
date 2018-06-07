@@ -70,7 +70,7 @@ Subdomain outline:
       How to Use Komodo's Privacy Services to Break Your Cryptocurrency Trail
         * Why it's important
           * Discuss how businesses would be like player poker with hands shown
-          * Why having a transparent chain is good -- how it enables features that you can't verify with the private chain 
+          * Why having a transparent chain is good -- how it enables features that you can't verify with the private chain
         * What it's good for, and what it's not
         * How it works
         * How you do it
@@ -79,6 +79,7 @@ Subdomain outline:
       * Link to Documentation Center
         * All API Documentation
           * Has an easy to link to domain address
+          * Comparison of what tools we offer compared to other platforms (make it competitive)
         * Coding examples
           * Tables show implementations in different languages
     * Komodo Metrics (Dynamic pages)
