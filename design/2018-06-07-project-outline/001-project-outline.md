@@ -1,4 +1,3 @@
-
 Title: Komodo Resources
 
 Description: A subdomain of the Komodo platform that displays resources for the Komodo audience
@@ -70,6 +69,8 @@ Subdomain outline:
         * How you do it
       How to Use Komodo's Privacy Services to Break Your Cryptocurrency Trail
         * Why it's important
+          * Discuss how businesses would be like player poker with hands shown
+          * Why having a transparent chain is good -- how it enables features that you can't verify with the private chain 
         * What it's good for, and what it's not
         * How it works
         * How you do it
