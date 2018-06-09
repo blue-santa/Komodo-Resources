@@ -1,41 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/application.css">
+
+    <!-- Needs to be fixed so title is dynamic by content -->
+    <title>Komodo Resources</title>
+    <% include ./partials/head.ejs %>
   </head>
   <body>
-    <nav class="nav flex-column bg-dark fixed-top">
-      <div class="container">
-        <a href="#">Komodo Resources</a>
-        <div >
-          <ul>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-          </ul>
+
+    <main class="main">
+      <div class="container-fluid>
+        <div class="row">
+          <div class="col-sm-2">
+            <% include ./partials/navbar.ejs %>
+          </div>
+          <div id="content" class="col-sm-10">
+            <header class="jumbotron">
+              <h1 class="container-fluid display-3">Komodo Resources</h1>
+            </header>
+            <% include ./partials/bottom.ejs %>
+          </div>
         </div>
       </div>
-    </nav>
-
-    <main class="container">
-      <header class="jumbotron my-4">
-        <h1 class="display-3">Komodo Resources</h1>
-        <p class="lead">An application for users to share information.</p>
-        <a href="#" class="btn btn-primary btn-lg">Button!</a>
-      </header>
     </main>
 
-    <script
-      src="http://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <% include ./partials/scripts.ejs %>
+
   </body>
 </html>
