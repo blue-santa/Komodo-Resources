@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Needs to be fixed so title is dynamic by content -->
+    <title>Komodo Resources</title>
+    <% include ./partials/head.ejs %>
+  </head>
+  <body>
+
+    <main class="main">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-2 sidebar">
+            <% include ./partials/navbar.ejs %>
+          </div>
+          <div id="content" class="col-sm-10">
+            <div class="bucket">
+              <header>
+                <h1 class="display-3 resources">Komodo Resources</h1>
+              </header>
+              <% include ./partials/alphabetical-links.ejs %>
+              <p>
+                <a href="https://google.com">Google Search</a>
+                <a href="https://komodoplatform.com/whitepaper.pdf">White paper</a>
+                <a href="https://youtube.com/how-to-atomic-swap">Atomic Swap</a>
+                <ul class="test">
+                  <li class="A">A</li>
+                  <li class="B">B</li>
+                  <li class="C">C</li>
+                  <li>Test</li>
+                  <li>Test</li>
+                  <li>Test</li>
+                </ul>
+              </p>
+            </div>
+            <% include ./partials/bottom.ejs %>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <% include ./partials/scripts.ejs %>
+
+  </body>
+</html>

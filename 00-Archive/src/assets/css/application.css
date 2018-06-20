@@ -1,0 +1,158 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700";
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: stretch;
+  background-image:
+    repeating-linear-gradient(90deg, hsla(80,0%,50%,.1) 0px, hsla(80,0%,50%,.1) 10px, hsla(180,0%,30%,.1) 10px, hsla(180,0%,30%,.1) 20px),
+    repeating-linear-gradient(0deg, hsla(80,0%,50%,.1) 0px, hsla(80,0%,50%,.1) 10px, hsla(180,0%,30%,.1) 10px, hsla(180,0%,30%,.1) 20px);
+  height: 100vh;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.main {
+}
+
+.pager {
+  list-style-type: none;
+}
+
+.bucket {
+  position: absolute;
+  left: 15vw;
+  width: 85vw;
+  text-align: center;
+  background-image: repeating-radial-gradient(closest-side circle at 20%, hsla(120,100%,30%,.1) 0%, hsla(120,100%,30%,.1) 20%, hsla(130,80%,40%,.3) 22%, hsla(130,80%,40%,.3) 30%, hsla(180,60%,35%,.2) 35%, hsla(120,100%,30%,.1) 90%, hsla(120,100%,30%,.1) 100%);
+  height: 100vh;
+}
+
+.resources {
+  color: #222;
+  text-shadow: 2px 3px 3px #666;
+  font-weight: bold;
+}
+
+.resources::selection {
+  background-color: 'light blue';
+}
+
+#sidebar {
+  width: 15vw;
+  min-height: 100vh;
+  background: #2e5858;
+  color: #fff;
+  transition: all 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+}
+
+#sidebar img {
+  width: 100%;
+  max-width: 100%;
+}
+
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: #547e7e;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid #478980;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+
+#sidebar ul li a:hover {
+  color: #6f8889;
+  background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+  color: #fff;
+  background: #244242;
+}
+
+.A {
+  display: none;
+}
+
+.A:target {
+  display: block;
+  font-weight: bold;
+}
+
+.test li:nth-child(2n) {
+  background-color: white;
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #6f8889;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+  content: '\e259';
+  display: block;
+  position: absolute;
+  right: 20px;
+  font-family: 'Glyphicons Halflings';
+  font-size: 0.6em;
+}
+
+a[aria-expanded="true"]::before {
+  content: '\e260';
+}
+
+a[href^="http://"], a[href^="https://"] {
+  color: blue;
+  background-color: white;
+  padding: 2px;
+}
+
+a[href$=".pdf"] {
+  color: white;
+  background-color: black;
+  padding: 2px;
+}
+
+a[href*="youtube"] {
+  color: blue;
+  background-color: pink;
+  padding: 2px;
+}

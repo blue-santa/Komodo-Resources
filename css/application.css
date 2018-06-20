@@ -1,0 +1,90 @@
+@media(min-width: 768px) {
+
+  .flex-container {
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+    /*
+    flex-direction: row || column || row-reverse || column-reverse;
+    flex-wrap: wrap || nowrap || wrap-reverse;
+    flex-flow: row || column || row-reverse || column-reverse && wrap || nowrap || wrap-reverse;
+    justify-content: flex-start || flex-end || center || space-between || space-around;
+    align-items: flex-start || flex\end || center \\ stretch || baseline;
+    align-content: flex-start || flex\end || center \\ stretch;
+    */
+  }
+
+}
+
+html {
+  width: 100vw;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 200;
+  color: hsla(360,0%,100%,.9);
+}
+
+body {
+}
+
+.sidebar {
+  flex-grow: 2;
+  flex-shrink: 2;
+  flex-basis: 8.333vw;
+  order: 1;
+  background-color: hsla(255,0%,20%,1);
+  min-height: 100vh;
+}
+
+.komodo-logo {
+  width: 100%;
+}
+
+.sidebar-links-container {
+  padding: 0% 2% 2% 2%;
+}
+
+.search-bar-placeholder {
+  text-align: center;
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 400;
+  background-color: hsla(0,0%,50%,.7);
+  padding: 2%;
+}
+
+.sidebar-links {
+
+}
+
+.sidebar-main-link {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400;
+  background-color: hsla(0,0%,0%,.2);
+  margin-bottom: 2%;
+  padding: 2%;
+}
+
+.sidebar-links h3 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+}
+
+.content {
+  order: 2;
+  background-color: hsla(255,0%,35%,1);
+  flex-grow: 10;
+  flex-shrink: 10;
+  flex-basis: 8.333vw;
+}
+
+.site-title h1 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.site-title h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  text-align: center;
+}
