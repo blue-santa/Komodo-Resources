@@ -27,9 +27,9 @@ There are several audiences that may frequent this subdomain:
 
 Subdomain outline:
   * Sidebar
-    * Search bar
     * (Some equivalent of achievements, where your path indicates what you've done)
     * Komodo logo, href to komodoplatform.com
+    * Search bar
     * Komodo Quick Summary
       * Broken down light paper, basically
       * Less than five pages total, few words on each page

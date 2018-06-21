@@ -40,7 +40,21 @@ body {
 }
 
 .sidebar-links-container {
-  padding: 0% 2% 2% 2%;
+  padding: 0% 2% 10% 2%;
+  border-bottom: 1px;
+  border-style: solid;
+  border-color: hsla(0,0%,50%,.5);
+}
+
+
+.sidebar-links-container .sidebar-title {
+  list-style-type: none;
+  counter-increment: none;
+}
+
+.sidebar-links-container ol {
+  list-style-type: upper-roman;
+  list-style-position: inside;
 }
 
 .search-bar-placeholder {
@@ -50,31 +64,165 @@ body {
   background-color: hsla(0,0%,50%,.7);
   padding: 2%;
   margin-bottom: 2%;
+  visibility: collapse;
+  height: 0rem;
 }
 
-.sidebar-links {
-
+.sidebar-title {
+  font-family: 'Roboto Slab', serif;
+  text-align: center;
+  font-weight: 400;
+  background-color: hsla(0,0%,0%,1);
+  border-bottom: .1rem;
+  border-color: hsla(0,0%,50%,.8);
+  border-style: solid;
+  padding: 3%;
 }
 
 .sidebar-main-link {
   font-family: 'Roboto Slab', serif;
   font-weight: 400;
   background-color: hsla(0,0%,0%,.5);
-  margin-bottom: 2%;
+  border-bottom: .05rem;
+  border-color: hsla(0,0%,50%,.8);
+  border-style: solid;
   padding: 2%;
+}
+
+.sidebar-links li:nth-child(5) {
+  border: none;
 }
 
 .sidebar-links h3 {
   font-family: 'Roboto Slab', serif;
   font-weight: 700;
 }
+
 .sidebar-links a, a:hover, .sidebar-links a:focus, .sidebar-links a:visited {
   color: hsla(360,0%,100%,.9);
   text-decoration: none;
+  transition: all 0.3s;
 }
 
 .sidebar-main-link:hover, .sidebar-main-link:focus, .sidebar-main-link:visited {
   background-color: hsla(0,0%,0%,.9);
+}
+
+.sidebar-main-link a.active {
+  background-color: white;
+}
+
+#partISubmenu {
+  visibility: collapse;
+  height: 0rem;
+  opacity: 0;
+  transition: all .3s;
+  padding: 0%;
+  overflow: hidden;
+  margin: 0%;
+}
+
+#partISubmenu:target {
+  visibility: visible;
+  height: 7.9rem;
+  line-height: 1.3rem;
+  opacity: 1;
+  background-color: hsla(360,0%,50%,.7);
+  padding: 3% 2% 2% 4%;
+  overflow: hidden;
+  margin: 2% -2% -2% -2%;
+}
+
+#partIISubmenu {
+  visibility: collapse;
+  height: 0rem;
+  opacity: 0;
+  transition: all .3s;
+  padding: 0%;
+  overflow: hidden;
+  margin: 0%;
+}
+
+#partIISubmenu:target {
+  visibility: visible;
+  height: 2.9rem;
+  line-height: 1.3rem;
+  opacity: 1;
+  background-color: hsla(360,0%,50%,.7);
+  padding: 3% 2% 2% 4%;
+  overflow: hidden;
+  margin: 2% -2% -2% -2%;
+}
+
+
+#partIIISubmenu {
+  visibility: collapse;
+  height: 0rem;
+  opacity: 0;
+  transition: all .3s;
+  padding: 0%;
+  overflow: hidden;
+  margin: 0%;
+}
+
+#partIIISubmenu:target {
+  visibility: visible;
+  height: 4.1rem;
+  line-height: 1.3rem;
+  opacity: 1;
+  background-color: hsla(360,0%,50%,.7);
+  padding: 3% 2% 2% 4%;
+  overflow: hidden;
+  margin: 2% -2% -2% -2%;
+}
+
+
+#partIVSubmenu {
+  visibility: collapse;
+  height: 0rem;
+  opacity: 0;
+  transition: all .3s;
+  padding: 0%;
+  overflow: hidden;
+  margin: 0%;
+}
+
+#partIVSubmenu:target {
+  visibility: visible;
+  height: 6.6rem;
+  line-height: 1.3rem;
+  opacity: 1;
+  background-color: hsla(360,0%,50%,.7);
+  padding: 3% 2% 2% 4%;
+  overflow: hidden;
+  margin: 2% -2% -2% -2%;
+}
+
+#partVSubmenu {
+  visibility: collapse;
+  height: 0rem;
+  opacity: 0;
+  transition: all .3s;
+  padding: 0%;
+  overflow: hidden;
+  margin: 0%;
+}
+
+#partVSubmenu:target {
+  visibility: visible;
+  height: 8rem;
+  line-height: 1.3rem;
+  opacity: 1;
+  background-color: hsla(360,0%,50%,.7);
+  padding: 3% 2% 2% 4%;
+  overflow: hidden;
+  margin: 2% -2% -2% -2%;
+}
+
+.sidebar-sub-link a:hover, .sidebar-sub-link a:active {
+  border-bottom: .08rem;
+  border-style: solid;
+  border-color: hsla(360,0%,80%,.9);
 }
 
 .content {
@@ -86,15 +234,23 @@ body {
 }
 
 .site-title h1 {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Condensed', serif;
   font-weight: 700;
   font-size: 3rem;
   text-align: center;
   padding-top: 40vh;
+  text-transform: uppercase;
 }
 
 .site-title h2 {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   font-weight: 600;
   text-align: center;
+  text-transform: uppercase;
+}
+
+.site-content {
+  padding: 5%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
 }
