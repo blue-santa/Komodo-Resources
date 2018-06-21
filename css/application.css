@@ -49,6 +49,7 @@ body {
   font-weight: 400;
   background-color: hsla(0,0%,50%,.7);
   padding: 2%;
+  margin-bottom: 2%;
 }
 
 .sidebar-links {
@@ -58,7 +59,7 @@ body {
 .sidebar-main-link {
   font-family: 'Roboto Slab', serif;
   font-weight: 400;
-  background-color: hsla(0,0%,0%,.2);
+  background-color: hsla(0,0%,0%,.5);
   margin-bottom: 2%;
   padding: 2%;
 }
@@ -66,6 +67,14 @@ body {
 .sidebar-links h3 {
   font-family: 'Roboto Slab', serif;
   font-weight: 700;
+}
+.sidebar-links a, a:hover, .sidebar-links a:focus, .sidebar-links a:visited {
+  color: hsla(360,0%,100%,.9);
+  text-decoration: none;
+}
+
+.sidebar-main-link:hover, .sidebar-main-link:focus, .sidebar-main-link:visited {
+  background-color: hsla(0,0%,0%,.9);
 }
 
 .content {
@@ -81,6 +90,7 @@ body {
   font-weight: 700;
   font-size: 3rem;
   text-align: center;
+  padding-top: 40vh;
 }
 
 .site-title h2 {
