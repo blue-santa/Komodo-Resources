@@ -1,0 +1,31 @@
+{
+  "name": "komodo-resources",
+  "version": "0.0.2",
+  "description": "Resources for the Komodo ecosystem",
+  "main": "app.js",
+  "scripts": {
+    "test": "export NODE_ENV=test && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KomodoPlatform/resources.git"
+  },
+  "keywords": [
+    "komodo",
+    "docs"
+  ],
+  "author": "siddhartha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KomodoPlatform/resources/issues"
+  },
+  "homepage": "https://github.com/KomodoPlatform/resources#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "jasmine": "^3.1.0",
+    "nodemon": "^1.17.5",
+    "sequelize": "^4.38.0"
+  }
+}

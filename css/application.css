@@ -1,29 +1,12 @@
-@media(min-width: 768px) {
-
-  .flex-container {
-    display: flex;
-    align-items: stretch;
-    flex-direction: row;
-    /*
-    flex-direction: row || column || row-reverse || column-reverse;
-    flex-wrap: wrap || nowrap || wrap-reverse;
-    flex-flow: row || column || row-reverse || column-reverse && wrap || nowrap || wrap-reverse;
-    justify-content: flex-start || flex-end || center || space-between || space-around;
-    align-items: flex-start || flex\end || center \\ stretch || baseline;
-    align-content: flex-start || flex\end || center \\ stretch;
-    */
-  }
-
-}
-
 html {
-  width: 100vw;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
   color: hsla(360,0%,100%,.9);
 }
 
 body {
+  width: 100%;
 }
 
 .sidebar {
@@ -253,4 +236,33 @@ body {
   padding: 5%;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
+}
+
+@media(min-width: 768px) {
+
+  .flex-container {
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+    /*
+    flex-direction: row || column || row-reverse || column-reverse;
+    flex-wrap: wrap || nowrap || wrap-reverse;
+    flex-flow: row || column || row-reverse || column-reverse && wrap || nowrap || wrap-reverse;
+    justify-content: flex-start || flex-end || center || space-between || space-around;
+    align-items: flex-start || flex\end || center \\ stretch || baseline;
+    align-content: flex-start || flex\end || center \\ stretch;
+    */
+  }
+
+}
+
+@media(max-width: 767px) {
+  html {
+    width: 100%;
+  }
+
+  body {
+    width: 100%;
+  }
+
 }
