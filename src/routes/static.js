@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 router.get('/', (req, res, next) => {
-  res.send('Welcome to Komodo Resources');
+  res.send(path.join(__dirname, '../../index.html'));
 });
 
 module.exports = router;
