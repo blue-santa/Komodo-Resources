@@ -1,7 +1,7 @@
 const path = require('path');
 const http = require('http');
 
-const app = require(path.join(__dirname + '/app'));
+const app = require('/app');
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
