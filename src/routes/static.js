@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 router.get('/', (req, res, next) => {
-  res.send(path.join(__dirname, '../../index.html', process.env.testDBPassword));
+  res.send('../../index.html');
 });
 
 module.exports = router;
