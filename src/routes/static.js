@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const staticController = require('../controllers/staticController');
 
-router.get('/', (req, res, next) => {
-  res.send(__dirname);
-});
+router.get('/', staticController.index);
 
-module.exports = router;
+module.exports = {
+  
+}
