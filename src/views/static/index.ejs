@@ -2,11 +2,20 @@
 <html lang="en">
   <head>
     <% include ../partials/head.ejs %>
+    <title><%= title %></title>
   </head>
   <body>
     <div class="flex-container">
       <% include ../partials/navbar.ejs %>
-      <% include ../partials/contentDisplay.ejs %>
+      <main class="content">
+        <div class="site-title">
+          <h1>Primary Topics</h1>
+          <h2>Educational Material for Komodo Users</h2>
+        </div>
+        <div class="site-content">
+          <p>Content will go here</p>
+        </div>
+      </main>
     </div>
     <% include ../partials/baseScripts.ejs %>
   </body>
