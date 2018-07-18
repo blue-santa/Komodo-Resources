@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+    <div class="flex-container">
+    <% include ../partials/navbar.ejs %>
+      <main>
+
+        <h1>Edit Primary Topic</h1>
+        <form action="/primaryTopics/<%= primaryTopic.id %>/update" method="post">
+          <div class="form-group">
+            <label for="title">Primary Topic Title</label>
+            <input value="<%= primaryTopic.title %>" type="text" class="form-control" name="title" placeholder="enter new primary topic title" required>
+          </div>
+          <button type="submit" class="button">Update</button>
+        </form>
+      </main>
+      <% include ../partials/baseScripts.ejs %>
+    </div>
+  </body>
+</html>

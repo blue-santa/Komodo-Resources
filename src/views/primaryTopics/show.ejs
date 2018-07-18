@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head.ejs %>
+  </head>
+  <body>
+    <div class="flex-container">
+      <% include ../partials/navbar.ejs %>
+
+      <main>
+        <h1><%= primaryTopic.title %></h1>
+        <a href="/primaryTopics/<%= primaryTopic.id %>/edit" class="button">Edit</a>
+        <form action="/primaryTopics/<%= primaryTopic.id %>/destroy" method="post">
+          <button type="submit" class="button">Delete</button>
+        </form>
+        <p>Content will go here %></p>
+      </main>
+
+    </div>
+    <% include ../partials/baseScripts.ejs %>
+  </body>
+</html>
