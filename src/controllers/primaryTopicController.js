@@ -6,7 +6,7 @@ module.exports = {
       if (err) {
         res.redirect(500, 'static/index');
       } else {
-        res.render('primaryTopics/index', { primaryTopics, title: 'Komodo Resources' });
+        res.render('primaryTopics/index', { primaryTopics, title: 'Primary Topics: Komodo Resources' });
       }
     });
   },

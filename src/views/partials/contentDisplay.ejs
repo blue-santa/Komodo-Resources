@@ -1,15 +1,10 @@
 <main class="content">
   <div class="site-title">
-    <h1>Primary Topics</h1>
+    <h1><a href="/primaryTopics">Primary Topics</a></h1>
     <h2>Educational Material for Komodo Users</h2>
   </div>
   <div class="site-content">
-    <ul class="list-group">
-      <% primaryTopics.forEach((primaryTopic) => { %>
-        <li class="list-group-item">
-          <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
-        </li>
-      <% }); %>
-    </ul>
+    <p>Content goes here</p>
+    <%= title %>
   </div>
 </main>

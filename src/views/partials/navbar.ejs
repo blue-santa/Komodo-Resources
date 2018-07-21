@@ -1,5 +1,7 @@
 <nav class="sidebar">
-  <img class="komodo-logo" src="./img/komodo-logo-horizontal-03.png">
+  <a href="/">
+    <img class="komodo-logo" src="./img/komodo-logo-horizontal-03.png">
+  </a>
   <div class="sidebar-links-container">
     <div class="sidebar-title">Introduction to Komodo</div>
     <ol class="sidebar-links">
@@ -61,6 +63,12 @@
           <li class="sidebar-sub-link">Komodo's Unique Adoption of the Zcash Parameters</li>
         </ol>
       </li>
+
+      <% primaryTopics.forEach((primaryTopic) => { %>
+        <li class="sidebar-main-link">
+          <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
+        </li>
+      <% }); %>
 
     </ol>
   </div>
