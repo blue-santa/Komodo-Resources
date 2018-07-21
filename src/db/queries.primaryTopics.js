@@ -23,7 +23,8 @@ module.exports = {
 
   addPrimaryTopic(newPrimaryTopic, callback) {
     return PrimaryTopic.create({
-      title: newPrimaryTopic.title
+      title: newPrimaryTopic.title,
+      content: newPrimaryTopic.content
     })
     .then((primaryTopic) => {
       callback(null, primaryTopic);

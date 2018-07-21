@@ -7,6 +7,7 @@ let primaryTopics = [];
 for (let i = 1; i <= 15; i++) {
   primaryTopics.push({
     title: faker.hacker.noun(),
+    content: faker.hacker.phrase(),
     createdAt: new Date(),
     updatedAt: new Date()
   });

@@ -7,13 +7,13 @@
     <div class="flex-container">
       <% include ../partials/navbar.ejs %>
 
-      <main>
+      <main class="content">
         <h1><%= primaryTopic.title %></h1>
         <a href="/primaryTopics/<%= primaryTopic.id %>/edit" class="button">Edit</a>
         <form action="/primaryTopics/<%= primaryTopic.id %>/destroy" method="post">
           <button type="submit" class="button">Delete</button>
         </form>
-        <p>Content will go here %></p>
+        <p><%= primaryTopic.content %></p>
       </main>
 
     </div>

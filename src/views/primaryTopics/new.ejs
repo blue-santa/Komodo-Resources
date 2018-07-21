@@ -11,8 +11,12 @@
 
         <form action="/primaryTopics/create" method="post">
           <div class="form-group">
-            <label for="title">New Primary Topic</label>
-            <input type="text" autofocus="true" class="form-control" name="title" placeholder="enter new primary topic title" required>
+            <label for="title">Title</label>
+            <input type="text" autofocus="true" class="form-control" name="title" placeholder="enter new title" required>
+          </div>
+          <div class="form-group">
+            <label for="content">Content</label>
+            <input type="text" autofocus="false" class="form-control" name="content" placeholder="enter new content" required>
           </div>
           <button type="submit" class="button">Submit</button>
         </form>

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('PrimaryTopics', {
+    return queryInterface.createTable('SecondaryTopics', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -23,10 +23,20 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      primaryTopicId: {
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: "PrimaryTopics",
+          key: "id",
+          as: "primaryTopicId"
+        },
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('PrimaryTopics');
+    return queryInterface.dropTable('SecondaryTopics');
   }
 };

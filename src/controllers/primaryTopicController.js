@@ -12,12 +12,13 @@ module.exports = {
   },
 
   new(req, res, next) {
-    res.render('primaryTopics/new', { title: 'New Primary Topic'});
+    res.render('primaryTopics/new', { title: 'New Primary Topic' });
   },
 
   create(req, res, next) {
     let newPrimaryTopic = {
-      title: req.body.title
+      title: req.body.title,
+      content: req.body.content
     };
     primaryTopicQueries.addPrimaryTopic(newPrimaryTopic, (err, primaryTopic) => {
       if (err) {

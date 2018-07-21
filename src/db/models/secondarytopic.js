@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var PrimaryTopic = sequelize.define('PrimaryTopic', {
+  var SecondaryTopic = sequelize.define('SecondaryTopic', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -8,14 +8,18 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    primaryTopicId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {});
-  PrimaryTopic.associate = function(models) {
+  SecondaryTopic.associate = function(models) {
     // associations can be defined here
-    PrimaryTopic.hasMany(models.SecondaryTopic, {
+    SecondaryTopic.belongsTo(models.PrimaryTopic, {
       foreignKey: "primaryTopicId",
-      as: "secondaryTopics"
+      onDelete: "CASCADE"
     });
   };
-  return PrimaryTopic;
+  return SecondaryTopic;
 };

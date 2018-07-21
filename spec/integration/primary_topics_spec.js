@@ -12,7 +12,8 @@ describe('routes : primaryTopics', () => {
     sequelize.sync({force: true}).then((res) => {
 
       PrimaryTopic.create({
-        title: 'Hello World'
+        title: 'Title: Hello World',
+        content: '<p>Content: Hello World</p>'
       })
       .then((primaryTopic) => {
         this.primaryTopic = primaryTopic;
@@ -33,7 +34,8 @@ describe('routes : primaryTopics', () => {
         expect(res.statusCode).toBe(200);
         expect(err).toBeNull();
         expect(body).toContain('Primary Topics');
-        expect(body).toContain('Hello World');
+        expect(body).toContain('Title: Hello World');
+        expect(body).toContain('Content: Hello World');
         done();
       });
     });
@@ -44,7 +46,7 @@ describe('routes : primaryTopics', () => {
     it("should render a new primary topic form", (done) => {
       request.get(`${base}/new`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("New Primary Topic");
+        expect(body).toContain('New Primary Topic');
         done();
       });
     });
@@ -52,10 +54,11 @@ describe('routes : primaryTopics', () => {
 
   describe('GET /primaryTopics/:id', () => {
 
-    it('should render a view with the selected topic', (done) => {
+    it('should render a view with the selected primary topic', (done) => {
       request.get(`${base}/${this.primaryTopic.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain('Hello World');
+        expect(body).toContain('Title: Hello World');
+        expect(body).toContain('Content: Hello World');
         done();
       });
     });
@@ -68,7 +71,8 @@ describe('routes : primaryTopics', () => {
       request.get(`${base}/${this.primaryTopic.id}/edit`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain('Edit Primary Topic');
-        expect(body).toContain('Hello World');
+        expect(body).toContain('Title: Hello World');
+        expect(body).toContain('Content: Hello World');
         done();
       });
     });
@@ -81,7 +85,8 @@ describe('routes : primaryTopics', () => {
       const options = {
         url: `${base}/${this.primaryTopic.id}/update`,
         form: {
-          title: 'Hello Again, World'
+          title: 'Title: Hello Again, World',
+          content: 'Content: Hello Again, World'
         }
       };
       request.post(options,
@@ -91,7 +96,8 @@ describe('routes : primaryTopics', () => {
             where: { id: this.primaryTopic.id }
           })
           .then((primaryTopic) => {
-            expect(primaryTopic.title).toBe('Hello Again, World');
+            expect(primaryTopic.title).toBe('Title: Hello Again, World');
+            expect(primaryTopic.content).toBe('Content: Hello Again, World');
             done();
           });
         }
@@ -104,17 +110,19 @@ describe('routes : primaryTopics', () => {
     const options = {
       url: `${base}/create`,
       form: {
-        title: 'test 1 - new primary topic'
+        title: 'Title: New Primary Topic',
+        content: '<p>Content: New Primary Topic</p>'
       }
     };
 
     it('should create a new topic and redirect', (done) => {
       request.post(options,
         (err, res, body) => {
-          PrimaryTopic.findOne({where: {title: 'test 1 - new primary topic' }})
+          PrimaryTopic.findOne({where: {title: 'Title: New Primary Topic' }})
           .then((primaryTopic) => {
             expect(res.statusCode).toBe(303);
-            expect(primaryTopic.title).toBe('test 1 - new primary topic');
+            expect(primaryTopic.title).toBe('Title: New Primary Topic');
+            expect(primaryTopic.content).toBe('<p>Content: New Primary Topic</p>');
             done();
           })
           .catch((err) => {

@@ -6,5 +6,17 @@
   <div class="site-content">
     <p>Content goes here</p>
     <%= title %>
+    <% primaryTopics.forEach((primaryTopic) => { %>
+      <li class="sidebar-main-link">
+        <ul>
+          <li>
+            <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
+          </li>
+          <li>
+            <p><%= primaryTopic.content %></p>
+          </li>
+        </ul>
+      </li>
+    <% }); %>
   </div>
 </main>
