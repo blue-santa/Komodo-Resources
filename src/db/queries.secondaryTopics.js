@@ -13,6 +13,25 @@ module.exports = {
     });
   },
 
+  updateSecondaryTopic(id, updatedSecondaryTopic, callback) {
+    return SecondaryTopic.findById(id)
+    .then((secondaryTopic) => {
+      if (!secondaryTopic) {
+        return callback('Secondary topic not found');
+      }
+
+      secondaryTopic.update(updatedSecondaryTopic, {
+        fields: Object.keys(updatedSecondaryTopic)
+      })
+      .then(() => {
+        callback(null, secondaryTopic);
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    })
+  },
+
   addSecondaryTopic(newSecondaryTopic, callback) {
     return SecondaryTopic.create(newSecondaryTopic)
     .then((secondaryTopic) => {

@@ -58,6 +58,19 @@ describe('routes : secondaryTopics', () => {
     });
   });
 
+  describe('GET /primaryTopics/:primaryTopicId/secondaryTopics/:id/edit', () => {
+
+    it('should render a view with an edit secondary topic form', (done) => {
+      request.get(`${base}/${this.secondaryTopic.primaryTopicId}/secondaryTopics/${this.secondaryTopic.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain('Edit Secondary Topic');
+        expect(body).toContain('Hello World - 2');
+        done();
+      });
+    });
+
+  });
+
   describe('POST /primaryTopics/:primaryTopicId/secondaryTopics/create', () => {
 
     it('should create a new secondary topic and redirect', (done) => {
@@ -80,6 +93,44 @@ describe('routes : secondaryTopics', () => {
           })
           .catch((err) => {
             console.log(err);
+            done();
+          });
+        }
+      );
+    });
+
+  });
+
+  describe('POST /primaryTopics/:primaryTopicId/secondaryTopics/:id/update', () => {
+
+    it('should return a status code 302', (done) => {
+      request.post({
+        url: `${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/update`,
+        form: {
+          title: 'Title: Hello World - 4',
+          content: 'Content: Hello World - 4'
+        }
+      }, (err, res, body) => {
+        expect(res.statusCode).toBe(302);
+        done();
+      });
+    });
+
+    it('should update the secondary topic with the given values', (done) => {
+      const options = {
+        url: `${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/update`,
+        form: {
+          title: 'Title: Hello World - 5'
+        }
+      };
+      request.post(options,
+        (err, res, body) => {
+          expect(err).toBeNull();
+          SecondaryTopic.findOne({
+            where: { id: this.secondaryTopic.id }
+          })
+          .then((secondaryTopic) => {
+            expect(secondaryTopic.title).toBe('Title: Hello World - 5');
             done();
           });
         }

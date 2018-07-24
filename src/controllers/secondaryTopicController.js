@@ -31,6 +31,26 @@ module.exports = {
     });
   },
 
+  edit(req, res, next) {
+    secondaryTopicQueries.getSecondaryTopic(req.params.id, (err, secondaryTopic) => {
+      if (err || secondaryTopic == null) {
+        res.redirect(404, '/');
+      } else {
+        res.render(`secondaryTopics/edit`, { secondaryTopic, title: `${secondaryTopic.title}: Komodo Resources` });
+      }
+    });
+  },
+
+  update(req, res, next) {
+    secondaryTopicQueries.updateSecondaryTopic(req.params.id, req.body, (err, secondaryTopic) => {
+      if (err || secondaryTopic == null) {
+        res.redirect(404, `/primaryTopics/${req.params.primaryTopicId}/secondaryTopics/${req.params.id}/edit`);
+      } else {
+        res.redirect(`/primaryTopics/${req.params.primaryTopicId}/secondaryTopics/${req.params.id}`);
+      }
+    });
+  },
+
   destroy(req, res, next) {
     secondaryTopicQueries.deleteSecondaryTopic(req.params.id, (err, deletedRecordsCount) => {
       if (err) {
