@@ -9,8 +9,8 @@
 
       <main class="content">
         <div class="site-title content-flex-container unique-row">
-          <h1 class=""><%= primaryTopic.title %></h1>
-          <form action="/primaryTopics/<%= primaryTopic.id %>/edit" method="post">
+          <h1><%= primaryTopic.title %></h1>
+          <form action="/primaryTopics/<%= primaryTopic.id %>/edit" method="get">
             <button type="submit" class="btn">Edit</button>
           </form>
           <form action="/primaryTopics/<%= primaryTopic.id %>/destroy" method="post">
@@ -19,6 +19,20 @@
         </div>
         <div class="site-content">
           <p><%- primaryTopic.content %></p>
+        </div>
+        <hr>
+        <div class="site-content">
+          <h1>Secondary Topics</h1>
+          <ul class="topic-list">
+            <% primaryTopic.secondaryTopics.forEach((secondaryTopic) => { %>
+              <li>
+                <a href="/primaryTopics/<%= primaryTopic.id %>/secondaryTopics/<%= secondaryTopic.id %>"> <%= secondaryTopic.title %> </a>
+              </li>
+            <% }) %>
+          </ul>
+          <form action="/primaryTopics/<%= primaryTopic.id %>/secondaryTopics/new" method="get">
+            <button type="submit" class="btn">New Secondary Topic</button>
+          </form>
         </div>
       </main>
 

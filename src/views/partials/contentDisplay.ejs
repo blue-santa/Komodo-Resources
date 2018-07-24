@@ -9,7 +9,10 @@
     <ul class="topic-list">
     <% primaryTopics.forEach((primaryTopic) => { %>
       <li>
-            <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
+        <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
+      </li>
+      <li>
+        <%= primaryTopic.content %>
       </li>
     <% }); %>
     </ul>

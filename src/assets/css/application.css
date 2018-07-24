@@ -285,7 +285,7 @@ a:visited {
   */
 }
 
-.site-title h1 {
+h1 {
   font-family: 'Roboto Condensed', serif;
   font-weight: 700;
   font-size: 3rem;
@@ -298,7 +298,7 @@ a:visited {
   text-decoration: underline;
 }
 
-.site-title h2 {
+h2 {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 600;
   text-align: center;
