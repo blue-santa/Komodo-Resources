@@ -8,12 +8,18 @@
       <% include ../partials/navbar.ejs %>
 
       <main class="content">
-        <h1><%= primaryTopic.title %></h1>
-        <a href="/primaryTopics/<%= primaryTopic.id %>/edit" class="button">Edit</a>
-        <form action="/primaryTopics/<%= primaryTopic.id %>/destroy" method="post">
-          <button type="submit" class="button">Delete</button>
-        </form>
-        <p><%= primaryTopic.content %></p>
+        <div class="site-title content-flex-container unique-row">
+          <h1 class=""><%= primaryTopic.title %></h1>
+          <form action="/primaryTopics/<%= primaryTopic.id %>/edit" method="post">
+            <button type="submit" class="btn">Edit</button>
+          </form>
+          <form action="/primaryTopics/<%= primaryTopic.id %>/destroy" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+        <div class="site-content">
+          <p><%- primaryTopic.content %></p>
+        </div>
       </main>
 
     </div>

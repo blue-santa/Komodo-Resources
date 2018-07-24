@@ -1,22 +1,20 @@
 <main class="content">
-  <div class="site-title">
+  <div class="site-title content-flex-container">
     <h1><a href="/primaryTopics">Primary Topics</a></h1>
-    <h2>Educational Material for Komodo Users</h2>
   </div>
-  <div class="site-content">
-    <p>Content goes here</p>
-    <%= title %>
+  <div class="site-title content-flex-container unique-row">
+      <h2>Educational Material for Komodo Users</h2>
+  </div>
+  <div class="site-content content-flex-container">
+    <ul class="topic-list">
     <% primaryTopics.forEach((primaryTopic) => { %>
-      <li class="sidebar-main-link">
-        <ul>
-          <li>
+      <li>
             <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
-          </li>
-          <li>
-            <p><%= primaryTopic.content %></p>
-          </li>
-        </ul>
       </li>
     <% }); %>
+    </ul>
+    <form action="/primaryTopics/new" method="get">
+      <button type="submit" class="btn">New</button>
+    </form>
   </div>
 </main>
