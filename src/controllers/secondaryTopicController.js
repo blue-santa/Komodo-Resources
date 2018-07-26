@@ -1,10 +1,20 @@
 const primaryTopicQueries = require('../db/queries.primaryTopics.js');
 const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
+const allTopicQueries = require('../db/queries.allTopics.js');
+
+let topicTree = [];
+
+allTopicQueries.buildTopicTree((err, topicTreeCall) => {
+  if (!topicTreeCall) {
+    return topicTree.push({ title: 'You need to add more stuff!' });
+  }
+  topicTree = topicTreeCall;
+});
 
 module.exports = {
 
   new(req, res, next) {
-    res.render('secondaryTopics/new', { primaryTopicId: req.params.primaryTopicId });
+    res.render('secondaryTopics/new', { primaryTopicId: req.params.primaryTopicId, topicTree });
   },
 
   show(req, res, next) {
@@ -12,7 +22,7 @@ module.exports = {
       if (err || secondaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        res.render('secondaryTopics/show', { secondaryTopic });
+        res.render('secondaryTopics/show', { secondaryTopic, topicTree });
       }
     });
   },
@@ -37,7 +47,7 @@ module.exports = {
       if (err || secondaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        res.render(`secondaryTopics/edit`, { secondaryTopic });
+        res.render(`secondaryTopics/edit`, { secondaryTopic, topicTree });
       }
     });
   },

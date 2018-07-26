@@ -2,6 +2,7 @@ const PrimaryTopic = require('./models').PrimaryTopic;
 const SecondaryTopic = require('./models').SecondaryTopic;
 
 module.exports = {
+  
   getAllPrimaryTopics(callback) {
     return PrimaryTopic.all()
     .then((primarytopics) => {
@@ -70,4 +71,5 @@ module.exports = {
       callback(err);
     });
   }
+
 }

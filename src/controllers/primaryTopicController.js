@@ -1,4 +1,15 @@
 const primaryTopicQueries = require('../db/queries.primaryTopics.js');
+const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
+const allTopicQueries = require('../db/queries.allTopics.js');
+
+let topicTree = [];
+
+allTopicQueries.buildTopicTree((err, topicTreeCall) => {
+  if (!topicTreeCall) {
+    return topicTree.push({ title: 'You need to add more stuff!' });
+  }
+  topicTree = topicTreeCall;
+});
 
 module.exports = {
   index(req, res, next) {
@@ -6,13 +17,13 @@ module.exports = {
       if (err) {
         res.redirect(500, 'static/index');
       } else {
-        res.render('primaryTopics/index', { primaryTopics, title: 'Primary Topics: Komodo Resources' });
+        res.render('primaryTopics/index', { primaryTopics, topicTree });
       }
     });
   },
 
   new(req, res, next) {
-    res.render('primaryTopics/new', { title: 'New Primary Topic' });
+    res.render('primaryTopics/new', { topicTree });
   },
 
   create(req, res, next) {
@@ -34,7 +45,7 @@ module.exports = {
       if (err || primaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        res.render('primaryTopics/show', { primaryTopic, title: `${primaryTopic.title}: Komodo Resources` });
+        res.render('primaryTopics/show', { primaryTopic, topicTree });
       }
     });
   },
@@ -44,7 +55,7 @@ module.exports = {
       if (err || primaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        res.render('primaryTopics/edit', { primaryTopic, title: `Update: ${primaryTopic.title}` });
+        res.render('primaryTopics/edit', { primaryTopic, topicTree });
       }
     });
   },

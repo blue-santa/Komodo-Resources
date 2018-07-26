@@ -113,10 +113,6 @@ a:visited {
   padding: 2%;
 }
 
-.sidebar-links li:nth-child(5) {
-  border: none;
-}
-
 .sidebar-links h3 {
   font-family: 'Roboto Medium', serif;
   font-weight: 700;

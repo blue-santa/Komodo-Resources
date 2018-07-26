@@ -1,5 +1,5 @@
-<% primaryTopics.forEach((primaryTopic) => { %>
+<% topicTree.forEach((primaryTopicNav) => { %>
   <li class="sidebar-main-link">
-    <a href="/primaryTopics/<%= primaryTopic.id %>"> <%= primaryTopic.title %> </a>
+    <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>"> <%= primaryTopicNav.title %> </a>
   </li>
 <% }); %>
