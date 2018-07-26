@@ -1,9 +1,10 @@
+const primaryTopicQueries = require('../db/queries.primaryTopics.js');
 const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
 
 module.exports = {
 
   new(req, res, next) {
-    res.render('secondaryTopics/new', { primaryTopicId: req.params.primaryTopicId, title: 'New Secondary Topic' });
+    res.render('secondaryTopics/new', { primaryTopicId: req.params.primaryTopicId });
   },
 
   show(req, res, next) {
@@ -11,7 +12,7 @@ module.exports = {
       if (err || secondaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        res.render('secondaryTopics/show', { secondaryTopic, title: `${secondaryTopic.title}: Komodo Resources` });
+        res.render('secondaryTopics/show', { secondaryTopic });
       }
     });
   },
@@ -36,7 +37,7 @@ module.exports = {
       if (err || secondaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        res.render(`secondaryTopics/edit`, { secondaryTopic, title: `${secondaryTopic.title}: Komodo Resources` });
+        res.render(`secondaryTopics/edit`, { secondaryTopic });
       }
     });
   },

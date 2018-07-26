@@ -2,11 +2,12 @@
 <html>
   <head>
     <% include ../partials/head.ejs %>
+    <title><%= secondaryTopic.title %>: Komodo Resources</title>
   </head>
   <body>
     <div class="flex-container">
       <% include ../partials/navbar.ejs %>
-      <main class="site-content">
+      <main class="content">
         <h1>Edit Secondary Topic</h1>
         <form action="/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>/update" method="post">
           <div class="form-group">
