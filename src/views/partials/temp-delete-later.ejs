@@ -3,3 +3,17 @@
     <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>"> <%= primaryTopicNav.title %> </a>
   </li>
 <% }); %>
+
+
+topicTree.secondaryTopics = {
+  title: `short and stout`,
+  secondaryTopicId: 0
+};
+
+<ol class="sidebar-links">
+  <% primaryTopicNav.secondaryTopics.forEach((secondaryTopicNav) => { %>
+    <li class="sidebar-second-link">
+      <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>/secondaryTopics/<%= secondaryTopicNav.secondaryTopicId %>"> <%= secondaryTopicNav.title %> </a>
+    </li>
+  <% }); %>
+</ol>

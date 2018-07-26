@@ -8,6 +8,13 @@
       <% topicTree.forEach((primaryTopicNav) => { %>
         <li class="sidebar-main-link">
           <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>"> <%= primaryTopicNav.title %> </a>
+          <ol class="sidebar-links">
+            <% primaryTopicNav.secondaryTopics.forEach((secondaryTopicNav) => { %>
+              <li class="sidebar-second-link">
+                <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>/secondaryTopics/<%= secondaryTopicNav.secondaryTopicId %>"> <%= secondaryTopicNav.title %> </a>
+              </li>
+            <% }); %>
+          </ol>
         </li>
       <% }); %>
     </ol>

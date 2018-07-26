@@ -4,10 +4,19 @@ const allTopicQueries = require('../db/queries.allTopics.js');
 let topicTree = [];
 
 allTopicQueries.buildTopicTree((err, topicTreeCall) => {
-  if (!topicTreeCall) {
-    return topicTree.push({ title: 'You need to add more stuff!' });
+  if (topicTreeCall === undefined || topicTreeCall[0].secondaryTopics === undefined) {
+    topicTreeCall = [];
+    topicTreeCall.push({
+      title: `I'm a little teapot`,
+      primaryTopicId: 0
+    });
+    topicTreeCall[0].secondaryTopics = [];
+    topicTreeCall[0].secondaryTopics.push({
+      title: `short and stout`,
+      secondaryTopicId: 0
+    });
   }
-  topicTree = topicTreeCall;
+  return topicTree = topicTreeCall;
 });
 
 module.exports = {
