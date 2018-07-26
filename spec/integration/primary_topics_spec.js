@@ -35,7 +35,6 @@ describe('routes : primaryTopics', () => {
         expect(err).toBeNull();
         expect(body).toContain('Primary Topics');
         expect(body).toContain('Title: Hello World');
-        expect(body).toContain('Content: Hello World');
         done();
       });
     });
