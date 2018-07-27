@@ -3,26 +3,27 @@ const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
 const allTopicQueries = require('../db/queries.allTopics.js');
 
 let topicTree = [];
+buildTree();
 
-allTopicQueries.buildTopicTree((err, topicTreeCall) => {
-  if (topicTreeCall === undefined ) {
-    topicTreeCall = [];
-    topicTreeCall.push({
-      title: `I'm a little teapot`,
-      primaryTopicId: 0
-    });
-  }
-
-  if (topicTreeCall[0].secondaryTopics === undefined) {
-    topicTreeCall[0].secondaryTopics = [];
-    topicTreeCall[0].secondaryTopics.push({
-      title: `short and stout`,
-      secondaryTopicId: 0
-    });
-  }
-
-  return topicTree = topicTreeCall;
-});
+function buildTree() {
+  allTopicQueries.buildTopicTree((err, topicTreeCall) => {
+    if (topicTreeCall === undefined ) {
+      topicTreeCall = [];
+      topicTreeCall.push({
+        title: `I'm a little teapot`,
+        primaryTopicId: 0
+      });
+    }
+    if (topicTreeCall[0].secondaryTopics === undefined) {
+      topicTreeCall[0].secondaryTopics = [];
+      topicTreeCall[0].secondaryTopics.push({
+        title: `short and stout`,
+        secondaryTopicId: 0
+      });
+    }
+    return topicTree = topicTreeCall;
+  });
+}
 
 module.exports = {
   index(req, res, next) {
@@ -30,12 +31,14 @@ module.exports = {
       if (err) {
         res.redirect(500, 'static/index');
       } else {
+        buildTree();
         res.render('primaryTopics/index', { primaryTopics, topicTree });
       }
     });
   },
 
   new(req, res, next) {
+    buildTree();
     res.render('primaryTopics/new', { topicTree });
   },
 
@@ -58,6 +61,7 @@ module.exports = {
       if (err || primaryTopic == null) {
         res.redirect(404, '/');
       } else {
+        buildTree();
         res.render('primaryTopics/show', { primaryTopic, topicTree });
       }
     });
@@ -68,6 +72,7 @@ module.exports = {
       if (err || primaryTopic == null) {
         res.redirect(404, '/');
       } else {
+        buildTree();
         res.render('primaryTopics/edit', { primaryTopic, topicTree });
       }
     });
