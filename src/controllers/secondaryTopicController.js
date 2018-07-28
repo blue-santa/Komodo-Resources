@@ -3,7 +3,6 @@ const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
 const allTopicQueries = require('../db/queries.allTopics.js');
 
 let topicTree = [];
-buildTree();
 
 function buildTree() {
   allTopicQueries.buildTopicTree((err, topicTreeCall) => {
@@ -24,6 +23,8 @@ function buildTree() {
     return topicTree = topicTreeCall;
   });
 }
+
+buildTree();
 
 module.exports = {
 

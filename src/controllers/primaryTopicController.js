@@ -1,9 +1,12 @@
 const primaryTopicQueries = require('../db/queries.primaryTopics.js');
 const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
 const allTopicQueries = require('../db/queries.allTopics.js');
+const fs = require('fs');
+const path = require('path');
+
+const base = path.join(__dirname + '../../assets/docs/');
 
 let topicTree = [];
-buildTree();
 
 function buildTree() {
   allTopicQueries.buildTopicTree((err, topicTreeCall) => {
@@ -24,6 +27,10 @@ function buildTree() {
     return topicTree = topicTreeCall;
   });
 }
+
+buildTree();
+
+let testKDoc = fs.readFileSync(base + 'test/assetchains-guide-Komodo-Notary-Node.html');
 
 module.exports = {
   index(req, res, next) {
@@ -62,7 +69,7 @@ module.exports = {
         res.redirect(404, '/');
       } else {
         buildTree();
-        res.render('primaryTopics/show', { primaryTopic, topicTree });
+        res.render('primaryTopics/show', { primaryTopic, topicTree, testKDoc });
       }
     });
   },
