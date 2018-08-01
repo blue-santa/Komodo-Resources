@@ -26,10 +26,13 @@
     "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "fs-extra": "^7.0.0",
     "html": "^1.0.0",
     "nodemon": "^1.17.5",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
+    "prompt": "^1.0.0",
+    "rimraf": "^2.6.2",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.0.0"
   },

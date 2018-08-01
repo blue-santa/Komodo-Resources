@@ -1,0 +1,57 @@
+<h1 id="setting-up-a-full-relayfr-node-for-barterdex">Setting up a Full Relay(FR) Node for BarterDEX</h1>
+<h2 id="what-is-a-full-relay-fr-node">What is a Full Relay (FR) node?</h2>
+<p>Full Relay nodes (FR) create the p2p network &amp; only relays data-packets for BarterDEX and allows ordermatching to happen. They don't trade. FR nodes never touch any funds of any sort and are equivalent to a bulletin board. There is no need to fund the wallet of a FR node. Bob and Alice connect to the FR network. Bob places orders and Alice fills the orders. It is ideal to have at least 3 FR nodes in each netid.</p>
+<h2 id="how-to-setup-an-fr-node">How to setup an FR node?</h2>
+<p>A FR node is just <code>marketmaker</code> launched with <code>client:0</code> parameter. Very easy to setup, just follow along without skipping any steps.</p>
+<h3 id="install-the-following-dependency-packages">Install the following dependency packages:</h3>
+<pre class="sourceCode shell"><code>sudo apt-get update
+sudo apt-get install cmake git libcurl4-openssl-dev build-essential</code></pre>
+<h3 id="install-nanomsg">Install <code>nanomsg</code></h3>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/nanomsg/nanomsg
+cd nanomsg
+cmake . -DNN_TESTS=OFF -DNN_ENABLE_DOC=OFF
+make -j2
+sudo make install
+sudo ldconfig</code></pre>
+<h3 id="clone-the-supernet-repo-from-github-install">Clone the SuperNET repo from github &amp; Install:</h3>
+<p>Clone the repo, checkout <code>dev</code> branch for latest and install.</p>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/jl777/SuperNET
+cd ~/SuperNET/iguana/exchanges
+git checkout dev
+./install
+cp passphrase ../dexscripts/passphrase</code></pre>
+<h3 id="edit-the-client-script">Edit the <code>client</code> script</h3>
+<p>The client script inside the directory <code>~/SuperNET/iguana/dexscripts</code> should look as follows to be running a FR node.</p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source passphrase
+source coins
+./stop
+git pull;
+cp ../exchanges/updateprices .;./updateprices
+cd ..; 
+./m_mm;
+pkill -15 marketmaker; 
+stdbuf -oL $1 ./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:0, \&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<p>barterDEX is now installed in your system.</p>
+<h3 id="starting-fr-node">Starting FR node</h3>
+<p>Every time you want to run a Full Relay node (FR), open a new terminal window and type the following:</p>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/dexscripts
+./client &amp;</code></pre>
+<h2 id="how-to-setup-fr-nodes-for-different-netids">How to setup FR nodes for different netids?</h2>
+<p>You need to edit the value of <code>netid</code> in the <code>client</code> script along with <code>client:0</code> parameter.</p>
+<h3 id="client"><code>client</code></h3>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source passphrase
+source coins
+./stop
+git pull;
+cp ../exchanges/updateprices .;./updateprices
+cd ..; 
+./m_mm;
+pkill -15 marketmaker; 
+stdbuf -oL $1 ./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:0,\&quot;netid\&quot;:1024, \&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<h3 id="stopping-a-fr-node">Stopping a FR node</h3>
+<p>Just use the following command in any terminal session to stop marketmaker. This will stop the running FR node.</p>
+<pre class="sourceCode shell"><code>pkill -15 marketmaker</code></pre>

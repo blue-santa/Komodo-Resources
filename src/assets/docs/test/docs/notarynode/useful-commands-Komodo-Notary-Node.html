@@ -1,0 +1,18 @@
+<h1 id="useful-commands-for-komodo-notary-node">Useful commands for Komodo Notary Node</h1>
+<p>Store <code>komodo-cli</code> into <code>/usr/bin</code>, so you can use it anywhere you are in the CLI</p>
+<pre class="sourceCode shell"><code>sudo cp ~/komodo/src/komodo-cli /usr/bin</code></pre>
+<p>Stop Komodo, Bitcoin and Iguana at once</p>
+<pre class="sourceCode shell"><code>komodo-cli stop &amp;&amp; bitcoin-cli stop &amp;&amp; pkill -15 iguana</code></pre>
+<p>Update Komodo (be sure to stop Komodo first, see above)</p>
+<pre class="sourceCode shell"><code>cd ~/komodo &amp;&amp; git pull &amp;&amp; cd src &amp;&amp; make</code></pre>
+<p>Search for a specific pubkey in files (like: notaries.c, ratify(A,B,C)_7776 etc. etc.)</p>
+<pre class="sourceCode shell"><code>**notaries.c**
+cd ~/SuperNET/iguana
+cat notaries.c | grep 0209d48554768dd8dada988b98aca23405057ac4b5b46838a9378b95c3e79b9b9e (or any pubkey of course)
+
+**ratify(A,B,C)_7776**
+cd ~/SuperNET/iguana/tests
+cat ratifyA_7776 | grep 0209d48554768dd8dada988b98aca23405057ac4b5b46838a9378b95c3e79b9b9e (or any pubkey of course)</code></pre>
+<p>If you want to copy your full bitcoin blocks to a new node instead of downloading it again you can scp the files to the new node. THIS WILL TAKE A WHILE!</p>
+<pre class="sourceCode shell"><code>cd ~/.bitcoin
+scp -r blocks/ chainstate/ user@ipofnewnode:~/.bitcoin</code></pre>

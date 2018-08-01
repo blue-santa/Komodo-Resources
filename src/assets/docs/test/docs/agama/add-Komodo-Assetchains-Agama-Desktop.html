@@ -1,0 +1,18 @@
+<h1 id="add-komodo-assetchains-in-agama-desktop">Add Komodo Assetchains in Agama Desktop</h1>
+<p>The Agama desktop code comprises of two parts. Backend and UI. This assetchain adding guide will cover both. All the files needs changing are linked. If you want to add Bitcoin compatible coins follow <span data-role="doc">this guide &lt;add-Bitcoin-Compatible-coin-Agama-Desktop&gt;</span>.</p>
+<h2 id="backend">Backend</h2>
+<ul>
+<li>Add a default asset chain port <a href="https://github.com/KomodoPlatform/Agama/blob/dev/routes/ports.js">/<a href="mailto:routes/ports.js@dev">routes/ports.js@dev</a></a></li>
+<li>Add an electrum server for your asset (optional) <a href="https://github.com/pbca26/agama-wallet-lib/blob/dev/src/electrum-servers.js#L1">pbca26/agama-wallet-lib:<a href="mailto:src/electrum-servers.js@dev#L1">src/electrum-servers.js@dev#L1</a></a></li>
+<li>Add an asset chain to the list of kmd assets <a href="https://github.com/pbca26/agama-wallet-lib/blob/dev/src/coin-helpers.js#L1">pbca26/agama-wallet-lib:<a href="mailto:src/coin-helpers.js@dev#L1">src/coin-helpers.js@dev#L1</a></a></li>
+<li>Submit a <a href="https://github.com/KomodoPlatform/Agama">PR</a></li>
+</ul>
+<h2 id="ui">UI:</h2>
+<ul>
+<li>Add asset chain entries to this file <a href="https://github.com/KomodoPlatform/EasyDEX-GUI/blob/dev/react/src/components/addcoin/payload.js#L45">KomodoPlatform/EasyDEX-GUI:<a href="mailto:react/src/components/addcoin/payload.js@dev#L45">react/src/components/addcoin/payload.js@dev#L45</a></a></li>
+<li>Drop a 100 x 100 px (better 200 x 200 px) logo into <a href="https://github.com/KomodoPlatform/EasyDEX-GUI/tree/dev/react/src/assets/images/cryptologo">KomodoPlatform/EasyDEX-GUI:<a href="mailto:react/src/assets/images/cryptologo@dev">react/src/assets/images/cryptologo@dev</a></a></li>
+<li>Add an asset chain explorer <a href="https://github.com/pbca26/agama-wallet-lib/blob/dev/src/coin-helpers.js#L51">pbca26/agama-wallet-lib:<a href="mailto:src/coin-helpers.js@dev#L51">src/coin-helpers.js@dev#L51</a></a></li>
+<li>Add asset chain name to EN translation file [<a href="https://github.com/KomodoPlatform/EasyDEX-GUI/blob/dev/react/src/translate/en.js" class="uri">https://github.com/KomodoPlatform/EasyDEX-GUI/blob/dev/react/src/translate/en.js</a>] (<a href="https://github.com/KomodoPlatform/EasyDEX-GUI/blob/dev/react/src/translate/en.js">KomodoPlatform/EasyDEX-GUI:<a href="mailto:react/src/translate/en.js@dev">react/src/translate/en.js@dev</a></a>), look for <code>ASSETCHAINS</code>.</li>
+<li>Submit a <a href="https://github.com/KomodoPlatform/Agama">PR</a></li>
+</ul>
+<p>Please make sure an asset chain is working in Agama before making a commit. Pull requests containing partial information or not working assets/servers will remain unmerged until all requirements are fulfilled.</p>

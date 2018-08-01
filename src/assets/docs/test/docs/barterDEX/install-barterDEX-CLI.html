@@ -1,0 +1,64 @@
+<h1 id="installing-and-using-komodo-platform-barterdex-in-linux-or-macos">Installing and Using Komodo Platform (barterDEX) (in linux or MacOS)</h1>
+<p><strong>This guide is intended for developers and advanced users (Linux &amp; MacOS) only using command line interface (CLI). GUI users, get</strong> <a href="https://github.com/KomodoPlatform/BarterDEX">BarterDEX GUI</a> <strong>. For Windows installations please refer to this</strong> <span data-role="doc">guide &lt;/barterDEX/install-barterDEX-CLI-windows&gt;</span> <strong>and use this</strong> <a href="https://github.com/KomodoPlatform/BarterDEX/tree/dev/assets/bin/win64">link for the binaries.</a></p>
+<p>Komodo Platform (barterDEX) is capable of working with Electrum servers. This means it is not necessary to download blockchain data in your computer. As a matter of fact, you don't need even download and run native coin wallet or daemon. Check the list of current Electrum servers here: <span data-role="doc">Electrum Servers List &lt;/barterDEX/electrum-servers-list&gt;</span>.</p>
+<p>If you however choose to use a native coin daemon, please make sure it is fully synced. For Komodo and other assetchains use the <a href="https://artifacts.supernet.org/latest/">latest Agama installer</a> or use the <a href="https://github.com/DeckerSU/komodo-qt/releases">KomodoOcean-QT</a>.</p>
+<p>For a list of currently supported native coins and instructions for the coin specific configuration file, see <a href="https://support.supernet.org/support/solutions/articles/29000014808-installation-script-for-various-coins">Supported Native Coins</a></p>
+<p>You may want to back up your system or clone it after everything is synced and running correctly BEFORE you start installing coin daemons.</p>
+<h2 id="installing-komodo-platform-barterdex">Installing Komodo Platform (barterDEX)</h2>
+<h3 id="install-the-following-dependency-packages">Install the following dependency packages:</h3>
+<pre class="sourceCode shell"><code>sudo apt-get update
+sudo apt-get install cmake git libcurl4-openssl-dev build-essential</code></pre>
+<h3 id="install-nanomsg">Install <code>nanomsg</code></h3>
+<h4 id="linux">Linux:</h4>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/nanomsg/nanomsg
+cd nanomsg
+cmake . -DNN_TESTS=OFF -DNN_ENABLE_DOC=OFF
+make -j2
+sudo make install
+sudo ldconfig</code></pre>
+<h4 id="macos">MacOS</h4>
+<p>You'll need to install <code>homebrew</code> (Google how to do it)</p>
+<pre class="sourceCode shell"><code>brew install nanomsg</code></pre>
+<h3 id="clone-the-supernet-repo-from-github-install">Clone the SuperNET repo from github &amp; Install:</h3>
+<p>Clone the repo, checkout dev branch for latest and install.</p>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/jl777/SuperNET
+cd ~/SuperNET/iguana/exchanges
+git checkout dev
+./install</code></pre>
+<h3 id="copy-the-passphrase-file-using-seed-passphrase">Copy the <code>passphrase</code> file &amp; using seed passphrase</h3>
+<p>From the same dir in terminal type the following commands to copy the <code>passphrase</code> file to <code>~/SuperNET/iguana/dexscripts</code> dir and add a strong 24 words seed passphrase in between <code>&quot;&quot;</code>. Save your passphrase properly without changing any word or space. Same seed <strong>passphrase</strong> will always show you the same <strong>smartaddress</strong>.</p>
+<pre class="sourceCode shell"><code>cp passphrase ../dexscripts/passphrase
+cd ../dexscripts
+nano passphrase</code></pre>
+<p>Enter your passphrase:</p>
+<pre class="sourceCode shell"><code>export passphrase=&quot;&lt;put a very strong passphrase here&gt;&quot;</code></pre>
+<p>Press <code>CTRL+X</code> then <code>Y</code> then <code>ENTER</code> to save the file and exit from Nano editor.</p>
+<h3 id="getting-the-userpass-value">Getting the userpass value</h3>
+<p>All these scripts are expecting a <code>userpass</code> file, which contains the definition of the <code>$userpass</code> variable (found inside scripts) to authenticate API access. This is to prevent malicious webpages from issuing port 7783 calls to steal your money. At first you may not know the value of <code>userpass</code>. To find out, just run the <code>client</code> script first (as instructed below) and then run <code>./setpassphrase</code>. You will notice your <code>userpass</code> value at the top of output and you can copy that value and put it into <code>~/SuperNET/iguana/dexscripts/userpass</code> file. If you don't, all subsequent API calls will get authorisation error.</p>
+<p>Open a new terminal and type the following:</p>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/dexscripts
+./client &amp;
+./setpassphrase
+pkill -15 marketmaker</code></pre>
+<h3 id="edit-the-userpass-file">Edit the userpass file</h3>
+<p>Now copy the <code>userpass</code> example file to <code>~/SuperNET/iguana/dexscripts</code> dir and edit the file to save the <code>userpass</code> you got from the <code>./setpassphrase</code> script output.</p>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/exchanges
+cp userpass ../dexscripts/userpass
+cd ../dexscripts
+nano userpass</code></pre>
+<p>Once done press <code>CTRL+X</code> then <code>Y</code> then <code>ENTER</code> to save the file and exit from Nano editor.</p>
+<p>barterDEX is now installed in your system.</p>
+<h3 id="running-barterdex">Running barterDEX</h3>
+<p>Every time you want to run <strong>barterDEX</strong> open a new terminal window and type the following:</p>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/dexscripts
+./client &amp;
+./setpassphrase</code></pre>
+<p>And, don't close it. Open a new terminal window to issue all other scripts/API calls from next. Get all available api list by typing <code>./help</code> inside <code>~/SuperNET/iguana/dexscripts</code> dir. You can see all scripts available for you to modify, test and use.</p>
+<h3 id="activating-coins">Activating coins</h3>
+<p>You can run barterDEX and activate coins for trading without downloading any blockchain data, using the Electrum mode. Edit the <code>electrum</code> script with the list of servers you want to use. To activate your list of electrum servers from the script, in terminal use <code>./electrum</code>.</p>
+<p>Native mode is faster and you need to use native wallet running with fully synced blockchain data and your barterDEX seed passphrase imported into the wallet. Edit the <code>enable</code> script with coin names and run <code>./enable</code> in terminal window to activate native coins for trading in barterDEX.</p>
+<h3 id="stopping-killing-marketmaker-close-the-app">Stopping <code>killing marketmaker</code> / Close the app</h3>
+<p>If you want to close barterDEX, issue <code>pkill -15 marketmaker</code> every time. This ensures all BarterDEX process is killed safely.</p>
+<p><strong>Check the doc</strong>: <span data-role="doc">BarterDEX API:Summary by Category &lt;/barterDEX/barterDEX-API&gt;</span> <strong>for more info on different API calls that barterDEX supports. e.g.: buy, sell, orderbook, balance etc. Just edit them for your liking and run them in 2nd terminal.</strong></p>

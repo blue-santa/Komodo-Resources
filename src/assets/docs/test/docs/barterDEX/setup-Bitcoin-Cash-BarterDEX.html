@@ -1,0 +1,176 @@
+<h1 id="setup-bitcoin-cash-for-barterdex">Setup Bitcoin Cash for BarterDEX</h1>
+<h2 id="gui-app">GUI App</h2>
+<p>Download and install the latest GUI wallet for your OS from your choice of website.</p>
+<ul>
+<li><a href="https://www.bitcoincash.org/#wallets" class="uri">https://www.bitcoincash.org/#wallets</a></li>
+<li><a href="https://www.bitcoinabc.org/" class="uri">https://www.bitcoinabc.org/</a></li>
+<li><dl>
+<dt><a href="https://download.bitcoinabc.org/" class="uri">https://download.bitcoinabc.org/</a> (find the latest version from here)</dt>
+<dd><ul>
+<li><a href="https://download.bitcoinabc.org/0.16.1/" class="uri">https://download.bitcoinabc.org/0.16.1/</a> (latest)</li>
+</ul>
+</dd>
+</dl></li>
+</ul>
+<h2 id="fixing-bitcoin-cash-and-bitcoin-core-conflicting-setup">Fixing Bitcoin Cash and Bitcoin-Core conflicting setup</h2>
+<p>As many users will be running Bitcoin-Core and Bitcoin Cash Wallets on the same machine, installing and running Bitcoin Cash on existing Bitcoin-Core running system may or may not conflict with existing Bitcoin-Core wallet setup. Just to make sure there is no chance of such case you can rename the Bitcoin Cash directory and file names.</p>
+<p>If you have already Bitcoin Cash wallet running on your machine, please do these changes:</p>
+<h3 id="linux">Linux</h3>
+<pre class="sourceCode shell"><code># assuming ~/.bitcoin is being used by bitcoin cash
+mv ~/.bitcoin/ ~/.bch/
+
+# assuming ~/.bitcoin/bitcoin.conf file is setup/configured and is used for bitcoin cash
+mv ~/.bch/bitcoin.conf ~/.bch/bch.conf
+
+# If you don&#39;t have ~/.bch/bch.conf file then create one as follows:
+echo &quot;server=1&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;listen=0&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;listenonion=0&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;rpcport=33333&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;port=83333&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;rpcuser=barterbch&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;rpcpassword=`head -c 32 /dev/urandom | base64`&quot; &gt;&gt; ~/.bch/bch.conf
+chmod 0600 ~/.bch/bch.conf</code></pre>
+<h3 id="osx">OSX</h3>
+<pre class="sourceCode shell"><code># assuming $HOME/Library/Application\ Support/Bitcoin is being used by bitcoin cash
+mv $HOME/Library/Application\ Support/Bitcoin $HOME/Library/Application\ Support/Bch
+
+# assuming $HOME/Library/Application\ Support/Bitcoin/bitcoin.conf file is setup/configured and is used for bitcoin cash
+mv $HOME/Library/Application\ Support/Bch/bitcoin.conf $HOME/Library/Application\ Support/Bch/bch.conf
+
+# If you don&#39;t have $HOME/Library/Application\ Support/Bch/bch.conf file then create one as follows:
+echo &quot;server=1&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+echo &quot;listen=0&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+echo &quot;listenonion=0&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+echo &quot;rpcport=33333&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+echo &quot;port=83333&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+echo &quot;rpcuser=barterbch&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+echo &quot;rpcpassword=`head -c 32 /dev/urandom | base64`&quot; &gt;&gt; $HOME/Library/Application\ Support/Bch/bch.conf
+chmod 0600 $HOME/Library/Application\ Support/Bch/bch.conf</code></pre>
+<h3 id="windows">Windows</h3>
+<blockquote>
+<ul>
+<li>Open Windows Explorer</li>
+<li>Type in its address bar <code>%AppData%</code>, and press Enter key to open your logged in user's Application Data folder.</li>
+<li>Assuming you have Bitcoin Cash installed and it was using the directory named <code>Bitcoin</code> at this location, rename it to <code>Bch</code>.</li>
+<li>Open <code>Bch</code> directory and rename <code>bitcoin.conf</code> file to <code>bch.conf</code> file.</li>
+<li>Open <code>bch.conf</code> file in a notepad or any text editor of your choice and make sure it matches the following config settings:</li>
+</ul>
+</blockquote>
+<pre class="sourceCode shell"><code>rpcuser=examplerpcuser
+rpcpassword=examplerpcpassword
+prune=4096
+server=1
+rpcbind=127.0.0.1
+bind=127.0.0.1
+rpcport=33333
+port=83333
+
+* Make any changes required to bch.conf file and save it.</code></pre>
+<h2 id="running-bitcoin-cash-with-new-setup-changes">Running Bitcoin Cash with new setup changes</h2>
+<p>Since the default directory and config file of bitcoin cash has been renamed you have to now use a command to run Bitcoin Cash.</p>
+<h3 id="linux-1">Linux</h3>
+<pre class="sourceCode shell"><code># If you want to run bitcoin cash wallet with prune mode on, which saves a lot of disk space, then use this command.
+# if using daemon
+# assuming you have bitcoin cash daemon with name &#39;bitcoind&#39;
+bitcoind -datadir=$HOME/.bch -conf=$HOME/.bch/bch.conf -prune=4096 -daemon
+
+# if using QT wallet
+bitcoin-qt -datadir=$HOME/.bch -conf=$HOME/.bch/bch.conf -prune=4096 -daemon
+
+# Or
+
+# if using daemon
+# If you want to run bitcoin cash deamon with full blockchain downloaded then use this command:
+bitcoind -datadir=$HOME/.bch -conf=$HOME/.bch/bch.conf -daemon
+
+# if using QT wallet
+bitcoin-qt -datadir=$HOME/.bch -conf=$HOME/.bch/bch.conf -daemon</code></pre>
+<h3 id="osx-1">OSX</h3>
+<pre class="sourceCode shell"><code># If you want to run bitcoin cash wallet with prune mode on, which saves a lot of disk space, then use this command.
+# if using daemon
+# assuming you have bitcoin cash daemon with name &#39;bitcoind&#39;
+bitcoind -datadir=$HOME/Library/Application\ Support/Bch -conf=$HOME/Library/Application\ Support/Bch/bch.conf -prune=4096 -daemon
+
+# if using QT wallet
+bitcoin-qt -datadir=$HOME/Library/Application\ Support/Bch -conf=$HOME/Library/Application\ Support/Bch/bch.conf -prune=4096 -daemon
+
+# Or
+
+# if using daemon
+# If you want to run bitcoin cash deamon with full blockchain downloaded then use this command:
+bitcoind -datadir=$HOME/Library/Application\ Support/Bch -conf=$HOME/Library/Application\ Support/Bch/bch.conf -daemon
+
+# if using QT wallet
+bitcoin-qt -datadir=$HOME/Library/Application\ Support/Bch -conf=$HOME/Library/Application\ Support/Bch/bch.conf -daemon</code></pre>
+<h3 id="windows-1">Windows</h3>
+<blockquote>
+<p># If you want to run bitcoin cash wallet with prune mode on, which saves a lot of disk space, then use this command. # if using daemon # assuming you have bitcoin cash daemon with name 'bitcoind' bitcoind -datadir=%AppData%Bch -conf=%AppData%Bchbch.conf -prune=4096 -daemon</p>
+<p># if using QT wallet Bitcoin-QT -datadir=%AppData%Bch -conf=%AppData%Bchbch.conf -prune=4096 -daemon</p>
+<p># Or</p>
+<p># if using daemon # If you want to run bitcoin cash deamon with full blockchain downloaded then use this command: bitcoind -datadir=%AppData%Bch -conf=%AppData%Bchbch.conf -daemon</p>
+<p># if using QT wallet Bitcoin-QT -datadir=%AppData%Bch -conf=%AppData%Bchbch.conf -daemon</p>
+</blockquote>
+<h2 id="if-you-want-to-install-and-run-bitcoin-cash-from-source">If you want to install and run Bitcoin Cash from source</h2>
+<p>You need Bitcoin Cash (BCH) blockchain synced and the wallet daemon running.</p>
+<p>Compile and run BitcoinABC wallet from source:</p>
+<pre class="sourceCode shell"><code>git clone https://github.com/Bitcoin-ABC/bitcoin-abc
+cd bitcoin-abc
+./autogen.sh
+./configure --with-incompatible-bdb --with-gui=no --disable-tests --disable-bench --without-miniupnpc
+make -j4
+sudo mv src/bitcoind /usr/local/bin/bchd
+sudo mv src/bitcoin-cli /usr/local/bin/bch-cli
+sudo mv src/bitcoin-tx /usr/local/bin/bch-tx
+mkdir ~/.bch
+echo &quot;server=1&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;listen=0&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;listenonion=0&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;rpcport=33333&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;port=83333&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;rpcuser=barterbch&quot; &gt;&gt; ~/.bch/bch.conf
+echo &quot;rpcpassword=`head -c 32 /dev/urandom | base64`&quot; &gt;&gt; ~/.bch/bch.conf
+chmod 0600 ~/.bch/bch.conf
+bchd -daemon -datadir=~/.bch -conf=bch.conf</code></pre>
+<p>If you already have this installed, just run <code>bchd -datadir=/home/&lt;user&gt;/.bch -conf=bch.conf -prune=4096 -daemon</code></p>
+<p>If you already have Bitcoin ABC istalled on MacOS, you can restart using this command:</p>
+<pre class="sourceCode shell"><code>/Applications/BitcoinABC-Qt.app/Contents/MacOS/BitcoinABC-Qt -conf=$HOME/Library/Application\ Support/Bch/bch.conf  -datadir=$HOME/Library/Application\ Support/Bch/</code></pre>
+<p>Basically, just run the daemon with <code>.bch/bch.conf</code> for native and then start BarterDEX and test. That means to run Bitcoin Cash with BarterDEX the BCH users <strong>must</strong> change their Bitcoin Cash data directory, setup <code>bitcoin.conf</code> as <code>bch.conf</code> file.</p>
+<p><code>bch.conf</code> file contents:</p>
+<pre class="sourceCode shell"><code>rpcuser=examplerpcuser
+rpcpassword=examplerpcpassword
+prune=4096
+server=1
+rpcbind=127.0.0.1
+bind=127.0.0.1
+rpcport=33333
+port=83333</code></pre>
+<p>BaterDEX GUI will automatically show you BitcoinCash (BCH)</p>
+<p>Use RPC commands like this</p>
+<pre class="sourceCode shell"><code>bch-cli -datadir=/home/&lt;user&gt;/.bch -conf=bch.conf getinfo </code></pre>
+<p>to query data.</p>
+<p>Optional: This entry goes to <code>coins.json</code> file (add this if this is not there).</p>
+<pre class="sourceCode shell"><code>{\&quot;coin\&quot;:\&quot;BCH\&quot;,\&quot;name\&quot;:\&quot;bch\&quot;,\&quot;active\&quot;:1,\&quot;rpcport\&quot;:33333,\&quot;pubtype\&quot;:0,\&quot;p2shtype\&quot;:5,\&quot;wiftype\&quot;:128,\&quot;txfee\&quot;:1000}</code></pre>
+<h2 id="tips-and-tricks">Tips and Tricks</h2>
+<p>With the above setup it becomes bit inconvinient to run BitcoinABC app. As it always looks for <code>bitcoin</code> data directory on it's platform and to make it run with our own custom renamed <code>Bch</code> direcotry we have to always issue a command to run with the desired path.</p>
+<p>But these few tips and tricks may help someone.</p>
+<h3 id="osx-2">OSX</h3>
+<p>Follow these commands to make setup your <code>BitcoinABC.app</code> to use <code>Bch</code> data directory on startup.</p>
+<pre class="sourceCode shell"><code>cd /Applications/BitcoinABC-Qt.app/Contents/MacOS
+
+# Rename existing BitcoinABC-Qt file to something else, like BitcoinABCQt
+mv BitcoinABC-Qt BitcoinABCQt
+
+# Now create a new shells script and paste this line into it
+nano BitcoinABC-Qt
+
+# Paste this line in this script:
+/Applications/BitcoinABC-Qt.app/Contents/MacOS/BitcoinABCQt -conf=$HOME/Library/Application\ Support/Bch/bch.conf  -datadir=$HOME/Library/Application\ Support/Bch/
+
+# Press CTRL+O to write this change to file
+# Press CTRL+X to exit the text editor and get back to command prompt
+
+# Now change this shell script&#39;s permissions to executable
+chmod +x BitcoinABC-Qt</code></pre>
+<p>With the above change, the <code>BitcoinABC-QT.app</code> will always start with directory and configuration file of <code>Bch</code>.</p>
+<p>And in case you are doing upgrade of <code>BitcoinABC-QT.app</code> or anything similar for Bitcoin Cash wallet for QT wallet, you can probably apply the same method to set them up for <code>Bch</code> directory by default.</p>

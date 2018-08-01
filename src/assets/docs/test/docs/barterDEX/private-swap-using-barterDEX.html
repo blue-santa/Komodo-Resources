@@ -1,0 +1,38 @@
+<h1 id="private-trading-using-barterdex">Private Trading using BarterDEX</h1>
+<p>You can use BarterDEX with 14,000+ different <span data-role="ref">ref-netid</span>. For private trading, both Bob node and client need to use a same <code>netid</code> and <code>seednode</code>. It is better to choose higher number netid (i.e.: 1000+).</p>
+<h2 id="bob-node">Bob Node</h2>
+<p>You need to edit your <code>client</code> and <code>setpassphrase</code> with same <code>netid</code> and <code>seednode</code> like <code>\&quot;netid\&quot;:1024,\&quot;seednode\&quot;:\&quot;51.255.10.25\&quot;</code> and follow the steps above. Your orders will not be visible in the global netid and orderbook. Only users who are connected to that specific netid on that ip can perform swaps. Check the example file below:</p>
+<p><strong>client</strong></p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source passphrase
+source coins
+./stop
+git pull;
+cp ../exchanges/updateprices .;./updateprices
+cd ..; 
+./m_mm;
+pkill -15 marketmaker; 
+stdbuf -oL $1 ./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:1,   \&quot;netid\&quot;:1024,\&quot;seednode\&quot;:\&quot;51.255.10.25\&quot;,\&quot;canbind\&quot;:1,\&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<p><strong>setpassphrase</strong></p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source userpass
+source passphrase
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;1d8b27b21efabcd96571cd56f91a40fb9aa4cc623d273c63bf9223dc6f8cd81f\&quot;,\&quot;method\&quot;:\&quot;passphrase\&quot;,\&quot;passphrase\&quot;:\&quot;$passphrase\&quot;,\&quot;netid\&quot;:1024,\&quot;seednode\&quot;:\&quot;51.255.10.25\&quot;,\&quot;gui\&quot;:\&quot;nogui\&quot;}&quot;</code></pre>
+<h2 id="alice-node">Alice Node</h2>
+<p>You need to edit your <code>client</code> and <code>setpassphrase</code> with same <code>netid</code> and <code>seednode</code> like <code>\&quot;netid\&quot;:1024,\&quot;seednode\&quot;:\&quot;51.255.10.25\&quot;</code> as the Bob node. Check the example files below:</p>
+<p><strong>client</strong></p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source passphrase
+source coins
+./stop
+git pull;
+cp ../exchanges/updateprices .;./updateprices
+cd ..; 
+./m_mm;
+pkill -15 marketmaker; 
+stdbuf -oL $1 ./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:1,\&quot;netid\&quot;:1024,\&quot;seednode\&quot;:\&quot;51.255.10.25\&quot;, \&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<p><strong>setpassphrase</strong></p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source userpass
+source passphrase
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;1d8b27b21efabcd96571cd56f91a40fb9aa4cc623d273c63bf9223dc6f8cd81f\&quot;,\&quot;method\&quot;:\&quot;passphrase\&quot;,\&quot;passphrase\&quot;:\&quot;$passphrase\&quot;,\&quot;netid\&quot;:1024,\&quot;seednode\&quot;:\&quot;51.255.10.25\&quot;,\&quot;gui\&quot;:\&quot;nogui\&quot;}&quot;</code></pre>

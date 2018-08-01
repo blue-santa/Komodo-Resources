@@ -1,0 +1,16 @@
+<h1 id="enabling-electrum-wallet-coins">Enabling Electrum Wallet Coins</h1>
+<p>To enable SPV wallets, also known as Electrum Wallets, just edit the <code>./electrum</code> script to add the command for the prefered coin. A list of all available electrum servers for various coins is available <span data-role="doc">here &lt;electrum-servers-list&gt;</span>.</p>
+<h2 id="copy-.electrum-to-..dexscripts-directory">Copy <code>./electrum</code> to <code>../dexscripts</code> directory:</h2>
+<pre class="sourceCode shell"><code>cd ``/KomodoPlatform/iguana/echanges``
+cp ./electrum ../dexscripts</code></pre>
+<h2 id="open-.electrum-to-add-a-coin">Open <code>./electrum</code> to add a coin:</h2>
+<pre class="sourceCode shell"><code>cd ../dexscripts
+nano electrum</code></pre>
+<p>Will show:</p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source userpass
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{&quot;userpass&quot;:&quot;$userpass&quot;,&quot;method&quot;:&quot;electrum&quot;,&quot;coin&quot;:&quot;BTC&quot;,&quot;ipaddr&quot;:&quot;173.212.225.176&quot;,&quot;port&quot;:50001}&quot;</code></pre>
+<p>Add any curl command from <span data-role="doc">this list &lt;electrum-servers-list&gt;</span> to the file.</p>
+<p>Press <code>CTRL+X</code> then <code>Y</code> then <code>ENTER</code> to save the file and exit</p>
+<p>Execute: <code>./electrum</code></p>
+<p><strong>Now electrum coins specified will be active and available for trading.</strong></p>

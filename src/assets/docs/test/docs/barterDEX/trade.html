@@ -1,0 +1,37 @@
+<h1 id="trade">Trade</h1>
+<p>Don't forget: Coins for trade pairs need to be active in the exchange, both <span data-role="doc">native&lt;enable-native-wallet-coins&gt;</span> and <span data-role="doc">electrum &lt;enable-electrum-wallet-coins&gt;</span> wallets can be used.</p>
+<h2 id="looking-at-the-orderbook">LOOKING AT THE ORDERBOOK</h2>
+<p>To see the order book you need to execute: <code>./orderbook</code></p>
+<p>If the <code>./client</code> is synced the orderbook will be listed. Remember that you have to add that coin to the orderbook file:</p>
+<pre class="sourceCode shell"><code>nano ./orderbook</code></pre>
+<p>add this command with the name of the coin you want to see:</p>
+<pre class="sourceCode shell"><code>curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;orderbook\&quot;,\&quot;base\&quot;:\&quot;NAME_OF_COIN\&quot;,\&quot;rel\&quot;:\&quot;KMD\&quot;}&quot;</code></pre>
+<h2 id="buying">BUYING</h2>
+<p><code>./buy</code> executes trades based on the values specified in the command. The command looks like this:</p>
+<pre class="sourceCode shell"><code>curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;autotrade\&quot;,\&quot;base\&quot;:\&quot;NAME_OF_BASE_COIN&quot;,\&quot;rel\&quot;:\&quot;NAME_OF_REL_COIN\&quot;,\&quot;relvolume\&quot;:VOLUME_OF_REL_COIN,\&quot;price\&quot;PRICE_OF_BASE_COIN}&quot;</code></pre>
+<p>You will need to edit this script based on the info the orderbook prints. The script will look for the orders most similar to the values of <code>./buy</code> and do an atomic swap between the chains.</p>
+<p><em>After editing the</em> <code>./buy</code> <em>file with your order parameters, execute it and you should have a trade going.</em></p>
+<p><strong>IMPORTANT: For better results and security (dust attack vector)</strong> <code>./buy</code> <strong>only execute trades that are at least 10% of the offered bob(ask) order. For example, if a bob order (an ask in the orderbook) of 10 REVS is offered at a price of 1.25 komodo per REV the autotrade command should be with a relvolume of at least:</strong></p>
+<pre class="sourceCode shell"><code>&quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;autotrade\&quot;,\&quot;base\&quot;:\&quot;REVS\&quot;,\&quot;rel\&quot;:\&quot;KMD\&quot;,\&quot;relvolume\&quot;:1,\&quot;price\&quot;:10}&quot;</code></pre>
+<p><strong>since 1 is 10% of the total order of 10 REVS.</strong></p>
+<p><strong>Alice, the one buying the REVS with KMD, will pay 1/777th of the KMD amount as fee, as a sort of safeguard against spam attacks.</strong></p>
+<p>If you found an order in the orderbook with duration in the command, you should include that in the <code>./buy</code> method as well:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    <span class="dt">&quot;userpass&quot;</span><span class="fu">:</span> <span class="st">&quot;$userpass&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    <span class="dt">&quot;method&quot;</span><span class="fu">:</span> <span class="st">&quot;autotrade&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="dt">&quot;duration&quot;</span><span class="fu">:</span> <span class="dv">10000</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">&quot;base&quot;</span><span class="fu">:</span> <span class="st">&quot;REVS&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="dt">&quot;rel&quot;</span><span class="fu">:</span> <span class="st">&quot;KMD&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    <span class="dt">&quot;relvolume&quot;</span><span class="fu">:</span> <span class="fl">12.5</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="fu">}</span></a></code></pre></div>
+<h2 id="selling-bob-utxos">SELLING (bob utxos)</h2>
+<p><code>./setprice</code></p>
+<p>To create a bob utxo (or an ask order) you need to first set the price. To set price you need to edit the <code>./setprice</code> script in the dexscripts folder:</p>
+<pre class="sourceCode shell"><code>cd ~/KomodoPlatform/iguana/dexscripts/
+nano setprice</code></pre>
+<p>This script contains a curl command that looks like this:</p>
+<pre class="sourceCode shell"><code>curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;setprice\&quot;,\&quot;base\&quot;:\&quot;NAME_OF_COIN_TO_TRADE\&quot;,\&quot;rel\&quot;:\&quot;KMD\&quot;,\&quot;price\&quot;:PRICE_OF_ORDER}&quot;</code></pre>
+<p>In this command you should edit the coin (<code>NAME_OF_COIN_TO_TRADE</code>) and then set the price (<code>PRICE_OF_ORDER</code>) per coin based in Komodo.</p>
+<p>For example: if you want to sell REVS at 1.25 komodo per REV, then <code>NAME_OF_COIN_TO_TRADE</code> should be REVS and <code>PRICE_OF_ORDER</code> should be 1.25.</p>
+<p><strong>After you edit the file, execute it (</strong> <code>./setprice</code> <strong>), then it will appear in orderbooks with that coin in either the base or rel.</strong></p>

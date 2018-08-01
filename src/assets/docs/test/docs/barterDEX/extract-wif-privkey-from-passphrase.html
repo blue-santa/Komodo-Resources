@@ -1,0 +1,13 @@
+<h1 id="extracting-wifprivkey-from-komodo-platform">Extracting WIF/privkey from Komodo Platform</h1>
+<p>To be able to get the privkey of the Smart Address created by the Komodo Platform Passphrase you will need to add the <code>wif:1</code> handle to the <strong>MarketMaker</strong> command. The <strong>MarketMaker</strong> execution command is in <code>./client</code>.</p>
+<pre class="sourceCode shell"><code>cd ~/KomodoPlatform/iguana/dexscripts
+nano ./client</code></pre>
+<p>You will see the <code>./client</code> script like this:</p>
+<pre class="sourceCode shell"><code>./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:1, \&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<p><strong>Now you need to add the</strong> <code>wif:1</code> <strong>handle like this:</strong></p>
+<pre class="sourceCode shell"><code>./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:1,\&quot;wif\&quot;:1, \&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<p>Once this edit is done, now start <strong>MarketMaker</strong>:</p>
+<pre class="sourceCode shell"><code>cd ~/KomodoPlatform/iguana/dexscripts
+./client</code></pre>
+<p><strong>Execute</strong> <code>./setpassphrase</code> <strong>API command</strong></p>
+<p>With that command you will see all active coins listed with their respective WIF privkeys.</p>

@@ -1,0 +1,65 @@
+<h1 id="asset-chain-parameters">Asset Chain Parameters</h1>
+<p>For instructions on how to create an assetchain see <span data-role="doc">create-Komodo-Assetchain</span></p>
+<p>For examples see <span data-role="doc">example-asset-chains</span></p>
+<h2 id="ac_name">-ac_name</h2>
+<p>This is the ticker symbol for the coin you wish to create. It is recommended to use only numbers and uppercase letters.</p>
+<h2 id="ac_supply">-ac_supply</h2>
+<p>This is the amount of premined coins you would like the chain to have. The node that sets <code>-gen</code> during the creation process will mine these coins in the genesis block. If this is not set, <code>-ac_reward</code> must be set, and the default value of 10 coins will be used. If <code>-ac_pubkey</code> is set, the premined coins will be mined to the address of the corresponding pubkey. This parameter should be set to a whole number without any decimals places. This should be to set to less than <code>2000000000</code> to avoid 64 bit overflows.</p>
+<p>Note: An additional fraction of a coin will be added to this based on the chain's parameters. This is used by nodes to verify the genesis block. For example, the DEX chain's <code>-ac_supply</code> parameter is set to <code>999999</code>, but in reality the genesis block was <code>999999.13521376</code>.</p>
+<h2 id="ac_reward">-ac_reward</h2>
+<p>This is the block reward for each mined block in satoshis. If this is not set, the block reward will be <code>10000</code> satoshis, and blocks will be on-demand after block 127 (a new block will not be mined unless there is a transaction in the mempool.)</p>
+<h2 id="ac_end">-ac_end</h2>
+<p>This is the block height in which block rewards will end. Every block after this height will have 0 block reward.</p>
+<h2 id="ac_halving">-ac_halving</h2>
+<p>This is the number of blocks between each block reward halving. This parameter will have no effect if <code>-ac_reward</code> is not set. The lowest possible value is <code>1440</code> (~1 day). If this parameter is set, but <code>-ac_decay</code> is not, the reward will decrease by 50% each halving.</p>
+<h2 id="ac_decay">-ac_decay</h2>
+<p>This is the percentage the block reward will decrease by each block reward halving. For example, if this is set to <code>750000000</code>, the block reward will drop 25% from the previous block reward each halving. This parameter will have no effect if <code>-ac_reward</code> is not set. This is the formula that <code>-ac_decay</code> follows:</p>
+<pre class="sourceCode shell"><code>numhalvings = (height / -ac_halving);
+for (i=0; i&lt;numhalvings; i++)
+reward = (reward * -ac_decay) / 100000000;</code></pre>
+<h2 id="ac_perc">-ac_perc</h2>
+<p>The <code>-ac_perc</code> parameter is the percentage added to the block reward and transactions that will be sent to the <code>-ac_pubkey</code> address. If this parameter is set, <code>-ac_pubkey</code> must also be set. For example, if <code>-ac_reward=100000000</code> and <code>-ac_perc=10000000</code>, for each block mined, the miner receives 1 coin along with the <code>-ac_pubkey</code> address receiving 0.1 coin. For every transaction sent, the pubkey address will receive 10% of the overall transaction value. This 10% is not taken from the user, rather it is created at this point. Each transaction inflates the overall supply.</p>
+<p>Note: Vout 1 of each coinbase transaction must be the correct amount sent to the corresponding pubkey. The <code>vout</code> type for all coinbase vouts must be <code>pubkey</code> as opposed to <code>pubkeyhash</code>. This only affects a miner trying to use a stratum. Z-nomp is currently incompatible.</p>
+<h2 id="ac_pubkey">-ac_pubkey</h2>
+<p>If <code>-ac_pubkey</code> is set, but <code>-ac_perc</code> is not, this simply means the genesis block will be mined to the set pubkey's address. This must be set to a 33 byte hex string. You can get the pubkey of an address by using the <code>validateaddress</code> command in <code>komodod</code>. The address must be imported to the wallet before using <code>validateaddress</code>.</p>
+<h2 id="ac_cc">-ac_cc</h2>
+<p>This is the network cluster on which the chain can interact with other chains via cross chain smart contracts. This functionality is still in testing. If this is set to 1, the chain will have smart contracts enabled, but it will not be able to interact with other chains. If this is set to any number other than 0 or 1, the chain can interact with other chains on the same network cluster. For example, all <code>-ac_cc=2</code> chains can interact with each other but may not interact with <code>-ac_cc=3</code> chains. If you'd like to explicitly disable smart contracts set this value to <code>0</code>.</p>
+<h2 id="ac_staked">-ac_staked</h2>
+<div class="note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p>This feature is currently only available in the <a href="https://github.com/jl777/komodo/tree/jl777">jl777 branch</a>.</p>
+</div>
+<p>This is the percentage of blocks the chain will aim to have as POS. For example, a <code>ac_staked=90</code> chain will have 90% POS blocks/10% POW blocks. This isn't exact, but the POW difficulty will automatically adjust based on the overall percentage of POW mined blocks.</p>
+<p>Each staked block will have an additional transaction added to the coinbase in which the coins that staked the block are sent back to the same address. This is used to verify which coins staked the block, and this allows for compatibility with existing Komodo infrastructure such as Agama, BarterDEX and explorers. If <code>-ac_staked</code> is used in conjunction with <code>-ac_perc</code>, the <code>-ac_pubkey</code> address will receive slightly more coins for each staked block compared to a mined block because of this extra transaction.</p>
+<p>The following are the (current) rules for staking a block:</p>
+<blockquote>
+<ol>
+<li>Block timestamps are used as the monotonically increasing timestamp. It is important to have a synced system clock.</li>
+<li>In order to stake, you must use <code>-gen -genproclimit=0</code> while launching the daemon or <code>komodo-cli -ac_name=&lt;CHAINNAME&gt; setgenerate true 0</code> after launching the daemon.</li>
+<li>A utxo is not eligible without <code>nLockTime</code> set and until 6000 seconds has passed from this lock time. <code>(100 * expected blocktimes) to be exact</code></li>
+<li>There are 64 different segments(<code>segids</code>) of addresses, based on the hash of the destination address. <code>((nHeight + addrhash.uints[0]) &amp; 0x3f)</code> The segid of an address can be found with the <code>validateaddress</code> command. Each segid will take turns being segid0 at each height. <code>(height % 64) = the segid0 for that height.</code> All other segid will adjust the elapsed time by <code>segid</code> seconds.</li>
+<li>A new block is eligible to be staked 2 seconds after median blocktime. For example, segid0 for a given height will be eligible to submit a block 2 seconds after median blocktime, whereas segid1 will be eligible to submit a block 4 seconds after median blocktime. For the next block, segid0 from the previous block will now be segid63 and will be eligible to submit a block 128 seconds after median blocktime. This means by 128 seconds after the median blocktime, all segids are eligible.</li>
+<li>Coinage calculated from the adjusted time is used to divide hash(address + pastblockhash) to create the value compared against the difficulty to determine if a block is won or not. This means a UTXO is more likely to win a block within a segid based on age of the UTXO and amount of coins.</li>
+</ol>
+</blockquote>
+<p>To create a chain using this parameter, start the first node with <code>-gen -genproclimit=0</code>. Start the second node with <code>-gen -genproclimit=$(nproc)</code>. Send coins from the second node to the first node, and it will begin staking. The first 100 blocks will allow POW regardless of the <code>ac_staked</code> value. On a chain using a high percentage for POS, it's vital to have coins staking by block 100. It is also vital to stake coins in all 64 segids. For the time being, you can use the genaddresses.py script in <a href="https://github.com/alrighttt/dockersegid">this repo</a> to generate an address for each segid. This functionality will soon be integrated directly into the daemon. You can use the <code>getbalance64</code> command to get the balance you currently have in each segid you are staking in.</p>
+<h2 id="ac_public">-ac_public</h2>
+<div class="note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p>This feature is currently only available in the <a href="https://github.com/jl777/komodo/tree/jl777">jl777 branch</a>.</p>
+</div>
+<p>If <code>ac_public</code> is set to 1, zkSNARKs will be disabled. All z address functionalilty is disabled. Therefore, all transactions on the blockchain are public.</p>
+<h2 id="ac_private">-ac_private</h2>
+<div class="note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p>This feature is currently only available in the <a href="https://github.com/jl777/komodo/tree/jl777">jl777 branch</a>.</p>
+</div>
+<p>If <code>ac_private</code> is set to 1, all transactions other than coinbase transactions(block rewards) must use zkSNARKs. All transparent address functionality other than sending mined coins from transparent addresses is disabled.</p>
+<p>Please send any critiques or feedback to Alright or gcharang on matrix or discord.</p>
+<p><a href="https://discord.gg/SCdf4eh">Discord Invite</a></p>

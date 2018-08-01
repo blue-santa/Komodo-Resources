@@ -1,0 +1,116 @@
+<h1 id="test-komodo-source-from-jl777-branch-to-make-sure-all-the-assetchains-sync-from-scratch-properly">Test komodo source from jl777 branch to make sure all the assetchains sync from scratch properly</h1>
+<h2 id="purpose">Purpose:</h2>
+<p>The perpose of this test is to check if the komodo source from jl777 branch has no issues compiling, all assetchains starts and syncs fully from scratch, no stuck chains. You can use this guide for any branch you want to test, just change the branch name in clone and compile section.</p>
+<p><strong>N.B.:</strong> This doc is similar to compiling komodo with an additional <code>verify</code> script. Please make sure you are not testing this in a node with funds. This doc is intended for test nodes/computer. If you have funds in your assetchains please backup your wallet and private key. The information in this doc may change in the future to update and make it better.</p>
+<h2 id="steps">Steps:</h2>
+<blockquote>
+<ol>
+<li>Install Dependencies (most needed for the first time)</li>
+<li>Clone komodo repo and compile</li>
+<li>Create komodo.conf file and clear all assetchaiins dir from .komodo data dir</li>
+<li>Start AC using ./assetchains.old and let them sync (it may take a while)</li>
+<li>Verify the assetchains</li>
+</ol>
+</blockquote>
+<h2 id="details">Details:</h2>
+<h3 id="install-dependencies">1. Install dependencies</h3>
+<pre class="sourceCode shell"><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+sudo apt-get install build-essential pkg-config libc6-dev m4 g++-multilib autoconf libtool ncurses-dev unzip git python zlib1g-dev wget bsdmainutils automake libboost-all-dev libssl-dev libprotobuf-dev protobuf-compiler libgtest-dev libqt4-dev libqrencode-dev libdb++-dev ntp ntpdate vim software-properties-common curl libcurl4-gnutls-dev cmake clang jq -y
+cd ~
+git clone https://github.com/nanomsg/nanomsg
+cd nanomsg
+cmake . -DNN_TESTS=OFF -DNN_ENABLE_DOC=OFF
+make -j2
+sudo make install
+sudo ldconfig</code></pre>
+<h3 id="clone-compile-symlink">2. Clone, Compile &amp; Symlink</h3>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/jl777/komodo
+cd komodo
+git checkout jl777
+./zcutil/fetch-params.sh
+./zcutil/build.sh -j$(nproc)
+sudo ln -sf /home/$USER/komodo/src/komodo-cli /usr/local/bin/komodo-cli
+sudo ln -sf /home/$USER/komodo/src/komodod /usr/local/bin/komodod
+sudo chmod +x /usr/local/bin/komodo-cli
+sudo chmod +x /usr/local/bin/komodod</code></pre>
+<h3 id="create-komodo.conf-clear-existing-assetchains-database-and-files">3. Create <code>komodo.conf</code> &amp; clear existing assetchains database and files</h3>
+<p>Create <code>komodo.conf</code></p>
+<pre class="sourceCode shell"><code>cd ~/.komodo
+nano komodo.conf</code></pre>
+<p>Paste the following content inside the file and save it. Don't forget to change values for <code>rpcuser</code> &amp; <code>rpcpassword</code>.</p>
+<pre class="sourceCode shell"><code>rpcuser=username
+rpcpassword=password
+txindex=1
+bind=127.0.0.1
+rpcbind=127.0.0.1</code></pre>
+<p>Remove existing assetchain block database and files</p>
+<pre class="sourceCode shell"><code>cd ~/.komodo
+rm -rf AXO  BEER  BET  BNTN  BOTS  BTCH  CEAL  CHAIN  COQUI  CRYPTO  DEX  DSEC  ETOMIC  HODL  JUMBLR  KV  MESH  MGW  MNZ  MSHARK  NINJA  OOT  PANGEA  PIZZA  PRLPAY  REVS  SUPERNET  WLC</code></pre>
+<h3 id="start-all-assetchains">4. Start all assetchains</h3>
+<pre class="sourceCode shell"><code>cd ~/komodo/src
+./assetchains.old</code></pre>
+<p>Wait for all sync to finish before proceeding to next step. This may take a while depending your hardware and internet connection</p>
+<h3 id="a.-create-verify-script-and-get-coinlist-file">5a. Create verify script and get coinlist file</h3>
+<pre class="sourceCode shell"><code>cd ~
+wget -qO coinlist https://raw.githubusercontent.com/KomodoPlatform/komodotools/master/webworker01/coinlist
+nano verify</code></pre>
+<p>paste the following content into it and save the file</p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+
+source coinlist
+forked=false
+
+for coins in &quot;${coinlist[@]}&quot;; do
+    coin=($coins)
+
+    blocks=$(komodo-cli -ac_name=${coin[0]} getinfo | jq .blocks)
+    longest=$(komodo-cli -ac_name=${coin[0]} getinfo | jq .longestchain)
+
+    if ((blocks &lt; longest)); then
+        forked=true
+        printf &quot;\033[0;31m${coin[0]} - Possible fork!\033[0m Blocks $blocks &lt; LongestChain $longest\n&quot;
+    else
+        echo &quot;${coin[0]} - Blocks $blocks = LongestChain $longest&quot;
+    fi
+done
+
+if [ &quot;$forked&quot; = false ]; then
+    printf &quot;\033[0;32mAll coins are fine\033[0m\n&quot;
+fi</code></pre>
+<p>change permission of <code>verify</code> script</p>
+<pre class="sourceCode shell"><code>chmod +x verify</code></pre>
+<h3 id="b.-verify-the-block-height">5b. Verify the block height</h3>
+<pre class="sourceCode shell"><code>./verify</code></pre>
+<p>Result: The result will be similar to below. At the end of the output you will see All coins are fine.</p>
+<pre class="sourceCode shell"><code>KMD - Blocks 842790 = LongestChain 842790
+CHIPS - Blocks 1987211 = Headers 1987211
+REVS - Blocks 162517 = LongestChain 162517
+SUPERNET - Blocks 221024 = LongestChain 221024
+DEX - Blocks 179547 = LongestChain 179547
+PANGEA - Blocks 18770 = LongestChain 18770
+JUMBLR - Blocks 153932 = LongestChain 153932
+BET - Blocks 47470 = LongestChain 47470
+CRYPTO - Blocks 31645 = LongestChain 31645
+HODL - Blocks 65524 = LongestChain 65524
+MSHARK - Blocks 152851 = LongestChain 152851
+BOTS - Blocks 141093 = LongestChain 141093
+MGW - Blocks 21237 = LongestChain 21237
+COQUI - Blocks 86948 = LongestChain 86948
+WLC - Blocks 224671 = LongestChain 224671
+KV - Blocks 59329 = LongestChain 59329
+CEAL - Blocks 31095 = LongestChain 31095
+MESH - Blocks 20467 = LongestChain 20467
+MNZ - Blocks 87188 = LongestChain 87188
+AXO - Blocks 8731 = LongestChain 8731
+ETOMIC - Blocks 17931 = LongestChain 17931
+BTCH - Blocks 49431 = LongestChain 49431
+PIZZA - Blocks 31850 = LongestChain 31850
+BEER - Blocks 37853 = LongestChain 37853
+NINJA - Blocks 8102 = LongestChain 8102
+OOT - Blocks 41106 = LongestChain 41106
+BNTN - Blocks 39911 = LongestChain 39911
+CHAIN - Blocks 2722 = LongestChain 2722
+PRLPAY - Blocks 1335 = LongestChain 1335
+DSEC - Blocks 230 = LongestChain 230
+All coins are fine</code></pre>

@@ -1,0 +1,33 @@
+<h1 id="how-to-update-komodo">How to update Komodo</h1>
+<p>Sometimes it is needed to update Komodo. This is how I did it.</p>
+<p>Reboot your node (to start clean).</p>
+<p>Go into the Komodo folder</p>
+<pre class="sourceCode shell"><code>cd komodo</code></pre>
+<p>Do a git pull</p>
+<pre class="sourceCode shell"><code>git pull</code></pre>
+<p><strong>ATTENTION: When it is not a new beta version you do make in the</strong> <code>~/komodo/src</code> <strong>dir</strong></p>
+<pre class="sourceCode shell"><code>cd src
+make</code></pre>
+<p><strong>ATTENTION: If it is a new beta version you forget above and do what is down under</strong></p>
+<pre class="sourceCode shell"><code>git checkout dPoW</code></pre>
+<p>Follow the following steps:</p>
+<pre class="sourceCode shell"><code>./zcutil/fetch-params.sh
+./zcutil/build.sh -j8</code></pre>
+<p>After that, go to your .komodo folder</p>
+<pre class="sourceCode shell"><code>cd ~/.komodo</code></pre>
+<p>Remove the following files</p>
+<pre class="sourceCode shell"><code>rm -rf blocks chainstate debug.log komodostate db.log</code></pre>
+<p>Go back to you home folder</p>
+<pre class="sourceCode shell"><code>cd ~</code></pre>
+<p>Run your start script</p>
+<pre class="sourceCode shell"><code>./start</code></pre>
+<p>Let it resync (check with the getinfo command). When it is done resync, start Iguana</p>
+<pre class="sourceCode shell"><code>cd ~/KomodoPlatform/iguana
+./m_notary</code></pre>
+<p>It has been done</p>
+<h2 id="problems">Problems?</h2>
+<p>I receive the following error when i do <code>./zcutil/build.sh -j8</code></p>
+<pre class="sourceCode shell"><code>EXCEPTION: St13runtime_error
+could not load param file at /home/j/.zcash-params/sprout-verifying.key
+Komodo in AppInit()</code></pre>
+<p>You have to do <code>./zcutil/fetch-params.sh</code> first and after that <code>./zcutil/build.sh -j8</code></p>

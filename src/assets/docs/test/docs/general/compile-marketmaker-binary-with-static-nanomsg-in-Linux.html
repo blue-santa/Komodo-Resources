@@ -1,0 +1,21 @@
+<h1 id="compile-marketmaker-binary-with-static-nanomsg-in-linux">Compile marketmaker Binary with Static nanomsg in Linux</h1>
+<p>This guide will help you to compile your own marketmaker binary in Linux with static nanomsg. Follow this <span data-role="doc">guide &lt;/general/compile-marketmaker-binary-with-static-nanomsg-in-MacOS&gt;</span> to compile for macOS.</p>
+<h2 id="install-dependency-packages">Install Dependency packages:</h2>
+<pre class="sourceCode shell"><code>sudo apt-get update
+sudo apt-get install cmake git libcurl4-openssl-dev build-essential</code></pre>
+<h2 id="install-nanomsg">Install <code>nanomsg</code></h2>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/nanomsg/nanomsg
+cd nanomsg
+cmake . -DNN_TESTS=OFF -DNN_ENABLE_DOC=OFF
+make -j2
+sudo make install
+sudo ldconfig</code></pre>
+<h2 id="clone-supernet-repo-and-compile">Clone SuperNET repo and compile</h2>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/jl777/SuperNET
+cd ~/SuperNET/iguana
+git checkout dev
+./m_LP_StaticNanoMsg
+make -f m_mm_StaticNanoMsg -j2 all</code></pre>
+<p>Once all done, you should be able to find both <code>iguana</code> and <code>marketmaker</code> static binaries in <code>~/SuperNET/agents/</code> dir.</p>

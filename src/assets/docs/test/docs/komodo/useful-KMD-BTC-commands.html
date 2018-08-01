@@ -1,0 +1,47 @@
+<h1 id="common-useful-komodo-and-bitcoin-commands">Common Useful Komodo and Bitcoin commands</h1>
+<h2 id="get-wallet-information">Get Wallet information</h2>
+<p>You can use <code>getwalletinfo</code> command to see just your wallet's balance, unconfirmed balance, wallet version and such.</p>
+<pre class="sourceCode shell"><code># For Komodo
+$ ./komodo-cli getwalletinfo
+{
+    &quot;walletversion&quot; : 60000,
+    &quot;balance&quot; : 89.46187742,
+    &quot;unconfirmed_balance&quot; : 0.00000000,
+    &quot;immature_balance&quot; : 0.00000000,
+    &quot;txcount&quot; : 484,
+    &quot;keypoololdest&quot; : 1482746526,
+    &quot;keypoolsize&quot; : 101
+}
+
+# For Bitcoin
+$ bitcoin-cli getwalletinfo
+{
+  &quot;walletversion&quot;: 130000,
+  &quot;balance&quot;: 0.03281999,
+  &quot;unconfirmed_balance&quot;: 0.00000000,
+  &quot;immature_balance&quot;: 0.00000000,
+  &quot;txcount&quot;: 251,
+  &quot;keypoololdest&quot;: 1477183290,
+  &quot;keypoolsize&quot;: 100,
+  &quot;paytxfee&quot;: 0.00000000,
+  &quot;hdmasterkeyid&quot;: &quot;de5e4d25f2887886eb2eca1fba625be46d3fd8f2&quot;
+}</code></pre>
+<h2 id="check-all-addresses-in-your-wallet-and-their-funds">Check all addresses in your wallet and their funds</h2>
+<pre class="sourceCode shell"><code>$ bitcoin-cli listaddressgroupings
+[
+  [
+    [
+      &quot;14dEGV9AdBgm6awo4uxojWAEYHTMf5QuQm&quot;, 
+      0.03281999, 
+      &quot;&quot;
+    ]
+  ], 
+  [
+    [
+      &quot;15R3C2ZKmak5pCc4duLY2jLtFD3o1jaeNd&quot;, 
+      0.00460000, 
+      &quot;15R3C2ZKmak5pCc4duLY2jLtFD3o1jaeNd&quot;
+    ]
+  ]
+]</code></pre>
+<p><strong>TODO</strong></p>

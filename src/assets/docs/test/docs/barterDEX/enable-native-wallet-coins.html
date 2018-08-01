@@ -1,0 +1,22 @@
+<h1 id="enabling-native-wallet-coins">Enabling Native Wallet Coins</h1>
+<p>There are two ways of enabling coins. One method is to edit the <code>./enable</code> file, the other is to edit the <code>./coins</code> file. The <code>./enable</code> file is simple to edit but it will need to be executed manually every time the <code>./client</code> is executed. On the other hand, the <code>./coins</code> file is a little more complicated to edit, but a coin that has been activated in the coins file will automatically be activated after <code>./client</code> is executed.</p>
+<h2 id="editing-the-.enable-file">Editing the <code>./enable</code> file</h2>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/dexscripts
+nano ./enable</code></pre>
+<p>Will show:</p>
+<pre class="sourceCode shell"><code>source userpass
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;enable\&quot;,\&quot;coin\&quot;:\&quot;NAME_OF_COIN\&quot;}&quot;</code></pre>
+<p>To list a coin on the enable file you need to change NAME_OF_COIN for the coin you want enabled. Copy and paste the line with a new coin for whatever other coins you want enabled. NOTE: KMD is enabled by default and doesn't need to be listed in the enable file.</p>
+<p>After changes in the enable file, run:</p>
+<pre class="sourceCode shell"><code>./enable</code></pre>
+<h2 id="editing-the-.coins-file">Editing the <code>./coins</code> file</h2>
+<p>Assuming you are in <code>~/SuperNET/iguana/dexscripts</code></p>
+<pre class="sourceCode shell"><code>nano ./coins</code></pre>
+<p>Will show:</p>
+<pre class="sourceCode shell"><code>export coins=&quot;[{\&quot;coin\&quot;:\&quot;REVS\&quot;,\&quot;active\&quot;:1, \&quot;asset\&quot;:\&quot;REVS\&quot;,\&quot;rpcport\&quot;:10196}, {\&quot;coin\&quot;:\&quot;JUMBLR\&quot;,\&quot;active\&quot;:1, \&quot;asset\&quot;:\&quot;JUMBLR\&quot;,\&quot;rpcport\&quot;:15106}, etc, etc, etc}]&quot;</code></pre>
+<p>Add ,<code>\&quot;active\&quot;:1</code>, to any coin you want to be active by default at startup like this:</p>
+<pre class="sourceCode shell"><code>{\&quot;coin\&quot;:\&quot;NAME_OF_COIN\&quot;,\&quot;active\&quot;:1, \&quot;asset\&quot;:\&quot;NAME_OF_COIN\&quot;,\&quot;rpcport\&quot;:10196}</code></pre>
+<p>If a coin is PoS, add the following parameter:</p>
+<pre class="sourceCode shell"><code>\&quot;isPos\&quot;:1,</code></pre>
+<p>You will need to restart the <code>./client</code> for the coin to get active. This change won't take effect automatically. But once a coin is active, it will activate automatically when you restart <code>./client</code> without the need to run <code>./enable</code> first.</p>
+<p><strong>To stop the</strong> <code>./client</code> <strong>process, use</strong> <code>./stop</code></p>

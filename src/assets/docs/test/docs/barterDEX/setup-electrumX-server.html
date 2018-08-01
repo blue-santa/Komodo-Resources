@@ -1,0 +1,53 @@
+<h1 id="electrumx-guide-for-barterdex">ElectrumX guide for barterDEX</h1>
+<p>Here are the steps required to run electrumx for KMD. Replace the variables according to your setup.</p>
+<ul>
+<li><code>$user</code> is the username under which electrumx will run</li>
+<li><code>$rpcuser</code> and <code>$rpcpass</code> are from the config of the wallet daemon</li>
+</ul>
+<h2 id="general-part">General part</h2>
+<pre class="sourceCode shell"><code>sudo apt-get install python3-setuptools python3-multidict python3.6 python3.6-dev libleveldb-dev
+
+git clone https://github.com/cipig/electrumx -b kmdassets
+cd electrumx
+vi setup.py
+    install_requires=[&#39;aiorpcX &gt;= 0.5.5&#39;, &#39;plyvel&#39;, &#39;pylru&#39;, &#39;aiohttp &gt;= 1&#39;, &#39;x11_hash&#39;, &#39;uvloop&#39;, &#39;scrypt&#39;],
+sudo python3.6 setup.py install</code></pre>
+<h2 id="coin-specific-part">Coin specific part</h2>
+<pre class="sourceCode shell"><code>sudo cp contrib/systemd/electrumx.service /etc/systemd/system/electrumx_KMD.service
+sudo vi /etc/systemd/system/electrumx_KMD.service
+    Description=Electrumx_KMD
+    EnvironmentFile=/etc/electrumx_KMD.conf
+    User=$user
+    mkdir ~/electrumdb_KMD
+    sudo vi /etc/electrumx_KMD.conf
+    COIN = Komodo
+    DB_DIRECTORY = /home/$user/electrumdb_KMD
+    DAEMON_URL = http://$rpcuser:$rpcpass@127.0.0.1:7771/
+    RPC_HOST = 127.0.0.1
+    RPC_PORT = 8001
+    HOST =
+    TCP_PORT = 10001
+    EVENT_LOOP_POLICY = uvloop
+    PEER_DISCOVERY = self
+
+sudo systemctl start electrumx_KMD</code></pre>
+<h2 id="more-coins">More coins</h2>
+<p>In order to setup and start more electrumx servers, just alter the coin specific part from above accordingly, replacing KMD by another coin symbol, setting COIN to another coin name, setting the right <code>rpcport</code> in <code>DAEMON_URL</code> and using another <code>RPC_PORT</code> and <code>TCP_PORT</code> for electrumx. Here is an example for SUPERNET:</p>
+<pre class="sourceCode shell"><code>sudo cp contrib/systemd/electrumx.service /etc/systemd/system/electrumx_SUPERNET.service
+sudo vi /etc/systemd/system/electrumx_SUPERNET.service
+    Description=Electrumx_SUPERNET
+    EnvironmentFile=/etc/electrumx_SUPERNET.conf
+    User=$user
+mkdir ~/electrumdb_SUPERNET
+sudo vi /etc/electrumx_SUPERNET.conf
+    COIN = SuperNET
+    DB_DIRECTORY = /home/$user/electrumdb_SUPERNET
+    DAEMON_URL = http://$rpcuser:$rpcpass@127.0.0.1:11341/
+    RPC_HOST = 127.0.0.1
+    RPC_PORT = 8005
+    HOST =
+    TCP_PORT = 10005
+    EVENT_LOOP_POLICY = uvloop
+    PEER_DISCOVERY = self
+
+sudo systemctl start electrumx_KMD</code></pre>

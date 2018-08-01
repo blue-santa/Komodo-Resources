@@ -1,0 +1,14 @@
+<h1 id="debug-komodo">Debug Komodo</h1>
+<p>To run Komodo in debug mode and help developer troubleshoot issues found at client end systems, please follow these steps:</p>
+<p><strong>NOTE:</strong> These steps are including notary node references in komodod command, but in case you are not a notary node, you don't need to include those command parameters.</p>
+<h2 id="prerequisite-is-to-install-gdb">Prerequisite is to install gdb</h2>
+<pre class="sourceCode shell"><code>sudo apt-get install gdb</code></pre>
+<h2 id="run-komodo-daemon-with-gdb-tool">Run Komodo daemon with <code>gdb</code> tool</h2>
+<p>Whichever komodod command you are running which results in crashing or problematic behavior run it with <code>gdb -args</code></p>
+<pre class="sourceCode shell"><code>gdb -args  ./src/komodod -gen -genproclimit=2 -notary -pubkey=&quot;03af2412ebf9517a43d192193490476fd0a44312c70755e07eb03b6d71338ebc9d&quot;</code></pre>
+<p><em>If you have trouble getting it started, try using the full path to the executable.</em></p>
+<p>The above command initialize debugging.</p>
+<p>Once you see <code>gdb&gt;</code> command prompt type <code>run</code> to start komodo in debug mode.</p>
+<h2 id="getting-backtrace-data">Getting backtrace data</h2>
+<p>Then when it crashes you'll again see <code>gdb&gt;</code> prompt, and some message from komodod daemon itself left some output in gdb before <code>gdb&gt;</code>.</p>
+<p>Type <code>backtrace</code> and and it will show further very important info that you need to pass to Komodo developers. Post whatever output you get from <code>backtrace</code> command to help troubleshoot issues.</p>

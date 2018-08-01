@@ -1,0 +1,44 @@
+<h1 id="standard-security-setup-for-nodes">Standard Security Setup for Nodes</h1>
+<p>Here are some steps to get a secured Komodo node. These are just some simple babysteps and to get a real secured server you also need to investigate why you need one. Only then you will understand that a secured server is imminent for hosting a Komodo Notary node.</p>
+<h2 id="step-1---install-a-minimal-installation-of-ubuntu">Step 1 - Install a minimal installation of Ubuntu</h2>
+<ul>
+<li>Always use a <a href="https://help.ubuntu.com/community/Installation/MinimalCD">minimal install</a> of Ubuntu! If you don't do this and you use a standard iso of Ubuntu it will setup all kinds of services which you do not need. It will open up ports on your server which could be vulnerable to future exploits. So, the first step for a secured server is a minimal installation.</li>
+</ul>
+<p>When installing a minimal setup of Ubuntu, be sure you select the OpenSSH server at the end of the graphical installation. Otherwise you cannot connect to your server if you are not using a KVM node.</p>
+<h2 id="step-2---create-your-own-private-ssh-keys">Step 2 - Create your own private SSH keys</h2>
+<ul>
+<li>By selecting the OpenSSH server at the installation, you also created a vulnerable spot. Hackers love brute forcing the SSH service. If you use a strong password, you're mostly safe to go for a while. But even when it is strong, it could be hijacked at some point, so it is wise to disable password login. We do this by creating our own SSH key, so we can use that later as the key to the front door of your server. <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2">Click here</a> for a tutorial how to create your own SSH key.</li>
+</ul>
+<h2 id="step-3---create-another-user-for-your-server-and-disable-root-account">Step 3 - Create another user for your server and disable root account</h2>
+<ul>
+<li>Root is the uberboss of your server. It can do everything without needing special permissions. So you might understand that this is also a vulnerability issue for your server. Although it is created by default, you should not use it. Only in special cases it is needed. Because root is the first name they try when they try to brute force your server, we need to disable it asap. But before we do that, we need to create a user which get the same root rights as root. Maybe you will ask yourself now &quot;what's the difference?&quot;. Simple, the hacker needs to know the name of the new user before they can go on with their brute force attack. It is a tiny step to max security, but a very crucial one. <a href="https://www.digitalocean.com/community/tutorials/how-to-add-delete-and-grant-sudo-privileges-to-users-on-a-debian-vps">Click here</a> for a tutorial how to create a user with sudo rights on a Debian based system (don't worry, Ubuntu is a Debian based system ;))</li>
+</ul>
+<h2 id="step-4---login-as-the-new-user-and-copy-your-ssh-key">Step 4 - Login as the new user and copy your SSH key</h2>
+<ul>
+<li>So now we have a new user (with root rights) and a freshly created SSH key we can now login to the server as the new user and store our SSH key on it. We can do this on a stupid way (creating .ssh dir, set the rights on it, creating authorized_keys file and set the permissions on it etc. etc.), but we are doing it the easy way. As logging into the server isn't part of any security course, I expect you already know how to do that. But to store our SSH key automatically we are doing this:</li>
+</ul>
+<pre class="sourceCode shell"><code>ssh-copy-id user@server.com</code></pre>
+<ul>
+<li>This will setup the procedure to store your public SSH key on the server. Once the script gets access to the remote account, it modifies/creates the <code>~/.ssh/authorized_keys</code> files in your own home directory. It may also fix permissions of the user's home directory if they are inappropriate. After it has been doing its thingy, you'll notice you aren't logged in yet. So login again to your server on the normal way (<code>ssh user@server.com</code>) and you will notice that you do not have to enter your password again. It logs in straight away. This gives us the opportunity to disable password login and root access to the server.</li>
+</ul>
+<h2 id="step-5---disable-password-login-and-root-access">Step 5 - Disable password login and root access</h2>
+<ul>
+<li>Now it is time to secure your OpenSSH server. Yes, i know, people will tell you to change your SSH port to a different one then port 22, but personally I don't think it is needed. If they want your server so badly, they will scan your ports anyway and they will find out your new port you have assigned to it. It is better to secure your OpenSSH server. First we will disallow access for user root. Even when he is the uberboss...it is time to take over his job by disable the account for access. So login to your server as the user you have created and which can login with his SSH key (and be sure this works before you go on, otherwise you won't get in anymore). Then open up the config file of your OpenSSH server.</li>
+</ul>
+<pre class="sourceCode shell"><code>sudo vi /etc/ssh/sshd_config</code></pre>
+<ul>
+<li>Find the following: <code>PermitRootLogin</code> and set this to <code>YES</code>. So it will look like this:</li>
+</ul>
+<pre class="sourceCode shell"><code>PermitRootLogin yes</code></pre>
+<ul>
+<li>Now find the following: <code>PasswordAuthentication</code> and set this to <code>NO</code>. So it will look like this:</li>
+</ul>
+<pre class="sourceCode shell"><code>PasswordAuthentication no</code></pre>
+<ul>
+<li>Save the file and restart your OpenSSH server by doing the following</li>
+</ul>
+<pre class="sourceCode shell"><code>sudo service ssh restart</code></pre>
+<ul>
+<li>Open a second shell and try to login with your root account (do NOT log out the first shell. In case something went wrong, you are not able to login anymore). If everything went well then the root account is being blocked and even brute forcing the OpenSSH server has become impossible, because the server isn't accepting any kind of password.</li>
+</ul>
+<p><strong>To be continued...</strong></p>

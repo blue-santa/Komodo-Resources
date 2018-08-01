@@ -1,0 +1,18 @@
+<h1 id="add-a-bitcoin-compatible-coin-to-agama-desktop">Add a Bitcoin Compatible coin to Agama Desktop</h1>
+<p>To learn about adding Komodo Assetchains to Agama look <span data-role="doc">here &lt;add-Komodo-Assetchains-Agama-Desktop&gt;</span> . This guide will help you to add Bitcoin compatible coins into Agama desktop wallet. You have to edit the backend part and the UI part to add. Follow the guide carefully.</p>
+<h2 id="backend">Backend</h2>
+<ul>
+<li>Add coin specific params to networks file <a href="https://github.com/KomodoPlatform/Agama/blob/v0.25/routes/electrumjs/electrumjs.networks.js">/<a href="mailto:routes/electrumjs/electrumjs.networks.js@v0.25">routes/electrumjs/electrumjs.networks.js@v0.25</a></a></li>
+<li>Depending on a coin type you might need to add a coin to <code>isPoS</code> or <code>isZcash</code> helpers here <a href="https://github.com/KomodoPlatform/Agama/blob/v0.25/routes/shepherd/electrum/network.js">/<a href="mailto:routes/shepherd/electrum/network.js@v0.25">routes/shepherd/electrum/network.js@v0.25</a></a></li>
+<li>Add an electrum server <a href="https://github.com/KomodoPlatform/Agama/blob/v0.25/routes/electrumjs/electrumServers.js">/<a href="mailto:routes/electrumjs/electrumServers.js@v0.25">routes/electrumjs/electrumServers.js@v0.25</a></a></li>
+<li>Submit a <a href="https://github.com/KomodoPlatform/Agama">PR</a></li>
+</ul>
+<h2 id="ui">UI:</h2>
+<ul>
+<li>Add a coin to UI coin helper file KomodoPlatform/EasyDEX-GUI:<a href="https://github.com/KomodoPlatform/EasyDEX-GUI/blob/v0.25/react/src/util/coinHelper.js#L9"><a href="mailto:react/src/util/coinHelper.js@v0.25#L9">react/src/util/coinHelper.js@v0.25#L9</a></a></li>
+<li>Add an asset chain to Add Coin component render <a href="https://github.com/KomodoPlatform/EasyDEX-GUI/blob/v0.25/react/src/components/addcoin/addcoinOptionsCrypto.js#L19">KomodoPlatform/EasyDEX-GUI:<a href="mailto:react/src/components/addcoin/addcoinOptionsCrypto.js@v0.25#L19">react/src/components/addcoin/addcoinOptionsCrypto.js@v0.25#L19</a></a></li>
+<li>Drop a 100 x 100 px (better 200 x 200 px) logo into <a href="https://github.com/KomodoPlatform/EasyDEX-GUI/tree/v0.25/react/src/assets/images/cryptologo">KomodoPlatform/EasyDEX-GUI:<a href="mailto:react/src/assets/images/cryptologo@v0.25">react/src/assets/images/cryptologo@v0.25</a></a></li>
+<li>Add an explorer <a href="https://github.com/KomodoPlatform/EasyDEX-GUI/tree/v0.25/react/src/assets/images/cryptologo">KomodoPlatform/EasyDEX-GUI:<a href="mailto:react/src/util/explorerList.js@v0.25#L4">react/src/util/explorerList.js@v0.25#L4</a></a></li>
+<li>Submit a <a href="https://github.com/KomodoPlatform/Agama">PR</a></li>
+</ul>
+<p>Please make sure an asset chain is working in Agama before making a commit. Pull requests containing partial information or not working assets/servers will remain unmerged until all requirements are fulfilled.</p>

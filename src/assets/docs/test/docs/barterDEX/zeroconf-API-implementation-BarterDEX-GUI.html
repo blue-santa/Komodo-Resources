@@ -1,0 +1,10 @@
+<h1 id="how-zeroconf-api-was-implemented-in-barterdex-gui">How zeroconf API was implemented in BarterDEX GUI</h1>
+<p>This is how Grewal Satinder implemented zeroconf in BarterDEX GUI:</p>
+<p>The files you need:</p>
+<ul>
+<li><a href="https://github.com/KomodoPlatform/BarterDEX/blob/master/ipc/shepherd-ipc.js#L62">/<a href="mailto:ipc/shepherd-ipc.js@master#L62">ipc/shepherd-ipc.js@master#L62</a></a></li>
+<li><a href="https://github.com/KomodoPlatform/BarterDEX/blob/master/gui/js/dex_SimpleActions.js#L5438">/<a href="mailto:gui/js/dex_SimpleActions.js@master#L5438">gui/js/dex_SimpleActions.js@master#L5438</a></a></li>
+</ul>
+<p>Look for keyword <code>zeroconf</code> in the file. There is Shepherd-IPC-API which interacts with the GUI through Electron IPC. This API's job is to record and backup the output of zeroconf results. Doesn't matter if it's success or error, it will record that output in a log file.</p>
+<p>The reason is in case the user somehow got messed up setup with the mm or something which results in loosing the access to their txid. These log files can be used to track those txids done for zeroconf and recover those funds sent to zeroconf. These logs files feature is independent operation to the <code>marketmaker</code> zeroconf API calls.</p>
+<p>The gui/js side of code is managing the <code>deposit</code> part and <code>claim</code> part. zeroconf is very easy to implement, as its the only deposit/claim process, nothing else much.</p>

@@ -1,0 +1,96 @@
+<h1 id="agama-v0.2.41-updates">Agama-v0.2.41-Updates</h1>
+<h2 id="enhancements">Enhancements</h2>
+<ol type="1">
+<li>Custom electrum servers config</li>
+</ol>
+<ol type="a">
+<li>The ability to configure a custom electrum server list has been added to <code>Settings -&gt; App Config</code></li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image1.png" alt="image" class="align-center" /></p>
+<ol start="2" type="1">
+<li>Extended argv - <strong>Dev only</strong></li>
+<li>KV electrum list</li>
+</ol>
+<ol type="a">
+<li>The ability to sync the electrum servers list from KV has been added to <code>Settings -&gt; App Config</code></li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image2.png" alt="image" class="align-center" /></p>
+<ol start="4" type="1">
+<li>Load coins list from file on app initialization</li>
+</ol>
+<ol type="a">
+<li>To enable loading your favorite coins from a file select the Load coins list from file option in <code>Settings -&gt; App Config</code></li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image3.png" alt="image" class="align-center" /></p>
+<ol start="5" type="1">
+<li>KV electrum servers list</li>
+</ol>
+<ol type="a">
+<li>The KV electrum server list may now be downloaded by selecting the Download KV Electrum servers list button in <code>Settings-&gt;App Config</code></li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image4.png" alt="image" class="align-center" /></p>
+<ol start="6" type="1">
+<li>Spv watch-only hides KMD claim button</li>
+</ol>
+<ol type="a">
+<li>If <code>KMD</code> is logged in as watch only, then the claim rewards button will now be hidden.</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image5.png" alt="image" class="align-center" /></p>
+<ol start="7" type="1">
+<li>Updated support page</li>
+</ol>
+<ol type="a">
+<li>Support tickets link has been updated to <a href="https://support.komodoplatform.com" class="uri">https://support.komodoplatform.com</a></li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image6.png" alt="image" class="align-center" /></p>
+<ol start="8" type="1">
+<li>Spv balance subtract unconfirmed balance, displays info icon</li>
+</ol>
+<ol type="a">
+<li>The info icon has been added to the <code>Send -&gt; Confirming</code> screen</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image7.png" alt="image" class="align-center" /></p>
+<ol start="9" type="1">
+<li>Updated asset explorers to point to *.kmdexplorer.io - <strong>Dev only</strong></li>
+<li>ZILLA coin added.</li>
+</ol>
+<ol type="a">
+<li>Chainzilla coin is now available in the Activate Coin screen</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image8.png" alt="image" class="align-center" /></p>
+<ol start="2" type="a">
+<li>Chainzilla wallet creation</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image9.png" alt="image" class="align-center" /></p>
+<ol start="11" type="1">
+<li>Tx history csv export</li>
+</ol>
+<ol type="a">
+<li>Exporting the tx history in csv format is now available in the bottom portion of Transactions screen</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image10.png" alt="image" class="align-center" /></p>
+<ol start="12" type="1">
+<li>Spv <code>Send</code> - no valid utxo - message handling</li>
+</ol>
+<ol type="a">
+<li>A new utxo validation message will now display with more detail</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image11.png" alt="image" class="align-center" /></p>
+<ol start="13" type="1">
+<li>Spv send confirm with pin</li>
+</ol>
+<p>a .To require a pin for send transactions go to <code>Settings -&gt; App Config -&gt; Require pin to confirm transaction</code> tab</p>
+<p><img src="images/Agama-v0.2.41/image12.png" alt="image" class="align-center" /></p>
+<ol start="2" type="a">
+<li>Once enabled save changes then restart the wallet. Now when making a send transaction your pin is required before confirming</li>
+</ol>
+<p><img src="images/Agama-v0.2.41/image13.png" alt="image" class="align-center" /></p>
+<h2 id="fixes">Fixes</h2>
+<ul>
+<li>KV null history display fix</li>
+<li>KV history refresh fix</li>
+<li>KV history refresh button fix</li>
+<li>Native send result table css overflow fix</li>
+<li>Fixed settings save bug that got socket timeout param broken</li>
+<li>Fixes the recent SPV connectivity issues</li>
+</ul>

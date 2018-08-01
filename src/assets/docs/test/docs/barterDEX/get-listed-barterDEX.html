@@ -1,0 +1,95 @@
+<h1 id="get-your-cointokenasset-listed-on-barterdex">Get your Coin/Token/Asset listed on barterDEX</h1>
+<p>Adding a coin to the BarterDEX is as simple as writing one line of code if your coin is a Bitcoin compatible. Below is a breakdown of the information needed from the source code and coin parameters. The first step is to gather all the information below and contact our specialists for review.</p>
+<p>For ETH compatibles go to: <span data-role="ref">How to Add new ERC20 Tokens in BarterDEX</span></p>
+<h2 id="coin-spec">Coin Spec</h2>
+<p>The Proposed coin must have support for the following API calls and must have BIP65 implemented.</p>
+<pre class="sourceCode shell"><code>estimatefee
+getblock
+getblockhash
+getinfo
+getrawmempool
+getrawtransaction
+gettxout
+importaddress
+importprivkey
+listunspent
+listreceivedbyaddress
+listtransactions
+sendrawtransaction
+signrawtransaction
+validateaddress</code></pre>
+<h2 id="information-required">Information Required</h2>
+<h3 id="example">Example</h3>
+<blockquote>
+<ul>
+<li><strong>Coin Ticker</strong> : LTC</li>
+<li><strong>Coin Name</strong>: litecoin</li>
+<li><strong>rpcport</strong> : 9332</li>
+<li><strong>pubtype</strong> : 48</li>
+<li><strong>taddr</strong> : 0</li>
+<li><strong>p2shtype</strong> : 50</li>
+<li><strong>wiftype</strong> : 176</li>
+<li><strong>txfee</strong> : 1000000</li>
+<li><strong>active</strong> : 1</li>
+</ul>
+</blockquote>
+<h3 id="other-info-to-take-note-of">Other info to take note of</h3>
+<ol type="1">
+<li>Need an icon too. After getting confirmation from our specialists, submit a pull request to the repository: <a href="https://github.com/jl777/coins" class="uri">https://github.com/jl777/coins</a></li>
+<li>The file <a href="https://github.com/jl777/coins/blob/master/coins" class="uri">https://github.com/jl777/coins/blob/master/coins</a> contains all the info required to list the coin in BarterDEX</li>
+<li>The explorer repository of the proposed coin also contains some of the info required to connect BarterDEX to the coin's own explorer infrastructure.</li>
+<li>The coin devs will have to send us an amount of the proposed coin to test the swaps with.</li>
+<li>Please use the info from coins-db-repo for the newest electrums, explorers and so on</li>
+<li>Electrum servers are in the electrums-directory. Every coin has its own file there: <a href="https://github.com/jl777/coins/tree/master/electrums" class="uri">https://github.com/jl777/coins/tree/master/electrums</a></li>
+</ol>
+<h3 id="json-output-example">Json Output Example:</h3>
+<pre class="sourceCode shell"><code>{\&quot;coin\&quot;:\&quot;LTC\&quot;, \&quot;name\&quot;: \&quot;litecoin\&quot;, \&quot;active\&quot;:1, \&quot;rpcport\&quot;:9332,\&quot;pubtype\&quot;:48, \&quot;p2shtype\&quot;:50, \&quot;wiftype\&quot;:176, \&quot;txfee\&quot;:100000}</code></pre>
+<h3 id="note">Note:</h3>
+<blockquote>
+<p>For <strong>taddr</strong> , 1 means yes and 0 means no and it refers to the coin having transparent and zaddresses. Mostly this is for zcash forks.</p>
+</blockquote>
+<h2 id="search-for-the-information-on-github">Search for the information on Github</h2>
+<p>All of the information and parameters required are normally contained within but not limited to these files (depends on your coin):</p>
+<blockquote>
+<ul>
+<li>init.cpp: <a href="https://github.com/litecoin-project/litecoin/blob/master/src/init.cpp" class="uri">https://github.com/litecoin-project/litecoin/blob/master/src/init.cpp</a></li>
+<li>base58.h: <a href="https://github.com/litecoin-project/litecoin/blob/master/src/base58.h" class="uri">https://github.com/litecoin-project/litecoin/blob/master/src/base58.h</a></li>
+<li>chainparamsbase.h: <a href="https://github.com/litecoin-project/litecoin/blob/master/src/chainparamsbase.h" class="uri">https://github.com/litecoin-project/litecoin/blob/master/src/chainparamsbase.h</a></li>
+</ul>
+</blockquote>
+<h2 id="additional-information">Additional Information</h2>
+<blockquote>
+<ul>
+<li>Lead developer's Github account:</li>
+<li>Bitcointalk Account:</li>
+<li>Information about the team and purpose of the coin:</li>
+<li>Social Media Accounts</li>
+</ul>
+</blockquote>
+<p>Once the information is gathered, please contact us via email: <a href="mailto:coinintegration@komodoplatform.com">coinintegration@komodoplatform.com</a> or #tradebots channel in our Discord (Invite Link: <a href="https://komodoplatform.com/discord" class="uri">https://komodoplatform.com/discord</a>) and request a coin addition. Provide us with all the relevant information and our specialists will get in touch.</p>
+<h2 id="how-to-add-new-erc20-tokens-in-barterdex">How to Add new ERC20 Tokens in BarterDEX</h2>
+<p>Adding ERC20 tokens in BarterDEX is very easy. We just need some information about the token.</p>
+<h3 id="requirements">Requirements:</h3>
+<blockquote>
+<ul>
+<li><code>approve</code> and <code>transferFrom</code> methods are a must for the swaps to work</li>
+<li>Contract address</li>
+<li>Ticker Symbol</li>
+<li>Name of the token</li>
+<li>CoinMarketCap name (for the autoprice with CMC to work)</li>
+<li>Token Logo</li>
+<li>Some tokens for testing</li>
+<li>rpcport is same for all tokens in BarterDEX</li>
+</ul>
+</blockquote>
+<p>The following is an example using OmiseGo (OMG)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">&quot;coin&quot;</span><span class="fu">:</span> <span class="st">&quot;OMG&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;omisego&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">&quot;fname&quot;</span><span class="fu">:</span> <span class="st">&quot;OmiseGo&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="dt">&quot;etomic&quot;</span><span class="fu">:</span> <span class="st">&quot;0xd26114cd6EE289AccF82350c8d8487fedB8A0C07&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="dt">&quot;rpcport&quot;</span><span class="fu">:</span> <span class="dv">80</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="fu">}</span></a></code></pre></div>
+<p>Once the information is gathered, please contact us via email <a href="mailto:coinintegration@komodoplatform.com">coinintegration@komodoplatform.com</a> or at #etomic channel in our Discord (Invite Link: <a href="https://komodoplatform.com/discord" class="uri">https://komodoplatform.com/discord</a> ) in order to add the information to the BarterDEX and to perform the required test atomic swaps to make sure it performs properly.</p>
+<p>You can send some tokens to test to the following BarterDEX test engineers.</p>
+<p>Cipi: <code>0xdf38dd108bab50da564092ad0cd739c4634d963c</code></p>

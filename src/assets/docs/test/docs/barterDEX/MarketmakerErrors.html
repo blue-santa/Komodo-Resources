@@ -1,0 +1,59 @@
+<h1 id="marketmaker-error-codes">Marketmaker Error codes</h1>
+<p>There are various errors codes a user could receive while using the marketmaker. This document intends to list each possible error along with a brief description of why a particular error may occur. Please send any critiques to @Alright on the <a href="https://discord.gg/SCdf4eh">Discord</a>.</p>
+<h2 id="alice-errors">Alice errors</h2>
+<p><code>&quot;error&quot;,&quot;only one pending request at a time&quot;</code> - You cannot create multiple simulaneous requests as alice.</p>
+<p><code>&quot;error creating utxo→pair&quot;</code> - The order was matched. The UTXOs that were matched are no longer valid. This is likely due to a different wallet spending them after an order was matched.</p>
+<p>-9998: <code>&quot;time expired for Alice_request&quot;</code> – Alice made a request that was not filled. The order timed out.</p>
+<p>-9999: <code>&quot;uuid canceled&quot;</code> – Alice made an order. No Bob was willing to fill it. The order timed out.</p>
+<p><code>&quot;error&quot;:&quot;quote validation error&quot;</code> - The quote given by Bob is no longer valid.</p>
+<p><code>&quot;reserved quote validate error {PRICE}&quot;</code> - The quote received by bob no longer matches the price he is requesting.</p>
+<p><code>&quot;error&quot;:&quot;invalid parameter&quot;</code> - Maxprice and relvolume must be &gt;0.</p>
+<p><code>&quot;LP_trades_alicevalidate {COIN} src {TXID} failed SPV check&quot;</code> - The UTXO you attempted to trade is not valid according to the SPV server. This is could be the result of a bad connection to the SPV server, a misconfigured SPV server or another wallet spending that UTXO.</p>
+<p><code>&quot;quote {COIN}/{COIN} validate error {price}&quot;</code> - The quote you received after placing this order is no longer valid.</p>
+<p><code>&quot;error&quot;:&quot;base or rel not found or inactive&quot;</code> - One of the coins you are attempting to trade has not been activated.</p>
+<p><code>&quot;error creating utxo→pair&quot;</code> - The order was matched. The UTXOs that were matched are no longer valid. This is likely doe to another wallet spending that UTXO.</p>
+<p><code>&quot;error&quot;,&quot;only one pending request at a time&quot;</code> - You cannot create multiple simultaneous requests as alice.</p>
+<p><code>&quot;error&quot;:&quot;not enough utxo, please make more deposits&quot;</code> - You don't have the appropriate UTXOs for the trade you are attempting to make. You need UTXOs in a ratio of X:&gt;(X/777). X is the amount you would like to trade.</p>
+<p><code>&quot;error&quot;:&quot;no orderbook entry found to handle request&quot;</code> - No Bob was willing to fill your request. If you do see Bobs in the orderbook, try different UTXOs sizes or a higher price.</p>
+<p><code>&quot;error&quot;:&quot;cant find a deposit that is close enough in size. make another deposit that is just a bit larger than what you want to trade&quot;</code> - You don't have the appropriate UTXOs for the trade you are attempting to make. If you do in fact have the UTXOs, it is possible they may be locked from previous failed swaps. Restart the marketmaker if so.</p>
+<p><code>&quot;error&quot;:&quot;cant find ETOMIC&quot;</code> - You need an equivalent amount of ETOMIC for any amount of ETH/ERC20 you attempt to trade. Use the BEER faucet on atomicexplorer.com. Trade BEER for ETOMIC.</p>
+<p><code>&quot;blockinit.{COIN} {HEIGHT} error&quot;</code> - This is likely due to the coin's daemon not properly responding to the marketmaker. Restart the daemon of the coin.</p>
+<h3 id="the--1xxx-subset-of-error-codes-deal-with-a-swap-failing-at-some-point-while-trading-as-alice.-these-can-be-caused-by-network-issues-or-a-misconfigured-node.">The -1XXX subset of error codes deal with a swap failing at some point while trading as Alice. These can be caused by network issues or a misconfigured node.</h3>
+<p>-1000: <code>“error LP_sendwait pubkeys”</code> - The swap was initiated between the two parties. Bob did not send his set of pubkeys.</p>
+<p>-1001: <code>&quot;error LP_sendwait choosei”</code> - Bob sent his set of pubkeys. Your node chose one pubkey from this set and requested the privkeys for the remaining pubkeys. Bob did not respond.</p>
+<p>-1002: <code>&quot;error LP_sendwait mostprivs&quot;</code> - Your node chose a pubkey from Bob's set. Bob did not respond with the privkeys for the remaining pubkeys in the set.</p>
+<p>-1003: <code>&quot;basilisk_alicetxs error&quot;</code> – Your node failed to create the dex fee transaction.</p>
+<p>-1004: <code>&quot;error sending alicefee”</code> - Swap failed at 1/7. Your node failed to send the dex fee.</p>
+<p>-1005: <code>&quot;error waiting for bobdeposit”</code> - Swap failed at 2/7. Bob failed to send bobdeposit.</p>
+<p>-1006: <code>&quot;error sending alicepayment”</code> - Swap failed at 3/7. Your node failed to send alicepayment.</p>
+<p>-1007: <code>&quot;error waiting for bobpayment”</code> - Swap failed at 4/7. Bob failed to send bobpayment.</p>
+<h3 id="the--3xxx-subset-of-errors-deal-with-a-swap-not-being-able-to-start-while-trading-as-alice.">The -3XXX subset of errors deal with a swap not being able to start while trading as Alice.</h3>
+<p>-3000: <code>&quot;cant find coin.{COIN}&quot;</code> - The coin you attempted to trade is not activated on your node.</p>
+<p>-3001: <code>&quot;cant initialize swap”</code> - Your node did not have enough available memory to start a swap.</p>
+<p>-3002: <code>&quot;error launching swaploop”</code> - Your node was unable to start a new process to handle a new swap. Out of available processes.</p>
+<p>-3003: <code>&quot;couldnt bind to any port {PORT}&quot;</code> - Your node was unable to make a proper connection to Bob's node via nanomsg. This is likely caused by a firewall or issues with your nanomsg installation.</p>
+<p>-3004: <code>&quot;cant find privkey for {ADDRESS}&quot;</code> – Your node cannot find the privkey for the coin you’re attempting to trade.</p>
+<h2 id="bob-errors">Bob errors</h2>
+<p><code>&quot;error&quot;:&quot;not enough utxo, please make more deposits&quot;</code> - You don't have the appropriate UTXOs for the trade you are attempting to make. You need UTXOs in a ratio of Y:(Y*&gt;1.125). Y is the amount you would like to trade.</p>
+<p><code>&quot;error creating utxo→pair&quot;</code> - The order was matched. The UTXOs that were matched are no longer valid. This is likely due to another wallet spending that UTXO.</p>
+<p><code>&quot;error&quot;:&quot;base or rel not found or inactive&quot;</code> - One of the coins you are attempting to trade has not been activated.</p>
+<p><code>&quot;error&quot;:&quot;GAME can only be alice coin&quot;</code> - GAME does not yet support BIP65. It can only be traded as Alice.</p>
+<p><code>&quot;error&quot;:&quot;cant find ETOMIC&quot;</code> - You need an equivalent amount of ETOMIC for any amount of ETH/ERC20 you attempt to trade. Use the BEER faucet on atomicexplorer.com. Trade that BEER for ETOMIC.</p>
+<p><code>&quot;error&quot;:&quot;invalid parameter&quot;</code> - maxprice and relvolume must be &gt;0.</p>
+<h3 id="the--2xxx-subset-of-error-codes-deal-with-a-swap-failing-at-some-point-while-trading-as-bob.-these-can-be-caused-by-network-issues-or-a-misconfigured-node.">The -2XXX subset of error codes deal with a swap failing at some point while trading as Bob. These can be caused by network issues or a misconfigured node.</h3>
+<p>-2000: <code>&quot;error waitsend pubkeys”</code> - The swap was initiated between the two parties. Alice did not send her set of pubkeys.</p>
+<p>-2001: <code>&quot;error waitsend choosei”</code> - Alice sent her set of pubkeys. Your node chose one pubkey from this set and requested the privkeys for the remaining pubkeys. Alice did not respond.</p>
+<p>-2002: <code>&quot;error waitsend mostprivs”</code>– Your node choose a pubkey from Alice's set. Alice did not respond with the privkeys for the remaining pubkeys in the set.</p>
+<p>-2003: <code>&quot;error bobscripts deposit”</code> – Your node failed to create the bobdeposit transaction. This is the result of the UTXO being spent by a different wallet after the swap has been initiated.</p>
+<p>-2004: <code>&quot;error waiting for alicefee”</code> - Swap failed at 1/7. Alice failed to send the dex fee.</p>
+<p>-2005: <code>&quot;error sending bobdeposit”</code> - Swap failed at 2/7. Your node failed to send bobdeposit.</p>
+<p>-2006: <code>&quot;error waiting for alicepayment”</code> - Swap failed at 3/7. Alice failed to send alicepayment.</p>
+<p>-2007: <code>&quot;error bobscripts payment”</code> – Your node failed to create the bobpayment transaction. This is likely the result of the UTXO being spent by a different wallet after the swap has been initiated.</p>
+<p>-2008: <code>&quot;error sending bobpayment”</code> - Swap failed at 4/7. Your node failed to send bobpayment.</p>
+<h3 id="the--4xxx-subset-of-errors-deal-with-a-swap-failing-to-start-while-trading-as-bob">The -4XXX subset of errors deal with a swap failing to start while trading as Bob</h3>
+<p>-4000: <code>&quot;{&quot;result&quot;,&quot;update stats&quot;}</code> - Your node received a request that was intended for a different node. This request is then relayed to other nodes.</p>
+<p>-4002: <code>&quot;error&quot;: “no price set&quot;</code> - You attempted to place an order without setting a price.</p>
+<p>-4003: <code>&quot;error&quot;:&quot;cant get alicecoin&quot;</code> - Your node received an invalid request from alice. Your node does not have an active order for the coin Alice requested to trade. This is likely due to Alice having an outdated orderbook.</p>
+<p>-4005: <code>&quot;error&quot;,&quot;couldnt create pairsock&quot;</code> - Your node failed to make a proper connection with Alice's node via nanomsg. This is likely caused by a firewall or issues with your nanomsg installation. Use <code>canbind:0</code> if your node is behind a firewall.</p>
+<p>-4007: <code>&quot;connect error {nanomsg error}&quot;</code> - Your node failed to make a proper connection with Bob's node via nanomsg. This is likely caused by a firewall or issues with your nanomsg installation.</p>
+<p>-4008: <code>&quot;no privkey found coin. {COIN} {address}&quot;</code> - Your node cannot find the privkey for the coin you’re attempting to trade.</p>

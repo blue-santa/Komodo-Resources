@@ -1,0 +1,72 @@
+<h1 id="hyperdex-0.1.0-alpha.8-enhancements">HyperDEX-0.1.0-alpha.8-Enhancements</h1>
+<ol type="1">
+<li>We have decided to remove the &quot;Cancel&quot; button from the Trades view. It was not working as expected and it doesn't look like it going to be possible to fix it until Marketmaker v2 (which will not be done soon). <a href="https://github.com/hyperdexapp/hyperdex/commit/60d9feecda1449222ac914f92e247b6e2cf54957">Commit details</a></li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image1.png" alt="image" class="align-center" /></p>
+<ol start="2" type="1">
+<li>Enable the EQL currency by default. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/280f7ddad60b7059cc63bd4d4a54b801bf10d2e3&amp;sa=D&amp;ust=1531137757860000">Commit details</a></li>
+</ol>
+<ol type="a">
+<li>The Equaliser (EQL) coin is now a default active coin upon app install</li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image2.png" alt="image" class="align-center" /></p>
+<ol start="3" type="1">
+<li>Update to BarterDEX <a href="https://github.com/artemii235/SuperNET/releases/tag/v1.0.270">Marketmaker v1.0.270</a> which contains a bug fix to improve order match rate.</li>
+</ol>
+<ol type="a">
+<li>Further details on this marketmaker update may be found here:</li>
+<li><a href="https://github.com/hyperdexapp/hyperdex/commit/74624bbdc8a01c55b366f7698542a33b57d1b5df">Commit details</a></li>
+<li><a href="https://github.com/artemii235/SuperNET/releases">Marketmaker download</a></li>
+</ol>
+<ol start="4" type="1">
+<li>Improve Content Security Policy <a href="https://github.com/hyperdexapp/hyperdex/commit/5d2751566ac8f305d9df5c5c214cf09bbe7e942a">Commit details</a></li>
+<li>Add translation files <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/00b4f84a8a6426d147c9244a66a458122f41fbd1&amp;sa=D&amp;ust=1531137757863000">Commit details</a></li>
+<li>Correctly handle inverse values for sell orders. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/167b89284c6623ae261219710e07973d54cef53e&amp;sa=D&amp;ust=1531137757864000">Commit details</a></li>
+</ol>
+<ol type="a">
+<li>Requested order values were displayed in reverse where the intended buy coin displayed as the intended sell coin. This has been corrected. More detailed information may be found here - <a href="https://github.com/hyperdexapp/hyperdex/issues/361" class="uri">https://github.com/hyperdexapp/hyperdex/issues/361</a></li>
+</ol>
+<ol start="7" type="1">
+<li>Add icons for currencies BCBC, MNZ, DNR, EQL <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/3e3ff118c567a4b3e1b8b6547eb484d14d8696f2&amp;sa=D&amp;ust=1531137757865000">Commit details</a></li>
+</ol>
+<ol type="a">
+<li>BCBC icon</li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image3.png" alt="image" class="align-center" /></p>
+<ol start="2" type="a">
+<li>MNZ icon</li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image4.png" alt="image" class="align-center" /></p>
+<ol start="3" type="a">
+<li>DNR icon</li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image5.png" alt="image" class="align-center" /></p>
+<ol start="4" type="a">
+<li>EQL icon</li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image6.png" alt="image" class="align-center" /></p>
+<ol start="8" type="1">
+<li>Split Settings into Portfolio and App Settings.</li>
+</ol>
+<ol type="a">
+<li>In the Settings view there are now two sections: Portfolio and App. To get to App settings select the Logout link or from the login page select <code>Portfolio -&gt; Settings</code></li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image7.png" alt="image" class="align-center" /></p>
+<ol start="2" type="a">
+<li>After either select the Logout link or selecting <code>Portfolio -&gt; Settings</code> from the login page the App settings will be displayed allowing a custom market maker URL to be entered</li>
+</ol>
+<ol start="9" type="1">
+<li>Add some stats to the Trades view. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/7d996b46533bc965409f53150b9b037731bc040c&amp;sa=D&amp;ust=1531137757868000">Commit details</a></li>
+</ol>
+<ol type="a">
+<li>In the <code>Trades -&gt; Open Orders</code> view, a record of number of trades, number of currencies, and fiat value are now displayed in the top right corner</li>
+</ol>
+<p><img src="images/HyperDEX-0.1.0-alpha.8/image8.png" alt="image" class="align-center" /></p>
+<h2 id="fixes">Fixes</h2>
+<ul>
+<li>Fix issue when clicking the &quot;Max&quot; button in the withdraw modal. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/37a35f53d3b87be547017337d965f06ca0d767d0&amp;sa=D&amp;ust=1531137757870000">Commit details</a></li>
+<li>Fix stuck pending swaps. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/0ed0acdf2638b0b628099a8753a4d4049d3b6833&amp;sa=D&amp;ust=1531137757870000">Commit details</a></li>
+<li>Fix not being able to type space in the seed phrase input. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/856c9715b99596dbabfbebb373b9886f185cf25b&amp;sa=D&amp;ust=1531137757871000">Commit details</a></li>
+<li>Fix USD calculation in the withdraw modal. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/a4fec46296178d58b47183fa1f1f557c054418b6&amp;sa=D&amp;ust=1531137757871000">Commit details</a></li>
+<li>Fix problem with having currencies with a number in the name enabled. <a href="https://www.google.com/url?q=https://github.com/hyperdexapp/hyperdex/commit/e6b435b6ccd27be24b3da566e899a0e014afd2da&amp;sa=D&amp;ust=1531137757872000">Commit details</a></li>
+</ul>

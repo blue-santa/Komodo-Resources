@@ -1,0 +1,24 @@
+<h1 id="funding-the-smart-address">Funding the Smart Address</h1>
+<p>In order to start trading, you need to fund your smart address.</p>
+<p>To find out the smartaddress of a coin, do the <code>./getcoin</code> api call, after editing it first:</p>
+<pre class="sourceCode shell"><code>nano getcoin</code></pre>
+<p>That will show you the following.</p>
+<pre class="sourceCode shell"><code>curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;getcoin\&quot;,\&quot;coin\&quot;:\&quot;NAME_OF_COIN\&quot;}&quot;</code></pre>
+<p>Edit the coin name, save and close the file. (<code>CTRL-O</code> to save, <code>CTRL-X</code> to close)</p>
+<p><strong>IMPORTANT: The smartaddress relies in the passphrase you assign. The smartaddress will not be imported to the wallet, it will stay as</strong> <code>watchonly</code> <strong>. If you lose the passphrase you lose all addresses of all coins assigned by it.</strong></p>
+<p>Then <strong>send transactions in duos</strong> to your smartaddress provided by <code>./getcoin</code> (using Hush as an example):</p>
+<pre class="sourceCode shell"><code>hush-cli sendtoaddress &lt;your smartaddress&gt; 1
+hush-cli sendtoaddress &lt;your smartaddress&gt; 1.2</code></pre>
+<h2 id="utxo-pairs">UTXO PAIRS</h2>
+<p>To make sure you have utxo pairs for both the bob and alice usage, it is best to send utxo in triplets of X, 1.2 X and 0.01 X. So if X is 10, send 10, 12, and 0.1 coins using sendtoaddress to your smartaddress. This means you will have to send 3 different transactions to the same address with 3 different quantities</p>
+<p>If you send coins from a main address using the command line, make sure you either send from an account (sendfrom &quot;account&quot; &quot;address&quot; ) (depends on coin) to the smart address, or send the amounts from small to big: 0.01, then 1.0 and finally 1.2. Otherwise the CLI will send from the smartaddress instead of your other fund address.</p>
+<h2 id="utxos-explained-by-jl777">UTXOs explained by Jl777:</h2>
+<pre><code>bob utxo are (X, X*1.125)
+alice utxo are (X, X/777)
+with the volume constraints, the bigger the utxo you have the larger offers you can handle
+one pair uses 2 actual utxo
+3 - 2 = 1
+so maybe it is better to do 1, 1.2, .01, .01
+then alice side pairs (1, .01) and (1.2, .01)
+but all the pairing is automatic and you can see what specific utxos got paired with inventory command</code></pre>
+<p><strong>Example:</strong> If you want to fund a komodo smartaddress with 230 komodo, you would need to first send a tx with 100kmd, then another tx with 120 kmd and a third tx with 10kmd.</p>

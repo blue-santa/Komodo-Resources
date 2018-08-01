@@ -1,0 +1,132 @@
+<h1 id="using-barterdex-cli-for-windows">Using barterDEX CLI for Windows</h1>
+<p><strong>Get the latest binaries from:</strong> <a href="https://github.com/KomodoPlatform/BarterDEX/tree/dev/assets/bin/win64">Github:</a></p>
+<p><strong>Get the scripts from:</strong> <a href="https://github.com/jl777/SuperNET/tree/master/iguana/dexscripts.win32">Github jl777's repository</a></p>
+<p>The <code>marketmaker</code> binary is essentially barterDEX-CLI</p>
+<ul>
+<li>Before starting, make sure that the scripts and following binaries are all in one folder:</li>
+</ul>
+<blockquote>
+<ol>
+<li>curl.exe (required for all scripts)</li>
+<li>marketmaker.exe</li>
+<li>libcurl.dll (required to run marketmaker)</li>
+<li>nanomsg.dll (required to run marketmaker)</li>
+</ol>
+</blockquote>
+<ul>
+<li>Don't forget to put <code>coins.json</code> file into a same folder. This file is available in the repo directory <code>Supernet/iguana/exchanges</code> <a href="https://github.com/jl777/SuperNET/blob/master/iguana/exchanges/coins.json">from here</a>.</li>
+<li>Type your passphrase into <code>passphrase</code> file in this folder (you should create a file with the name passphrase and without any extension) and run <code>1-client.cmd</code>. This will start the marketmaker. The next step is to obtain userpass, which will be needed by other scripts. You can simply copy and paste it from marketmaker output on startup into the <code>userpass</code> file.</li>
+</ul>
+<p><img src="/_static/images/userpass.png" alt="image" class="align-center" /></p>
+<p>Or run <code>2-getuserpass.cmd</code> to fill the <code>userpass</code> file automatically.<strong>Note:</strong> For the other scripts to access <code>userpass</code> value, you shouldn't run any other scripts between 1-client.cmd and 2-getuserpass.cmd launching.</p>
+<p>Sample output of correct <code>2-getuserpass.cmd</code> usage is:</p>
+<p><img src="/_static/images/userpass-usage.png" alt="image" class="align-center" /></p>
+<p>You should see your <code>userpass</code> on screen, and it will also be automatically copied to the <code>userpass</code> file. It's required by all the other scripts to have this <code>userpass</code> value in the <code>userpass file</code>. If the output of <code>2-getuserpass.cmd</code> is not the same as the value showed on screen, wait some seconds and run <code>2-getuserpass.cmd</code> again. Also make sure that you have allowed marketmaker to accept incoming connections in your Windows Firewall settings (At the first time launch, your system should automatically ask for it).</p>
+<ul>
+<li>The scripts shown in the next section are examples and are there to get you started. For a reference of all the available API options, please refer to <span data-role="doc">BarterDEX API Summary &lt;barterDEX-API&gt;</span></li>
+</ul>
+<h2 id="scripts">Scripts:</h2>
+<p><strong>Note:</strong> Before you use any script that deals with any actions related to your coins (for example, withdraw and others) edit it and make sure that it has the correct addresses, coin name and volumes inside. Don't run any scripts without looking at it's source and clearly understanding what it does.</p>
+<ul>
+<li><code>1-client.cmd</code> - used to start Marketmaker. Make sure you already have filled a strong <code>passphrase</code> into <code>passphrase file</code> as described above.</li>
+<li><code>2-getuserpass.cmd</code> - fills <code>userpass</code> in <code>userpass file</code>. this step needed to use any other scripts.</li>
+<li><code>enable.cmd</code> - enables the selected coin for trading.</li>
+<li><code>balance.cmd</code> - displays current balance of selected coin.</li>
+<li><code>getcoin.cmd</code> - prints information about a selected coin:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ot">[</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;success&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="dt">&quot;disabled&quot;</span><span class="fu">:</span> <span class="dv">70</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="dt">&quot;coin&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">            <span class="dt">&quot;coin&quot;</span><span class="fu">:</span> <span class="st">&quot;KMD&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">            <span class="dt">&quot;installed&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">            <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="dv">580716</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">            <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="fl">72.68774305</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">            <span class="dt">&quot;KMDvalue&quot;</span><span class="fu">:</span> <span class="fl">72.68774305</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">            <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;active&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">            <span class="dt">&quot;electrum&quot;</span><span class="fu">:</span> <span class="st">&quot;electrum.cipig.net:10001&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">            <span class="dt">&quot;smartaddress&quot;</span><span class="fu">:</span> <span class="st">&quot;RTCVGuoSNehKG8YYxcoskC7LK1yZhgvQRV&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">            <span class="dt">&quot;rpc&quot;</span><span class="fu">:</span> <span class="st">&quot;127.0.0.1:7771&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">            <span class="dt">&quot;pubtype&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">            <span class="dt">&quot;p2shtype&quot;</span><span class="fu">:</span> <span class="dv">85</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">            <span class="dt">&quot;wiftype&quot;</span><span class="fu">:</span> <span class="dv">188</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">            <span class="dt">&quot;txfee&quot;</span><span class="fu">:</span> <span class="dv">10000</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="ot">]</span></a></code></pre></div>
+<ul>
+<li><code>electrum.cmd</code> - Allows you to run coins in electum mode. For running more coins in electrum mode, add needed electrum servers from here - <span data-role="doc">Electrum Servers &lt;electrum-servers-list&gt;</span></li>
+<li><code>help.cmd</code> - displays help about all the available API commands.</li>
+<li><code>listunspent.cmd</code> - prints your utxos.</li>
+<li><code>bot_buy.cmd</code> - launches bot for buying. you'll need to set base and rel coin in script, and also maxprice and relvolume.</li>
+<li><code>bot_list.cmd</code> - lists id of all running bots.</li>
+<li><code>bot_statuslist.cmd</code> - list statuses of all running bots.</li>
+<li><code>bot_stop.cmd</code> - stopt the bot with given bot_id.</li>
+<li><code>withdraw.cmd</code> - example of <code>withdraw</code> method. you can send coins from your smartaddress to any other address using widthraw. When executed, this method generates signed raw tx in hex, which you can use with sendrawtransaction.cmd. Remember that <code>withdraw</code> only prepares the transaction, but it doesn't broadcast (send) it to network. after tx is prepared we need to send it using <code>sendrawtransaction</code> method.</li>
+<li><code>sendrawtransaction.cmd</code> - sends raw transaction. you'll need a signedtx in hex.</li>
+<li><code>withdraw_send.cmd</code> - combines <code>withdraw</code> and <code>sendrawtransaction</code> scripts. you can call it send, just specify coin, volume and addresses to which you want to send coins and it will prepare and broadcast transaction automatically.</li>
+<li><code>withdraw_10_send.cmd</code> - example of inventory split: This script will split 10 KMD from your balance to be like an ideal Alice inventory into 10 utxos pairs (1.002, 0.00386871). Strongly recommended to read <a href="http://pad.supernet.org/barterdex-readme" class="uri">http://pad.supernet.org/barterdex-readme</a> -&gt; UTXO PAIRS to understand the basics. This script is just for example how you can split your coins in (X, X/777) to start trading them.</li>
+</ul>
+<h2 id="f.a.q.">F.A.Q.</h2>
+<ol type="1">
+<li>Is there a simple way to display JSON results returned by all scripts, like orderbook and others, in a human readable form?</li>
+</ol>
+<blockquote>
+<ul>
+<li>Yes, you can use the service <a href="http://jsoneditoronline.org/">JSON Editor Online</a>, just copy and paste the output of script in the left column and see structured output in right.</li>
+</ul>
+</blockquote>
+<ol start="2" type="1">
+<li>I see an output like this when I run <code>1-client.cmd</code> :</li>
+</ol>
+<pre><code>bind(0.0.0.0) port.7783 failed: No error sock.1468. errno.0
+bind(0.0.0.0) port.7783 failed: No error sock.1516. errno.0
+bind(0.0.0.0) port.7783 failed: No error sock.1444. errno.0
+bind(0.0.0.0) port.7783 failed: No error sock.1484. errno.0
+bind(0.0.0.0) port.7783 failed: No error sock.1412. errno.0
+bind(0.0.0.0) port.7783 failed: No error sock.1524. errno.0
+bind(0.0.0.0) port.7783 failed: No error sock.1008. errno.0</code></pre>
+<p>And nothing works.</p>
+<blockquote>
+<ul>
+<li>Before running <code>1-client.cmd</code> make sure in Task Manager that you don't already have a running <code>marketmaker.exe</code>. If you have <code>- kill</code> this process via Task Manager or via command line command <code>taskkill /f /im taskkill.exe</code> .</li>
+</ul>
+</blockquote>
+<ol start="3" type="1">
+<li>How can I pretty print JSON answers of marketmaker?</li>
+</ol>
+<blockquote>
+<ul>
+<li>You can get best results with 2 tools - <a href="https://conemu.github.io/">conemu</a> and <a href="https://stedolan.github.io/jq/">jq</a> . conemu supports ANSI X3.64 and Xterm 256 colors and jq allow you to pretty-print json output with colors, like this:</li>
+</ul>
+</blockquote>
+<p><img src="/_static/images/conemu-jq.png" alt="image" class="align-center" /></p>
+<p>Also it is recommended to install <a href="https://www.farmanager.com/index.php?l=en">Far Manager</a> - this is a powerful console file manager for Windows, like Midnight Commander in unix.</p>
+<ol start="4" type="1">
+<li>What additional dependencies are required by marketmaker?</li>
+</ol>
+<blockquote>
+<ul>
+<li>Currently <code>marketmaker.exe</code> (Windows) uses the following DLLs:</li>
+</ul>
+<blockquote>
+<ul>
+<li>32 bit:
+<ol>
+<li>libcrypto-1_1.dll</li>
+<li>libcurl.dll</li>
+<li>libssl-1_1.dll</li>
+<li>nanomsg.dll</li>
+<li>pthreadvc2.dll</li>
+</ol></li>
+<li>64-bit:
+<ol>
+<li>libcurl.dll</li>
+<li>nanomsg.dll</li>
+</ol></li>
+</ul>
+</blockquote>
+</blockquote>
+<p>These are already included in the repo and are archived with the releases. Another location the Win-32 dependencies might be found: <a href="https://artifacts.supernet.org/latest/windows/" class="uri">https://artifacts.supernet.org/latest/windows/</a></p>

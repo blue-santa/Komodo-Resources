@@ -1,0 +1,51 @@
+<h1 id="using-the-key-value-feature">Using the Key-Value feature</h1>
+<p>To search for a key in the whole blockchain database, use the following command:</p>
+<pre class="sourceCode shell"><code>$ ./komodo-cli kvsearch hello</code></pre>
+<p>Output:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">&quot;coin&quot;</span><span class="fu">:</span> <span class="st">&quot;KMD&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">&quot;currentheight&quot;</span><span class="fu">:</span> <span class="dv">406146</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="st">&quot;hello&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">&quot;keylen&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="st">&quot;cant find key&quot;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="fu">}</span></a></code></pre></div>
+<p>To create or update a new Key/Value entry in blockchain and also securing it with your own custom password specific to tha Key/Value pair, use the following example:</p>
+<pre class="sourceCode shell"><code>$ ./komodo-cli kvupdate hello &quot;ehlo world&quot; testpassphrase</code></pre>
+<p>Output:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">&quot;coin&quot;</span><span class="fu">:</span> <span class="st">&quot;KMD&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="dv">406151</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">&quot;expiration&quot;</span><span class="fu">:</span> <span class="dv">407591</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">&quot;flags&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="st">&quot;hello&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">&quot;keylen&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;ehlo world&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="dt">&quot;valuesize&quot;</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">  <span class="dt">&quot;fee&quot;</span><span class="fu">:</span> <span class="fl">0.001</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">  <span class="dt">&quot;txid&quot;</span><span class="fu">:</span> <span class="st">&quot;9e662c19bbd5c8b011d60ddb86f15d115b365e243c333780e5833d399167f102&quot;</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="fu">}</span></a></code></pre></div>
+<p>After updating you'll find the details of the same key/value entry in blockchain will reflect the new data.</p>
+<pre class="sourceCode shell"><code>$ ./komodo-cli kvsearch hello</code></pre>
+<p>Output</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="dt">&quot;coin&quot;</span><span class="fu">:</span> <span class="st">&quot;KMD&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">&quot;currentheight&quot;</span><span class="fu">:</span> <span class="dv">406153</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="st">&quot;hello&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="dt">&quot;keylen&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="dv">406151</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  <span class="dt">&quot;expiration&quot;</span><span class="fu">:</span> <span class="dv">407591</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">  <span class="dt">&quot;flags&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">  <span class="dt">&quot;value&quot;</span><span class="fu">:</span> <span class="st">&quot;ehlo world&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">  <span class="dt">&quot;valuesize&quot;</span><span class="fu">:</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="fu">}</span></a></code></pre></div>
+<p>You can also set custom expiry date for the key/value with the following example command:</p>
+<pre class="sourceCode shell"><code>./komodo-cli kvupdate hello &quot;ehlo world&quot; 125 testpassphrase</code></pre>
+<p>kvupdate = command</p>
+<p>hello = key</p>
+<p>&quot;ehlo world&quot; = value</p>
+<p>125 = days (will set 1440 blocks per day x 125)</p>
+<p>testpassphrase = passphrase for key hello</p>
+<h2 id="faq">FAQ</h2>
+<blockquote>
+<p>* How much does KV storage cost? A. You pay a transaction fee depending on both the key <strong>and</strong> value size. But it depends on which chain you want to store the kv-entry. You can use a Komodo Asset Chain and pay the fee in the Asset Chain's tokens or you can use KV chain and use it there. But each assetchain has the KV capability. So you could even use your own chain for it (due to difference in costs).</p>
+</blockquote>

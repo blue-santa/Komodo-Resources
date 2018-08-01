@@ -1,0 +1,2134 @@
+<h1 id="komodo---api---documentation">Komodo - API - Documentation</h1>
+<p>You can access this API while <code>komodod</code> is running. Just go to another terminal and run <code>./komodo-cli help</code>.</p>
+<p>For help about a particular API option execute <code>./komodo-cli help getwalletinfo</code></p>
+<p>In some of the explanation of API calls if you find <code>Zcash</code> consider it replaced by <code>Komodo</code> and <code>zcashaddress</code> replaced by <code>komodoaddress</code></p>
+<p><span data-role="doc">Guide to install Komodo &lt;install-Komodo-manually&gt;</span></p>
+<h2 id="list-of-api-by-category">List of API by Category</h2>
+<p>Click any of the api options below to be taken to their summary. Then navigate using the links in the Navigation bar on the left side. Or press the <code>Home</code> button on your keyboard to come back to the top again. As the docs are full of code samples and command-line outputs, it's best viewed on a laptop/desktop (i.e, any device that is bigger than a handheld).</p>
+<h3 id="category-addressindex-addressindex"><span data-role="ref">Category: Addressindex &lt;Addressindex&gt;</span></h3>
+<p><span data-role="ref">getaddressbalance</span>, <span data-role="ref">getaddressdeltas</span>, <span data-role="ref">getaddressmempool</span>, <span data-role="ref">getaddresstxids</span>, <span data-role="ref">getaddressutxos</span></p>
+<h3 id="category-blockchain-blockchain"><span data-role="ref">Category: Blockchain &lt;Blockchain&gt;</span></h3>
+<p><span data-role="ref">MoMoMdata symbol kmdheight notarized_height</span>, <span data-role="ref">allMoMs kmdstarti kmdendi</span>, <span data-role="ref">calc_MoM height MoMdepth</span>, <span data-role="ref">getbestblockhash</span>, <span data-role="ref">getblock &quot;hash|height&quot; ( verbose )</span>, <span data-role="ref">getblockchaininfo</span>, <span data-role="ref">getblockcount</span></p>
+<p><span data-role="ref">getblockhash index</span>, <span data-role="ref">getblockhashes timestamp</span>, <span data-role="ref">getblockheader &quot;hash&quot; ( verbose )</span>, <span data-role="ref">getchaintips</span>, <span data-role="ref">getdifficulty</span>, <span data-role="ref">getmempoolinfo</span>, <span data-role="ref">getrawmempool ( verbose )</span>, <span data-role="ref">getspentinfo</span>, <span data-role="ref">gettxout &quot;txid&quot; n ( includemempool )</span>, <span data-role="ref">gettxoutproof [&quot;txid&quot;,...] ( blockhash )</span>, <span data-role="ref">gettxoutsetinfo</span>, <span data-role="ref">height_MoM height</span>, <span data-role="ref">kvsearch key</span>, <span data-role="ref">kvupdate key value flags/passphrase</span>, <span data-role="ref">minerids needs height</span>, <span data-role="ref">notaries height timestamp</span>, <span data-role="ref">paxpending needs no args</span>, <span data-role="ref">paxprice &quot;base&quot; &quot;rel&quot; height</span>, <span data-role="ref">paxprices &quot;base&quot; &quot;rel&quot; maxsamples</span>, <span data-role="ref">txMoMproof needs a txid</span>, <span data-role="ref">verifychain ( checklevel numblocks )</span>, <span data-role="ref">verifytxoutproof &quot;proof&quot;</span></p>
+<h3 id="category-control-control"><span data-role="ref">Category: Control &lt;Control&gt;</span></h3>
+<p><span data-role="ref">getinfo</span>, <span data-role="ref">help ( &quot;command&quot; )</span>, <span data-role="ref">stop &lt;komodo-api-stop&gt;</span></p>
+<h3 id="category-disclosure-disclosure"><span data-role="ref">Category: Disclosure &lt;Disclosure&gt;</span></h3>
+<p><span data-role="ref">z_getpaymentdisclosure &quot;txid&quot; &quot;js_index&quot; &quot;output_index&quot; (&quot;message&quot;)</span>, <span data-role="ref">z_validatepaymentdisclosure &quot;paymentdisclosure&quot;</span></p>
+<h3 id="category-generating-generating"><span data-role="ref">Category: Generating &lt;Generating&gt;</span></h3>
+<p><span data-role="ref">generate numblocks</span>, <span data-role="ref">getgenerate</span>, <span data-role="ref">setgenerate generate ( genproclimit )</span></p>
+<h3 id="category-mining-mining"><span data-role="ref">Category: Mining &lt;Mining&gt;</span></h3>
+<p><span data-role="ref">getblocksubsidy height</span>, <span data-role="ref">getblocktemplate ( &quot;jsonrequestobject&quot; )</span>, <span data-role="ref">getlocalsolps</span>, <span data-role="ref">getmininginfo</span>, <span data-role="ref">getnetworkhashps ( blocks height )</span>, <span data-role="ref">getnetworksolps ( blocks height )</span>, <span data-role="ref">prioritisetransaction \&lt;txid\&gt; \&lt;priority delta\&gt; \&lt;fee delta\&gt;</span>, <span data-role="ref">submitblock &quot;hexdata&quot; ( &quot;jsonparametersobject&quot; )</span></p>
+<h3 id="category-network-network"><span data-role="ref">Category: Network &lt;Network&gt;</span></h3>
+<p><span data-role="ref">addnode &quot;node&quot; &quot;add|remove|onetry&quot;</span>, <span data-role="ref">clearbanned</span>, <span data-role="ref">disconnectnode &quot;node&quot;</span>, <span data-role="ref">getaddednodeinfo dns ( &quot;node&quot; )</span>, <span data-role="ref">getconnectioncount</span>, <span data-role="ref">getdeprecationinfo</span>, <span data-role="ref">getnettotals</span>, <span data-role="ref">getnetworkinfo</span>, <span data-role="ref">getpeerinfo</span>, <span data-role="ref">listbanned</span>, <span data-role="ref">ping</span>, <span data-role="ref">setban &quot;ip(/netmask)&quot; &quot;add|remove&quot; (bantime) (absolute)</span></p>
+<h3 id="category-rawtransactions-rawtransactions"><span data-role="ref">Category: Rawtransactions &lt;Rawtransactions&gt;</span></h3>
+<p><span data-role="ref">createrawtransaction [{&quot;txid&quot;:&quot;id&quot;,&quot;vout&quot;:n},...] {&quot;address&quot;:amount,...}</span>, <span data-role="ref">decoderawtransaction &quot;hexstring&quot;</span>, <span data-role="ref">decodescript &quot;hex&quot;</span>, <span data-role="ref">fundrawtransaction &quot;hexstring&quot;</span>, <span data-role="ref">getrawtransaction &quot;txid&quot; ( verbose )</span>, <span data-role="ref">sendrawtransaction &quot;hexstring&quot; ( allowhighfees )</span>, <span data-role="ref">signrawtransaction &quot;hexstring&quot; ( [{&quot;txid&quot;:&quot;id&quot;,&quot;vout&quot;:n,&quot;scriptPubKey&quot;:&quot;hex&quot;,&quot;redeemScript&quot;:&quot;hex&quot;},...] [&quot;privatekey1&quot;,...] sighashtype )</span></p>
+<h3 id="category-util-util"><span data-role="ref">Category: Util &lt;Util&gt;</span></h3>
+<p><span data-role="ref">createmultisig nrequired [&quot;key&quot;,...]</span>, <span data-role="ref">estimatefee nblocks</span>, <span data-role="ref">estimatepriority nblocks</span>, <span data-role="ref">invalidateblock &quot;hash&quot;</span>, <span data-role="ref">jumblr_deposit &quot;depositaddress&quot;</span>, <span data-role="ref">jumblr_pause</span>, <span data-role="ref">jumblr_resume</span>, <span data-role="ref">jumblr_secret &quot;secretaddress&quot;</span>, <span data-role="ref">reconsiderblock &quot;hash&quot;</span>, <span data-role="ref">validateaddress &quot;komodoaddress&quot;</span>, <span data-role="ref">verifymessage &quot;komodoaddress&quot; &quot;signature&quot; &quot;message&quot;</span>, <span data-role="ref">z_validateaddress &quot;zaddr&quot;</span></p>
+<h3 id="category-wallet-wallet"><span data-role="ref">Category: Wallet &lt;Wallet&gt;</span></h3>
+<p><span data-role="ref">addmultisigaddress nrequired [&quot;key&quot;,...] ( &quot;account&quot; )</span>, <span data-role="ref">backupwallet &quot;destination&quot;</span>, <span data-role="ref">dumpprivkey &quot;komodoaddress&quot;</span>, <span data-role="ref">dumpwallet &quot;filename&quot;</span>, <span data-role="ref">encryptwallet &quot;passphrase&quot;</span>, <span data-role="ref">getaccount &quot;KMD_address&quot;</span>, <span data-role="ref">getaccountaddress &quot;account&quot;</span>, <span data-role="ref">getaddressesbyaccount &quot;account&quot;</span>, <span data-role="ref">getbalance ( &quot;account&quot; minconf includeWatchonly )</span>, <span data-role="ref">getnewaddress ( &quot;account&quot; )</span>, <span data-role="ref">getrawchangeaddress</span>, <span data-role="ref">getreceivedbyaccount &quot;account&quot; ( minconf )</span>, <span data-role="ref">getreceivedbyaddress &quot;KMD_address&quot; ( minconf )</span>, <span data-role="ref">gettransaction &quot;txid&quot; ( includeWatchonly )</span>, <span data-role="ref">getunconfirmedbalance</span>, <span data-role="ref">getwalletinfo</span>, <span data-role="ref">importaddress &quot;address&quot; ( &quot;label&quot; rescan )</span>, <span data-role="ref">importprivkey &quot;komodoprivkey&quot; ( &quot;label&quot; rescan )</span>, <span data-role="ref">importwallet &quot;filename&quot;</span>, <span data-role="ref">keypoolrefill ( newsize )</span>, <span data-role="ref">listaccounts ( minconf includeWatchonly)</span>, <span data-role="ref">listaddressgroupings</span>, <span data-role="ref">listlockunspent</span>, <span data-role="ref">listreceivedbyaccount ( minconf includeempty includeWatchonly)</span>, <span data-role="ref">listreceivedbyaddress ( minconf includeempty includeWatchonly)</span>, <span data-role="ref">listsinceblock ( &quot;blockhash&quot; target-confirmations includeWatchonly)</span>, <span data-role="ref">listtransactions ( &quot;account&quot; count from includeWatchonly)</span>, <span data-role="ref">listunspent ( minconf maxconf  [&quot;address&quot;,...] )</span>, <span data-role="ref">lockunspent unlock [{&quot;txid&quot;:&quot;txid&quot;,&quot;vout&quot;:n},...]</span>, <span data-role="ref">move &quot;fromaccount&quot; &quot;toaccount&quot; amount ( minconf &quot;comment&quot; )</span>, <span data-role="ref">resendwallettransactions</span>, <span data-role="ref">sendfrom &quot;fromaccount&quot; &quot;toKMDaddress&quot; amount ( minconf &quot;comment&quot; &quot;comment-to&quot; )</span>, <span data-role="ref">sendmany &quot;fromaccount&quot; {&quot;address&quot;:amount,...} ( minconf &quot;comment&quot; [&quot;address&quot;,...] )</span>, <span data-role="ref">sendtoaddress &quot;KMD_address&quot; amount ( &quot;comment&quot; &quot;comment-to&quot; subtractfeefromamount )</span>, <span data-role="ref">setaccount &quot;KMD_address&quot; &quot;account&quot;</span>, <span data-role="ref">settxfee amount</span>, <span data-role="ref">signmessage &quot;KMD address&quot; &quot;message&quot;</span>, <span data-role="ref">z_exportkey &quot;zaddr&quot;</span>, <span data-role="ref">z_exportviewingkey &quot;zaddr&quot;</span>, <span data-role="ref">z_exportwallet &quot;filename&quot;</span>, <span data-role="ref">z_getbalance &quot;address&quot; ( minconf )</span>, <span data-role="ref">z_getnewaddress</span>, <span data-role="ref">z_getoperationresult ([&quot;operationid&quot;, ...])</span>, <span data-role="ref">z_getoperationstatus ([&quot;operationid&quot;, ...])</span>, <span data-role="ref">z_gettotalbalance ( minconf includeWatchonly )</span>, <span data-role="ref">z_importkey &quot;zkey&quot; ( rescan startHeight )</span>, <span data-role="ref">z_importviewingkey &quot;vkey&quot; ( rescan startHeight )</span>, <span data-role="ref">z_importwallet &quot;filename&quot;</span>, <span data-role="ref">z_listaddresses ( includeWatchonly )</span>, <span data-role="ref">z_listoperationids</span>, <span data-role="ref">z_listreceivedbyaddress &quot;address&quot; ( minconf )</span>, <span data-role="ref">z_mergetoaddress [&quot;fromaddress&quot;, ...] &quot;toaddress&quot; ( fee ) ( transparent_limit ) ( shielded_limit ) ( memo )</span>, <span data-role="ref">z_sendmany &quot;fromaddress&quot; [{&quot;address&quot;:...,&quot;amount&quot;:...},...] ( minconf ) ( fee )</span>, <span data-role="ref">z_shieldcoinbase &quot;fromaddress&quot; &quot;tozaddress&quot; ( fee ) ( limit )</span>, <span data-role="ref">zcbenchmark benchmarktype samplecount</span>, <span data-role="ref">zcrawjoinsplit rawtx inputs outputs vpub_old vpub_new</span>, <span data-role="ref">zcrawkeygen</span>, <span data-role="ref">zcrawreceive zcsecretkey encryptednote</span>, <span data-role="ref">zcsamplejoinsplit</span></p>
+<h2 id="addressindex">Addressindex</h2>
+<h3 id="getaddressbalance">getaddressbalance</h3>
+<p>Returns the balance for an address(es) (requires addressindex to be enabled).</p>
+<p>Arguments:</p>
+<pre><code>{
+  &quot;addresses&quot;
+    [
+      &quot;address&quot;  (string) The base58check encoded address
+      ,...
+    ]
+}</code></pre>
+<p>Result: :</p>
+<pre><code>{
+  &quot;balance&quot;  (string) The current balance in satoshis
+  &quot;received&quot;  (string) The total number of satoshis received (including change)
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddressbalance &#39;{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddressbalance&quot;, &quot;params&quot;: [{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaddressdeltas">getaddressdeltas</h3>
+<p>Returns all changes for an address (requires addressindex to be enabled).</p>
+<p>Arguments:</p>
+<pre><code>{
+  &quot;addresses&quot;
+    [
+      &quot;address&quot;  (string) The base58check encoded address
+      ,...
+    ]
+  &quot;start&quot; (number) The start block height
+  &quot;end&quot; (number) The end block height
+  &quot;chainInfo&quot; (boolean) Include chain info in results, only applies if start and end specified
+}</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;satoshis&quot;  (number) The difference of satoshis
+    &quot;txid&quot;  (string) The related txid
+    &quot;index&quot;  (number) The related input or output index
+    &quot;height&quot;  (number) The block height
+    &quot;address&quot;  (string) The base58check encoded address
+  }
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddressdeltas &#39;{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddressdeltas&quot;, &quot;params&quot;: [{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaddressmempool">getaddressmempool</h3>
+<p>Returns all mempool deltas for an address (requires addressindex to be enabled).</p>
+<p>Arguments:</p>
+<pre><code>{
+  &quot;addresses&quot;
+    [
+      &quot;address&quot;  (string) The base58check encoded address
+      ,...
+    ]
+}</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;address&quot;  (string) The base58check encoded address
+    &quot;txid&quot;  (string) The related txid
+    &quot;index&quot;  (number) The related input or output index
+    &quot;satoshis&quot;  (number) The difference of satoshis
+    &quot;timestamp&quot;  (number) The time the transaction entered the mempool (seconds)
+    &quot;prevtxid&quot;  (string) The previous txid (if spending)
+    &quot;prevout&quot;  (string) The previous transaction output index (if spending)
+  }
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddressmempool &#39;{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddressmempool&quot;, &quot;params&quot;: [{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaddresstxids">getaddresstxids</h3>
+<p>Returns the txids for an address(es) (requires addressindex to be enabled).</p>
+<p>Arguments:</p>
+<pre><code>{
+  &quot;addresses&quot;
+    [
+      &quot;address&quot;  (string) The base58check encoded address
+      ,...
+    ]
+  &quot;start&quot; (number) The start block height
+  &quot;end&quot; (number) The end block height
+}</code></pre>
+<p>Result:</p>
+<pre><code>[
+  &quot;transactionid&quot;  (string) The transaction id
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddresstxids &#39;{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddresstxids&quot;, &quot;params&quot;: [{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaddressutxos">getaddressutxos</h3>
+<p>Returns all unspent outputs for an address (requires addressindex to be enabled).</p>
+<p>Arguments:</p>
+<pre><code>{
+  &quot;addresses&quot;
+    [
+      &quot;address&quot;  (string) The base58check encoded address
+      ,...
+    ],
+  &quot;chainInfo&quot;  (boolean) Include chain info with results
+}</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;address&quot;  (string) The address base58check encoded
+    &quot;txid&quot;  (string) The output txid
+    &quot;height&quot;  (number) The block height
+    &quot;outputIndex&quot;  (number) The output index
+    &quot;script&quot;  (strin) The script hex encoded
+    &quot;satoshis&quot;  (number) The number of satoshis of the output
+  }
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddressutxos &#39;{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddressutxos&quot;, &quot;params&quot;: [{&quot;addresses&quot;: [&quot;12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX&quot;]}] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h2 id="blockchain">Blockchain</h2>
+<h3 id="momomdata-symbol-kmdheight-notarized_height">MoMoMdata symbol kmdheight notarized_height</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="allmoms-kmdstarti-kmdendi">allMoMs kmdstarti kmdendi</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="calc_mom-height-momdepth">calc_MoM height MoMdepth</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="getbestblockhash">getbestblockhash</h3>
+<p>Returns the hash of the best (tip) block in the longest block chain.</p>
+<p>Result:</p>
+<pre><code>&quot;hex&quot;      (string) the block hash hex encoded</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getbestblockhash 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getbestblockhash&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getblock-hashheight-verbose">getblock &quot;hash|height&quot; ( verbose )</h3>
+<ul>
+<li>If verbose is <code>false</code>, returns a string that is serialized, hex-encoded data for block 'hash|height'.</li>
+<li>If verbose is <code>true</code>, returns an Object with information about block &lt;hash|height&gt;.</li>
+</ul>
+<p>Arguments:</p>
+<pre><code>1. &quot;hash|height&quot;     (string, required) The block hash or height
+2. verbose           (boolean, optional, default=true) true for a json object, false for the hex encoded data</code></pre>
+<p>Result (for verbose = <code>true</code>):</p>
+<pre><code>{
+    &quot;hash&quot;: &quot;hash&quot;,       (string) the block hash (same as provided hash)</code></pre>
+<blockquote>
+<p>&quot;confirmations&quot;: n, (numeric) The number of confirmations, or -1 if the block is not on the main chain &quot;size&quot;: n, (numeric) The block size &quot;height&quot;: n, (numeric) The block height or index (same as provided height) &quot;version&quot;: n, (numeric) The block version &quot;merkleroot&quot;: &quot;xxxx&quot;, (string) The merkle root &quot;tx&quot;: [ (array of string) The transaction ids &quot;transactionid&quot; (string) The transaction id ,... ], &quot;time&quot;: ttt, (numeric) The block time in seconds since epoch (Jan 1 1970 GMT) &quot;nonce&quot;: n, (numeric) The nonce &quot;bits&quot;: &quot;1d00ffff&quot;, (string) The bits &quot;difficulty&quot;: x.xxx, (numeric) The difficulty &quot;previousblockhash&quot;: &quot;hash&quot;, (string) The hash of the previous block &quot;nextblockhash&quot;: &quot;hash&quot; (string) The hash of the next block }</p>
+</blockquote>
+<p>Result (for verbose=<code>false</code>):</p>
+<pre><code>&quot;data&quot;             (string) A string that is serialized, hex-encoded data for block &#39;hash&#39;.</code></pre>
+<p>Examples: :</p>
+<pre><code>&gt; komodo-cli getblock &quot;00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblock&quot;, &quot;params&quot;: [&quot;00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/
+&gt; komodo-cli getblock 12800
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblock&quot;, &quot;params&quot;: [12800] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getblockchaininfo">getblockchaininfo</h3>
+<p>Returns an object containing various state info regarding block chain processing.</p>
+<blockquote>
+<p><em>Note that when the chain tip is at the last block before a network upgrade activation,</em> <code>consensus.chaintip != consensus.nextblock</code>.</p>
+</blockquote>
+<p>Result:</p>
+<pre><code>{
+    &quot;chain&quot;: &quot;xxxx&quot;,        (string) current network name as defined in BIP70 (main, test, regtest)</code></pre>
+<blockquote>
+<p>&quot;blocks&quot;: xxxxxx, (numeric) the current number of blocks processed in the server &quot;headers&quot;: xxxxxx, (numeric) the current number of headers we have validated &quot;bestblockhash&quot;: &quot;...&quot;, (string) the hash of the currently best block &quot;difficulty&quot;: xxxxxx, (numeric) the current difficulty &quot;verificationprogress&quot;: xxxx, (numeric) estimate of verification progress [0..1 ] &quot;chainwork&quot;: &quot;xxxx&quot; (string) total amount of work in active chain, in hexadecimal &quot;commitments&quot;: xxxxxx, (numeric) the current number of note commitments in the commitment tree &quot;softforks&quot;: [ (array) status of softforks in progress { &quot;id&quot;: &quot;xxxx&quot;, (string) name of softfork &quot;version&quot;: xx, (numeric) block version &quot;enforce&quot;: { (object) progress toward enforcing the softfork rules for new-version blocks &quot;status&quot;: xx, (boolean) true if threshold reached &quot;found&quot;: xx, (numeric) number of blocks with the new version found &quot;required&quot;: xx, (numeric) number of blocks required to trigger &quot;window&quot;: xx, (numeric) maximum size of examined window of recent blocks }, &quot;reject&quot;: { ... } (object) progress toward rejecting pre-softfork blocks (same fields as &quot;enforce&quot;) }, ... ], &quot;upgrades&quot;: { (object) status of network upgrades &quot;xxxx&quot;: { (string) branch ID of the upgrade &quot;name&quot;: &quot;xxxx&quot;, (string) name of upgrade &quot;activationheight&quot;: xxxxxx, (numeric) block height of activation &quot;status&quot;: &quot;xxxx&quot;, (string) status of upgrade &quot;info&quot;: &quot;xxxx&quot;, (string) additional information about upgrade }, ... }, &quot;consensus&quot;: { (object) branch IDs of the current and upcoming consensus rules &quot;chaintip&quot;: &quot;xxxxxxxx&quot;, (string) branch ID used to validate the current chain tip &quot;nextblock&quot;: &quot;xxxxxxxx&quot; (string) branch ID that the next block will be validated under } }</p>
+</blockquote>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblockchaininfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblockchaininfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getblockcount">getblockcount</h3>
+<p>Returns the number of blocks in the best valid block chain.</p>
+<p>Result:</p>
+<pre><code>n    (numeric) The current block count</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblockcount 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblockcount&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getblockhash-index">getblockhash index</h3>
+<p>Returns hash of block in best-block-chain at index provided.</p>
+<p>Arguments:</p>
+<pre><code>1. index         (numeric, required) The block index</code></pre>
+<p>Result:</p>
+<pre><code>&quot;hash&quot;         (string) The block hash</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblockhash 1000
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblockhash&quot;, &quot;params&quot;: [1000] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getblockhashes-timestamp">getblockhashes timestamp</h3>
+<p>Returns array of hashes of blocks within the timestamp range provided.</p>
+<p>Arguments:</p>
+<pre><code>1. high         (numeric, required) The newer block timestamp
+2. low          (numeric, required) The older block timestamp
+3. options      (string, required) A json object
+{
+  &quot;noOrphans&quot;:true   (boolean) will only include blocks on the main chain
+  &quot;logicalTimes&quot;:true   (boolean) will include logical timestamps with hashes
+}</code></pre>
+<p>Result:</p>
+<pre><code>[
+      &quot;hash&quot;         (string) The block hash
+]
+[
+  {
+    &quot;blockhash&quot;: (string) The block hash
+    &quot;logicalts&quot;: (numeric) The logical timestamp
+  }
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblockhashes 1231614698 1231024505
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblockhashes&quot;, &quot;params&quot;: [1231614698, 1231024505] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/
+&gt; komodo-cli getblockhashes 1231614698 1231024505 &#39;{&quot;noOrphans&quot;:false, &quot;logicalTimes&quot;:true}&#39;</code></pre>
+<h3 id="getblockheader-hash-verbose">getblockheader &quot;hash&quot; ( verbose )</h3>
+<p>If verbose is false, returns a string that is serialized, hex-encoded data for blockheader 'hash'. If verbose is true, returns an Object with information about blockheader &lt;hash&gt;.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hash&quot;          (string, required) The block hash
+2. verbose           (boolean, optional, default=true) true for a json object, false for the hex encoded data</code></pre>
+<p>Result (for verbose = true):</p>
+<pre><code>{
+  &quot;hash&quot; : &quot;hash&quot;,     (string) the block hash (same as provided)
+  &quot;confirmations&quot; : n,   (numeric) The number of confirmations, or -1 if the block is not on the main chain
+  &quot;height&quot; : n,          (numeric) The block height or index
+  &quot;version&quot; : n,         (numeric) The block version
+  &quot;merkleroot&quot; : &quot;xxxx&quot;, (string) The merkle root
+  &quot;time&quot; : ttt,          (numeric) The block time in seconds since epoch (Jan 1 1970 GMT)
+  &quot;nonce&quot; : n,           (numeric) The nonce
+  &quot;bits&quot; : &quot;1d00ffff&quot;, (string) The bits
+  &quot;difficulty&quot; : x.xxx,  (numeric) The difficulty
+  &quot;previousblockhash&quot; : &quot;hash&quot;,  (string) The hash of the previous block
+  &quot;nextblockhash&quot; : &quot;hash&quot;       (string) The hash of the next block
+}</code></pre>
+<p>Result (for verbose=false):</p>
+<pre><code>&quot;data&quot;             (string) A string that is serialized, hex-encoded data for block &#39;hash&#39;.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblockheader &quot;00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblockheader&quot;, &quot;params&quot;: [&quot;00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getchaintips">getchaintips</h3>
+<p>Return information about all known tips in the block tree, including the main chain as well as orphaned branches.</p>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;height&quot;: xxxx,         (numeric) height of the chain tip
+    &quot;hash&quot;: &quot;xxxx&quot;,         (string) block hash of the tip
+    &quot;branchlen&quot;: 0          (numeric) zero for main chain
+    &quot;status&quot;: &quot;active&quot;      (string) &quot;active&quot; for the main chain
+  },
+  {
+    &quot;height&quot;: xxxx,
+    &quot;hash&quot;: &quot;xxxx&quot;,
+    &quot;branchlen&quot;: 1          (numeric) length of branch connecting the tip to the main chain
+    &quot;status&quot;: &quot;xxxx&quot;        (string) status of the chain (active, valid-fork, valid-headers, headers-only, invalid)
+  }
+]</code></pre>
+<p>Possible values for status:</p>
+<pre><code>1.  &quot;invalid&quot;               This branch contains at least one invalid block
+2.  &quot;headers-only&quot;          Not all blocks for this branch are available, but the headers are valid
+3.  &quot;valid-headers&quot;         All blocks are available for this branch, but they were never fully validated
+4.  &quot;valid-fork&quot;            This branch is not part of the active chain, but is fully validated
+5.  &quot;active&quot;                This is the tip of the active main chain, which is certainly valid</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getchaintips 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getchaintips&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getdifficulty">getdifficulty</h3>
+<p>Returns the proof-of-work difficulty as a multiple of the minimum difficulty.</p>
+<p>Result:</p>
+<pre><code>n.nnn       (numeric) the proof-of-work difficulty as a multiple of the minimum difficulty.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getdifficulty 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getdifficulty&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getmempoolinfo">getmempoolinfo</h3>
+<p>Returns details on the active state of the TX memory pool.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;size&quot;: xxxxx                (numeric) Current tx count
+  &quot;bytes&quot;: xxxxx               (numeric) Sum of all tx sizes
+  &quot;usage&quot;: xxxxx               (numeric) Total memory usage for the mempool
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getmempoolinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getmempoolinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getrawmempool-verbose">getrawmempool ( verbose )</h3>
+<p>Returns all transaction ids in memory pool as a json array of string transaction ids.</p>
+<p>Arguments:</p>
+<pre><code>1. verbose           (boolean, optional, default=false) true for a json object, false for array of transaction ids</code></pre>
+<p>Result: (for verbose = false):</p>
+<pre><code>[                     (json array of string)
+  &quot;transactionid&quot;     (string) The transaction id
+  ,...
+]</code></pre>
+<p>Result: (for verbose = true):</p>
+<pre><code>{                           (json object)
+  &quot;transactionid&quot; : {       (json object)
+    &quot;size&quot; : n,             (numeric) transaction size in bytes
+    &quot;fee&quot; : n,              (numeric) transaction fee in ZEC
+    &quot;time&quot; : n,             (numeric) local time transaction entered pool in seconds since 1 Jan 1970 GMT
+    &quot;height&quot; : n,           (numeric) block height when transaction entered pool
+    &quot;startingpriority&quot; : n, (numeric) priority when transaction entered pool
+    &quot;currentpriority&quot; : n,  (numeric) transaction priority now
+    &quot;depends&quot; : [           (array) unconfirmed transactions used as inputs for this transaction
+    &quot;transactionid&quot;,    (string) parent transaction id
+       ...]
+  }, ...
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getrawmempool true
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getrawmempool&quot;, &quot;params&quot;: [true] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getspentinfo">getspentinfo</h3>
+<p>Returns the txid and index where an output is spent.</p>
+<p>Arguments:</p>
+<pre><code>{
+  &quot;txid&quot; (string) The hex string of the txid
+  &quot;index&quot; (number) The start block height
+}</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;txid&quot;  (string) The transaction id
+  &quot;index&quot;  (number) The spending input index
+  ,...
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getspentinfo &#39;{&quot;txid&quot;: &quot;0437cd7f8525ceed2324359c2d0ba26006d92d856a9c20fa0241106ee5a597c9&quot;, &quot;index&quot;: 0}&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getspentinfo&quot;, &quot;params&quot;: [{&quot;txid&quot;: &quot;0437cd7f8525ceed2324359c2d0ba26006d92d856a9c20fa0241106ee5a597c9&quot;, &quot;index&quot;: 0}] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="gettxout-txid-n-includemempool">gettxout &quot;txid&quot; n ( includemempool )</h3>
+<p>Returns details about an unspent transaction output.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;txid&quot;       (string, required) The transaction id
+2. n              (numeric, required) vout value
+3. includemempool  (boolean, optional) Whether to include the mempool</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;bestblock&quot; : &quot;hash&quot;,    (string) the block hash
+  &quot;confirmations&quot; : n,       (numeric) The number of confirmations
+  &quot;value&quot; : x.xxx,           (numeric) The transaction value in ZEC
+&quot;scriptPubKey&quot; : {         (json object)
+     &quot;asm&quot; : &quot;code&quot;,       (string) 
+     &quot;hex&quot; : &quot;hex&quot;,        (string) 
+     &quot;reqSigs&quot; : n,          (numeric) Number of required signatures
+     &quot;type&quot; : &quot;pubkeyhash&quot;, (string) The type, eg pubkeyhash
+     &quot;addresses&quot; : [          (array of string) array of Zcash addresses
+        &quot;zcashaddress&quot;        (string) Zcash address
+        ,...
+     ]
+},
+&quot;version&quot; : n,              (numeric) The version
+&quot;coinbase&quot; : true|false     (boolean) Coinbase or not
+}</code></pre>
+<p>Examples:</p>
+<p>Get unspent transactions</p>
+<pre><code>&gt; komodo-cli listunspent </code></pre>
+<p>View the details</p>
+<pre><code>&gt; komodo-cli gettxout &quot;txid&quot; 1</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;gettxout&quot;, &quot;params&quot;: [&quot;txid&quot;, 1] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="gettxoutproof-txid...-blockhash">gettxoutproof [&quot;txid&quot;,...] ( blockhash )</h3>
+<p>Returns a hex-encoded proof that &quot;txid&quot; was included in a block.</p>
+<p><strong>NOTE:</strong> By default this function only works sometimes. This is when there is an unspent output in the utxo for this transaction. To make it always work, you need to maintain a transaction index, using the -txindex command line option or specify the block in which the transaction is included in manually (by blockhash).</p>
+<p>Return the raw transaction data.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;txids&quot;       (string) A json array of txids to filter
+    [
+      &quot;txid&quot;     (string) A transaction hash
+      ,...
+    ]
+2. &quot;block hash&quot;  (string, optional) If specified, looks for txid in the block with this hash</code></pre>
+<p>Result:</p>
+<pre><code>&quot;data&quot;           (string) A string that is a serialized, hex-encoded data for the proof.</code></pre>
+<h3 id="gettxoutsetinfo">gettxoutsetinfo</h3>
+<p>Returns statistics about the unspent transaction output set. Note this call may take some time.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;height&quot;:n,     (numeric) The current block height (index)
+  &quot;bestblock&quot;: &quot;hex&quot;,   (string) the best block hash hex
+  &quot;transactions&quot;: n,      (numeric) The number of transactions
+  &quot;txouts&quot;: n,            (numeric) The number of output transactions
+ &quot;bytes_serialized&quot;: n,  (numeric) The serialized size
+  &quot;hash_serialized&quot;: &quot;hash&quot;,   (string) The serialized hash
+  &quot;total_amount&quot;: x.xxx          (numeric) The total amount
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli gettxoutsetinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;gettxoutsetinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="height_mom-height">height_MoM height</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="kvsearch-key">kvsearch key</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="kvupdate-key-value-flagspassphrase">kvupdate key value flags/passphrase</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="minerids-needs-height">minerids needs height</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="notaries-height-timestamp">notaries height timestamp</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="paxpending-needs-no-args">paxpending needs no args</h3>
+<p><code>DEPRECATED</code></p>
+<h3 id="paxprice-base-rel-height">paxprice &quot;base&quot; &quot;rel&quot; height</h3>
+<p><code>DEPRECATED</code></p>
+<h3 id="paxprices-base-rel-maxsamples">paxprices &quot;base&quot; &quot;rel&quot; maxsamples</h3>
+<p><code>DEPRECATED</code></p>
+<h3 id="txmomproof-needs-a-txid">txMoMproof needs a txid</h3>
+<p><code>COMING SOON</code></p>
+<h3 id="verifychain-checklevel-numblocks">verifychain ( checklevel numblocks )</h3>
+<p>Verifies blockchain database.</p>
+<p>Arguments:</p>
+<pre><code>1. checklevel   (numeric, optional, 0-4, default=3) How thorough the block verification is.
+2. numblocks    (numeric, optional, default=288, 0=all) The number of blocks to check.</code></pre>
+<p>Result:</p>
+<pre><code>true|false       (boolean) Verified or not</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli verifychain 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;verifychain&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="verifytxoutproof-proof">verifytxoutproof &quot;proof&quot;</h3>
+<p>Verifies that a proof points to a transaction in a block, returning the transaction it commits to and throwing an RPC error if the block is not in our best chain</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;proof&quot;    (string, required) The hex-encoded proof generated by gettxoutproof</code></pre>
+<p>Result:</p>
+<pre><code>[&quot;txid&quot;]      (array, strings) The txid(s) which the proof commits to, or empty array if the proof is invalid</code></pre>
+<h2 id="control">Control</h2>
+<h3 id="getinfo">getinfo</h3>
+<p>Returns an object containing various state info.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;version&quot;: xxxxx,           (numeric) the server version
+  &quot;protocolversion&quot;: xxxxx,   (numeric) the protocol version
+  &quot;walletversion&quot;: xxxxx,     (numeric) the wallet version
+  &quot;balance&quot;: xxxxxxx,         (numeric) the total Zcash balance of the wallet
+  &quot;blocks&quot;: xxxxxx,           (numeric) the current number of blocks processed in the server
+  &quot;timeoffset&quot;: xxxxx,        (numeric) the time offset
+  &quot;connections&quot;: xxxxx,       (numeric) the number of connections
+  &quot;proxy&quot;: &quot;host:port&quot;,     (string, optional) the proxy used by the server
+  &quot;difficulty&quot;: xxxxxx,       (numeric) the current difficulty
+  &quot;testnet&quot;: true|false,      (boolean) if the server is using testnet or not
+  &quot;keypoololdest&quot;: xxxxxx,    (numeric) the timestamp (seconds since GMT epoch) of the oldest pre-generated key in the key pool
+  &quot;keypoolsize&quot;: xxxx,        (numeric) how many new keys are pre-generated
+  &quot;unlocked_until&quot;: ttt,      (numeric) the timestamp in seconds since epoch (midnight Jan 1 1970 GMT) that the wallet is unlocked for transfers, or 0 if the wallet is locked
+  &quot;paytxfee&quot;: x.xxxx,         (numeric) the transaction fee set in ZEC/kB
+  &quot;relayfee&quot;: x.xxxx,         (numeric) minimum relay fee for non-free transactions in ZEC/kB
+  &quot;errors&quot;: &quot;...&quot;           (string) any error messages
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="help-command">help ( &quot;command&quot; )</h3>
+<p>List all commands, or get help for a specified command.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;command&quot;     (string, optional) The command to get help on</code></pre>
+<p>Result:</p>
+<pre><code>&quot;text&quot;     (string) The help text</code></pre>
+<h3 id="komodo-api-stop">stop</h3>
+<p>Stop Komodo server.</p>
+<h2 id="disclosure">Disclosure</h2>
+<h3 id="z_getpaymentdisclosure-txid-js_index-output_index-message">z_getpaymentdisclosure &quot;txid&quot; &quot;js_index&quot; &quot;output_index&quot; (&quot;message&quot;)</h3>
+<p>Generate a payment disclosure for a given joinsplit output.</p>
+<p><strong>EXPERIMENTAL FEATURE</strong></p>
+<p><strong>WARNING</strong>: Payment disclosure is currently DISABLED. This call always fails.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;txid&quot;            (string, required) 
+2. &quot;js_index&quot;        (string, required) 
+3. &quot;output_index&quot;    (string, required) 
+4. &quot;message&quot;         (string, optional) </code></pre>
+<p>Result:</p>
+<pre><code>&quot;paymentdisclosure&quot;  (string) Hex data string, with &quot;zpd:&quot; prefix.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_getpaymentdisclosure 96f12882450429324d5f3b48630e3168220e49ab7b0f066e5c2935a6b88bb0f2 0 0 &quot;refund&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_getpaymentdisclosure&quot;, &quot;params&quot;: [&quot;96f12882450429324d5f3b48630e3168220e49ab7b0f066e5c2935a6b88bb0f2&quot;, 0, 0, &quot;refund&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_validatepaymentdisclosure-paymentdisclosure">z_validatepaymentdisclosure &quot;paymentdisclosure&quot;</h3>
+<p>Validates a payment disclosure.</p>
+<p><strong>EXPERIMENTAL FEATURE</strong></p>
+<p><strong>WARNING</strong>: Payment disclosure is curretly DISABLED. This call always fails.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;paymentdisclosure&quot;     (string, required) Hex data string, with &quot;zpd:&quot; prefix.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_validatepaymentdisclosure &quot;zpd:706462ff004c561a0447ba2ec51184e6c204...&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_validatepaymentdisclosure&quot;, &quot;params&quot;: [&quot;zpd:706462ff004c561a0447ba2ec51184e6c204...&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h2 id="generating">Generating</h2>
+<h3 id="generate-numblocks">generate numblocks</h3>
+<p>Mine blocks immediately (before the RPC call returns)</p>
+<p><strong>Note</strong>: this function can only be used on the regtest network</p>
+<p>Arguments:</p>
+<pre><code>1. numblocks    (numeric) How many blocks are generated immediately.</code></pre>
+<p>Result:</p>
+<pre><code>[ blockhashes ]     (array) hashes of blocks generated</code></pre>
+<p>Examples:</p>
+<p>Generate 11 blocks</p>
+<pre><code>&gt; komodo-cli generate 11</code></pre>
+<h3 id="getgenerate">getgenerate</h3>
+<p>Return if the server is set to generate coins or not. The default is false. It is set with the command line argument <code>-gen</code> (or <code>komodo.conf</code> setting gen) It can also be set with the <code>setgenerate</code> call.</p>
+<p>Result:</p>
+<pre><code>true|false      (boolean) If the server is set to generate coins or not</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getgenerate 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getgenerate&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="setgenerate-generate-genproclimit">setgenerate generate ( genproclimit )</h3>
+<p>Set 'generate' true or false to turn generation on or off. Generation is limited to 'genproclimit' processors, -1 is unlimited. See the getgenerate call for the current setting.</p>
+<p>Arguments:</p>
+<pre><code>1. generate         (boolean, required) Set to true to turn on generation, off to turn off.
+2. genproclimit     (numeric, optional) Set the processor limit for when generation is on. Can be -1 for unlimited.</code></pre>
+<p>Examples:</p>
+<p>Set the generation on with a limit of one processor</p>
+<pre><code>&gt; komodo-cli setgenerate true 1</code></pre>
+<p>Check the setting</p>
+<pre><code>&gt; komodo-cli getgenerate </code></pre>
+<p>Turn off generation</p>
+<pre><code>&gt; komodo-cli setgenerate false</code></pre>
+<p>Using json rpc</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;setgenerate&quot;, &quot;params&quot;: [true, 1] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h2 id="mining">Mining</h2>
+<h3 id="getblocksubsidy-height">getblocksubsidy height</h3>
+<p>Returns block subsidy reward, taking into account the mining slow start and the founders reward, of block at index provided.</p>
+<p>Arguments:</p>
+<pre><code>1. height         (numeric, optional) The block height.  If not provided, defaults to the current height of the chain.</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;miner&quot; : x.xxx           (numeric) The mining reward amount in KMD.
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblocksubsidy 1000
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblockubsidy&quot;, &quot;params&quot;: [1000] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getblocktemplate-jsonrequestobject">getblocktemplate ( &quot;jsonrequestobject&quot; )</h3>
+<p>If the request parameters include a <code>mode</code> key, that is used to explicitly select between the default 'template' request or a 'proposal'. It returns data needed to construct a block to work on. See <a href="https://en.bitcoin.it/wiki/BIP_0022" class="uri">https://en.bitcoin.it/wiki/BIP_0022</a> for full specification.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;jsonrequestobject&quot;       (string, optional) A json object in the following spec
+     {
+       &quot;mode&quot;:&quot;template&quot;    (string, optional) This must be set to &quot;template&quot; or omitted
+       &quot;capabilities&quot;:[       (array, optional) A list of strings
+           &quot;support&quot;           (string) client side supported feature, &#39;longpoll&#39;, &#39;coinbasetxn&#39;, &#39;coinbasevalue&#39;, &#39;proposal&#39;, &#39;serverlist&#39;, &#39;workid&#39;
+           ,...
+         ]
+     }</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;version&quot; : n,                    (numeric) The block version
+  &quot;previousblockhash&quot; : &quot;xxxx&quot;,    (string) The hash of current highest block
+  &quot;transactions&quot; : [                (array) contents of non-coinbase transactions that should be included in the next block
+      {
+         &quot;data&quot; : &quot;xxxx&quot;,          (string) transaction data encoded in hexadecimal (byte-for-byte)
+         &quot;hash&quot; : &quot;xxxx&quot;,          (string) hash/id encoded in little-endian hexadecimal
+         &quot;depends&quot; : [              (array) array of numbers 
+             n                        (numeric) transactions before this one (by 1-based index in &#39;transactions&#39; list) that must be present in the final block if this one is
+             ,...
+         ],
+         &quot;fee&quot;: n,                   (numeric) difference in value between transaction inputs and outputs (in Satoshis); for coinbase transactions, this is a negative Number of the total collected block fees (ie, not including the block subsidy); if key is not present, fee is unknown and clients MUST NOT assume there isn&#39;t one
+         &quot;sigops&quot; : n,               (numeric) total number of SigOps, as counted for purposes of block limits; if key is not present, sigop count is unknown and clients MUST NOT assume there aren&#39;t any
+         &quot;required&quot; : true|false     (boolean) if provided and true, this transaction must be in the final block
+      }
+      ,...
+  ],
+  &quot;coinbasetxn&quot; : { ...},           (json object) information for coinbase transaction
+  &quot;target&quot; : &quot;xxxx&quot;,               (string) The hash target
+  &quot;mintime&quot; : xxx,                   (numeric) The minimum timestamp appropriate for next block time in seconds since epoch (Jan 1 1970 GMT)
+  &quot;mutable&quot; : [                      (array of string) list of ways the block template may be changed 
+     &quot;value&quot;                         (string) A way the block template may be changed, e.g. &#39;time&#39;, &#39;transactions&#39;, &#39;prevblock&#39;
+     ,...
+  ],
+  &quot;noncerange&quot; : &quot;00000000ffffffff&quot;,   (string) A range of valid nonces
+  &quot;sigoplimit&quot; : n,                 (numeric) limit of sigops in blocks
+  &quot;sizelimit&quot; : n,                  (numeric) limit of block size
+  &quot;curtime&quot; : ttt,                  (numeric) current timestamp in seconds since epoch (Jan 1 1970 GMT)
+  &quot;bits&quot; : &quot;xxx&quot;,                 (string) compressed target of next block
+  &quot;height&quot; : n                      (numeric) The height of the next block
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getblocktemplate 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getblocktemplate&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getlocalsolps">getlocalsolps</h3>
+<p>Returns the average local solutions per second since this node was started. This is the same information shown on the metrics screen (if enabled).</p>
+<p>Result:</p>
+<blockquote>
+<p>xxx.xxxxx (numeric) Solutions per second average</p>
+</blockquote>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getlocalsolps 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getlocalsolps&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getmininginfo">getmininginfo</h3>
+<p>Returns a json object containing mining-related information.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;blocks&quot;: nnn,             (numeric) The current block
+  &quot;currentblocksize&quot;: nnn,   (numeric) The last block size
+  &quot;currentblocktx&quot;: nnn,     (numeric) The last block transaction
+  &quot;difficulty&quot;: xxx.xxxxx    (numeric) The current difficulty
+  &quot;errors&quot;: &quot;...&quot;          (string) Current errors
+  &quot;generate&quot;: true|false     (boolean) If the generation is on or off (see getgenerate or setgenerate calls)
+  &quot;genproclimit&quot;: n          (numeric) The processor limit for generation. -1 if no generation. (see getgenerate or setgenerate calls)
+  &quot;localsolps&quot;: xxx.xxxxx    (numeric) The average local solution rate in Sol/s since this node was started
+  &quot;networksolps&quot;: x          (numeric) The estimated network solution rate in Sol/s
+  &quot;pooledtx&quot;: n              (numeric) The size of the mem pool
+  &quot;testnet&quot;: true|false      (boolean) If using testnet or not
+  &quot;chain&quot;: &quot;xxxx&quot;,         (string) current network name as defined in BIP70 (main, test, regtest)
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getmininginfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getmininginfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getnetworkhashps-blocks-height">getnetworkhashps ( blocks height )</h3>
+<p><strong>DEPRECATED</strong> - left for backwards-compatibility. Use getnetworksolps instead.</p>
+<p>Returns the estimated network solutions per second based on the last n blocks. Pass in [blocks] to override # of blocks, -1 specifies over difficulty averaging window. Pass in [height] to estimate the network speed at the time when a certain block was found.</p>
+<p>Arguments:</p>
+<pre><code>1. blocks     (numeric, optional, default=120) The number of blocks, or -1 for blocks over difficulty averaging window.
+2. height     (numeric, optional, default=-1) To estimate at the time of the given height.</code></pre>
+<p>Result:</p>
+<pre><code>x             (numeric) Solutions per second estimated</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getnetworkhashps 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getnetworkhashps&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getnetworksolps-blocks-height">getnetworksolps ( blocks height )</h3>
+<p>Returns the estimated network solutions per second based on the last n blocks. Pass in [blocks] to override # of blocks, -1 specifies over difficulty averaging window. Pass in [height] to estimate the network speed at the time when a certain block was found.</p>
+<p>Arguments:</p>
+<pre><code>1. blocks     (numeric, optional, default=120) The number of blocks, or -1 for blocks over difficulty averaging window.
+2. height     (numeric, optional, default=-1) To estimate at the time of the given height.</code></pre>
+<p>Result:</p>
+<pre><code>x             (numeric) Solutions per second estimated</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getnetworksolps 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getnetworksolps&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="prioritisetransaction-txid-priority-delta-fee-delta">prioritisetransaction &lt;txid&gt; &lt;priority delta&gt; &lt;fee delta&gt;</h3>
+<p>Accepts the transaction into mined blocks at a higher (or lower) priority</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;txid&quot;       (string, required) The transaction id.
+2. priority delta (numeric, required) The priority to add or subtract.
+              The transaction selection algorithm considers the tx as it would have a higher priority.
+              (priority of a transaction is calculated: coinage * value_in_satoshis / txsize) 
+3. fee delta      (numeric, required) The fee value (in satoshis) to add (or subtract, if negative).
+              The fee is not actually paid, only the algorithm for selecting transactions into a block
+              considers the transaction as it would have paid a higher (or lower) fee.</code></pre>
+<p>Result:</p>
+<pre><code>true              (boolean) Returns true</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli prioritisetransaction &quot;txid&quot; 0.0 10000
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;prioritisetransaction&quot;, &quot;params&quot;: [&quot;txid&quot;, 0.0, 10000] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="submitblock-hexdata-jsonparametersobject">submitblock &quot;hexdata&quot; ( &quot;jsonparametersobject&quot; )</h3>
+<p>Attempts to submit new block to network. The 'jsonparametersobject' parameter is currently ignored. See <a href="https://en.bitcoin.it/wiki/BIP_0022" class="uri">https://en.bitcoin.it/wiki/BIP_0022</a> for full specification.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hexdata&quot;    (string, required) the hex-encoded block data to submit
+2. &quot;jsonparametersobject&quot;     (string, optional) object of optional parameters</code></pre>
+<pre><code>{
+  &quot;workid&quot; : &quot;id&quot;    (string, optional) if the server provided a workid, it MUST be included with submissions
+}</code></pre>
+<p>Result:</p>
+<pre><code>&quot;duplicate&quot; - node already has valid copy of block
+&quot;duplicate-invalid&quot; - node already has block, but it is invalid
+&quot;duplicate-inconclusive&quot; - node already has block but has not validated it
+&quot;inconclusive&quot; - node has not validated the block, it may not be on the node&#39;s current best chain
+&quot;rejected&quot; - block was rejected as invalid</code></pre>
+<p>For more information on submitblock parameters and results, see: <a href="https://github.com/bitcoin/bips/blob/master/bip-0022.mediawiki#block-submission" class="uri">https://github.com/bitcoin/bips/blob/master/bip-0022.mediawiki#block-submission</a></p>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli submitblock &quot;mydata&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;submitblock&quot;, &quot;params&quot;: [&quot;mydata&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h2 id="network">Network</h2>
+<h3 id="addnode-node-addonetry">addnode &quot;node&quot; &quot;addonetry&quot;</h3>
+<p>Attempts add or remove a node from the addnode list. Or try a connection to a node once.</p>
+<p>Arguments: :</p>
+<pre><code>1. &quot;node&quot;     (string, required) The node (see getpeerinfo for nodes)
+2. &quot;command&quot;  (string, required) &#39;add&#39; to add a node to the list, &#39;remove&#39; to remove a node from the list, &#39;onetry&#39; to try a connection to the node once</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli addnode &quot;192.168.0.6:8233&quot; &quot;onetry&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;addnode&quot;, &quot;params&quot;: [&quot;192.168.0.6:8233&quot;, &quot;onetry&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="clearbanned">clearbanned</h3>
+<p>Clear all banned IPs.</p>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli clearbanned 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;clearbanned&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="disconnectnode-node">disconnectnode &quot;node&quot;</h3>
+<p>Immediately disconnects from the specified node.</p>
+<p>Arguments:</p>
+<pre><code>1.&quot;node&quot;     (string, required) The node (see getpeerinfo for nodes)</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli disconnectnode &quot;192.168.0.6:8233&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;disconnectnode&quot;, &quot;params&quot;: [&quot;192.168.0.6:8233&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaddednodeinfo-dns-node">getaddednodeinfo dns ( &quot;node&quot; )</h3>
+<p>Returns information about the given added node, or all added nodes (note that onetry addnodes are not listed here) If dns is false, only a list of added nodes will be provided, otherwise connected information will also be available.</p>
+<p>Arguments:</p>
+<pre><code>1. dns        (boolean, required) If false, only a list of added nodes will be provided, otherwise connected information will also be available.
+2. &quot;node&quot;   (string, optional) If provided, return information about this specific node, otherwise all nodes are returned.</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;addednode&quot; : &quot;192.168.0.201&quot;,   (string) The node ip address
+    &quot;connected&quot; : true|false,          (boolean) If connected
+    &quot;addresses&quot; : [
+       {
+         &quot;address&quot; : &quot;192.168.0.201:8233&quot;,  (string) The Zcash server host and port
+         &quot;connected&quot; : &quot;outbound&quot;           (string) connection, inbound or outbound
+       }
+       ,...
+     ]
+  }
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddednodeinfo true
+&gt; komodo-cli getaddednodeinfo true &quot;192.168.0.201&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddednodeinfo&quot;, &quot;params&quot;: [true, &quot;192.168.0.201&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getconnectioncount">getconnectioncount</h3>
+<p>Returns the number of connections to other nodes.</p>
+<p>Result:</p>
+<pre><code>n          (numeric) The connection count</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getconnectioncount 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getconnectioncount&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getdeprecationinfo">getdeprecationinfo</h3>
+<p>Returns an object containing current version and deprecation block height. Applicable only on mainnet.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;version&quot;: xxxxx,                      (numeric) the server version
+  &quot;subversion&quot;: &quot;/MagicBean:x.y.z[-v]/&quot;,     (string) the server subversion string
+  &quot;deprecationheight&quot;: xxxxx,            (numeric) the block height at which this version will deprecate and shut down (unless -disabledeprecation is set)
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getdeprecationinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getdeprecationinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getnettotals">getnettotals</h3>
+<p>Returns information about network traffic, including bytes in, bytes out, and current time.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;totalbytesrecv&quot;: n,   (numeric) Total bytes received
+  &quot;totalbytessent&quot;: n,   (numeric) Total bytes sent
+  &quot;timemillis&quot;: t        (numeric) Total cpu time
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getnettotals 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getnettotals&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getnetworkinfo">getnetworkinfo</h3>
+<p>Returns an object containing various state info regarding P2P networking.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;version&quot;: xxxxx,                      (numeric) the server version
+  &quot;subversion&quot;: &quot;/MagicBean:x.y.z[-v]/&quot;,     (string) the server subversion string
+  &quot;protocolversion&quot;: xxxxx,              (numeric) the protocol version
+  &quot;localservices&quot;: &quot;xxxxxxxxxxxxxxxx&quot;, (string) the services we offer to the network
+  &quot;timeoffset&quot;: xxxxx,                   (numeric) the time offset
+  &quot;connections&quot;: xxxxx,                  (numeric) the number of connections
+  &quot;networks&quot;: [                          (array) information per network
+  {
+    &quot;name&quot;: &quot;xxx&quot;,                     (string) network (ipv4, ipv6 or onion)
+    &quot;limited&quot;: true|false,               (boolean) is the network limited using -onlynet?
+    &quot;reachable&quot;: true|false,             (boolean) is the network reachable?
+    &quot;proxy&quot;: &quot;host:port&quot;               (string) the proxy that is used for this network, or empty if none
+  }
+  ,...
+  ],
+  &quot;relayfee&quot;: x.xxxxxxxx,                (numeric) minimum relay fee for non-free transactions in ZEC/kB
+  &quot;localaddresses&quot;: [                    (array) list of local addresses
+  {
+    &quot;address&quot;: &quot;xxxx&quot;,                 (string) network address
+    &quot;port&quot;: xxx,                         (numeric) network port
+    &quot;score&quot;: xxx                         (numeric) relative score
+  }
+  ,...
+  ]
+  &quot;warnings&quot;: &quot;...&quot;                    (string) any network warnings (such as alert messages) 
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getnetworkinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getnetworkinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getpeerinfo">getpeerinfo</h3>
+<p>Returns data about each connected network node as a json array of objects.</p>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;id&quot;: n,                   (numeric) Peer index
+    &quot;addr&quot;:&quot;host:port&quot;,      (string) The ip address and port of the peer
+    &quot;addrlocal&quot;:&quot;ip:port&quot;,   (string) local address
+    &quot;services&quot;:&quot;xxxxxxxxxxxxxxxx&quot;,   (string) The services offered
+    &quot;lastsend&quot;: ttt,           (numeric) The time in seconds since epoch (Jan 1 1970 GMT) of the last send
+    &quot;lastrecv&quot;: ttt,           (numeric) The time in seconds since epoch (Jan 1 1970 GMT) of the last receive
+    &quot;bytessent&quot;: n,            (numeric) The total bytes sent
+    &quot;bytesrecv&quot;: n,            (numeric) The total bytes received
+    &quot;conntime&quot;: ttt,           (numeric) The connection time in seconds since epoch (Jan 1 1970 GMT)
+    &quot;timeoffset&quot;: ttt,         (numeric) The time offset in seconds
+    &quot;pingtime&quot;: n,             (numeric) ping time
+    &quot;pingwait&quot;: n,             (numeric) ping wait
+    &quot;version&quot;: v,              (numeric) The peer version, such as 170002
+    &quot;subver&quot;: &quot;/MagicBean:x.y.z[-v]/&quot;,  (string) The string version
+    &quot;inbound&quot;: true|false,     (boolean) Inbound (true) or Outbound (false)
+    &quot;startingheight&quot;: n,       (numeric) The starting height (block) of the peer
+    &quot;banscore&quot;: n,             (numeric) The ban score
+    &quot;synced_headers&quot;: n,       (numeric) The last header we have in common with this peer
+    &quot;synced_blocks&quot;: n,        (numeric) The last block we have in common with this peer
+    &quot;inflight&quot;: [
+       n,                        (numeric) The heights of blocks we&#39;re currently asking from this peer
+       ...
+    ]
+  }
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getpeerinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getpeerinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listbanned">listbanned</h3>
+<p>List all banned IPs/Subnets.</p>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli listbanned 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listbanned&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="ping">ping</h3>
+<p>Requests that a ping be sent to all other nodes, to measure ping time. Results provided in getpeerinfo, pingtime and pingwait fields are decimal seconds. Ping command is handled in queue with all other commands, so it measures processing backlog, not just network ping.</p>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli ping 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;ping&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="setban-ipnetmask-addremove-bantime-absolute">setban &quot;ip(/netmask)&quot; &quot;add|remove&quot; (bantime) (absolute)</h3>
+<p>Attempts add or remove a IP/Subnet from the banned list.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;ip(/netmask)&quot; (string, required) The IP/Subnet (see getpeerinfo for nodes ip) with a optional netmask (default is /32 = single ip)
+2. &quot;command&quot;      (string, required) &#39;add&#39; to add a IP/Subnet to the list, &#39;remove&#39; to remove a IP/Subnet from the list
+3. &quot;bantime&quot;      (numeric, optional) time in seconds how long (or until when if [absolute] is set) the ip is banned (0 or empty means using the default time of 24h which can also be overwritten by the -bantime startup argument)
+4. &quot;absolute&quot;     (boolean, optional) If set, the bantime must be a absolute timestamp in seconds since epoch (Jan 1 1970 GMT)</code></pre>
+<p>Examples:</p>
+<blockquote>
+<p>&gt; komodo-cli setban &quot;192.168.0.6&quot; &quot;add&quot; 86400 &gt; komodo-cli setban &quot;192.168.0.0/24&quot; &quot;add&quot; &gt; curl --user myusername --data-binary '{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;setban&quot;, &quot;params&quot;: [&quot;192.168.0.6&quot;, &quot;add&quot; 86400] }' -H 'content-type: text/plain;' <a href="http://127.0.0.1:7771/" class="uri">http://127.0.0.1:7771/</a></p>
+</blockquote>
+<h2 id="rawtransactions">Rawtransactions</h2>
+<h3 id="createrawtransaction-txididvoutn...-addressamount...">createrawtransaction [{&quot;txid&quot;:&quot;id&quot;,&quot;vout&quot;:n},...] {&quot;address&quot;:amount,...}</h3>
+<p>Create a transaction spending the given inputs and sending to the given addresses. Returns hex-encoded raw transaction. <em>Note that the transaction's inputs are not signed, and it is not stored in the wallet or transmitted to the network.</em></p>
+<p>Arguments:</p>
+<pre><code>1. &quot;transactions&quot;        (string, required) A json array of json objects
+     [
+       {
+         &quot;txid&quot;:&quot;id&quot;,  (string, required) The transaction id
+         &quot;vout&quot;:n        (numeric, required) The output number
+       }
+       ,...
+     ]
+2. &quot;addresses&quot;           (string, required) a json object with addresses as keys and amounts as values
+    {
+      &quot;address&quot;: x.xxx   (numeric, required) The key is the Zcash address, the value is the ZEC amount
+      ,...
+    }</code></pre>
+<p>Result:</p>
+<pre><code>&quot;transaction&quot;            (string) hex string of the transaction</code></pre>
+<p>Examples:</p>
+<blockquote>
+<p>&gt; komodo-cli createrawtransaction &quot;[{&quot;txid&quot;:&quot;myid&quot;,&quot;vout&quot;:0}]&quot; &quot;{&quot;address&quot;:0.01}&quot; &gt; curl --user myusername --data-binary '{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;createrawtransaction&quot;, &quot;params&quot;: [&quot;[{&quot;txid&quot;:&quot;myid&quot;,&quot;vout&quot;:0}]&quot;, &quot;{&quot;address&quot;:0.01}&quot;] }' -H 'content-type: text/plain;' <a href="http://127.0.0.1:7771/" class="uri">http://127.0.0.1:7771/</a></p>
+</blockquote>
+<h3 id="decoderawtransaction-hexstring">decoderawtransaction &quot;hexstring&quot;</h3>
+<p>Return a JSON object representing the serialized, hex-encoded transaction.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hex&quot;      (string, required) The transaction hex string</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;txid&quot; : &quot;id&quot;,        (string) The transaction id
+  &quot;overwintered&quot; : bool   (boolean) The Overwintered flag
+  &quot;version&quot; : n,          (numeric) The version
+  &quot;versiongroupid&quot;: &quot;hex&quot;   (string, optional) The version group id (Overwintered txs)
+  &quot;locktime&quot; : ttt,       (numeric) The lock time
+  &quot;expiryheight&quot; : n,     (numeric, optional) Last valid block height for mining transaction (Overwintered txs)
+  &quot;vin&quot; : [               (array of json objects)
+     {
+       &quot;txid&quot;: &quot;id&quot;,    (string) The transaction id
+       &quot;vout&quot;: n,         (numeric) The output number
+       &quot;scriptSig&quot;: {     (json object) The script
+         &quot;asm&quot;: &quot;asm&quot;,  (string) asm
+         &quot;hex&quot;: &quot;hex&quot;   (string) hex
+       },
+       &quot;sequence&quot;: n     (numeric) The script sequence number
+     }
+     ,...
+  ],
+  &quot;vout&quot; : [             (array of json objects)
+     {
+       &quot;value&quot; : x.xxx,            (numeric) The value in ZEC
+       &quot;n&quot; : n,                    (numeric) index
+       &quot;scriptPubKey&quot; : {          (json object)
+         &quot;asm&quot; : &quot;asm&quot;,          (string) the asm
+         &quot;hex&quot; : &quot;hex&quot;,          (string) the hex
+         &quot;reqSigs&quot; : n,            (numeric) The required sigs
+         &quot;type&quot; : &quot;pubkeyhash&quot;,  (string) The type, eg &#39;pubkeyhash&#39;
+         &quot;addresses&quot; : [           (json array of string)
+           &quot;t12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc&quot;   (string) zcash address
+           ,...
+         ]
+       }
+     }
+     ,...
+  ],
+  &quot;vjoinsplit&quot; : [        (array of json objects, only for version &gt;= 2)
+     {
+       &quot;vpub_old&quot; : x.xxx,         (numeric) public input value in KMD
+       &quot;vpub_new&quot; : x.xxx,         (numeric) public output value in KMD
+       &quot;anchor&quot; : &quot;hex&quot;,         (string) the anchor
+       &quot;nullifiers&quot; : [            (json array of string)
+         &quot;hex&quot;                     (string) input note nullifier
+         ,...
+       ],
+       &quot;commitments&quot; : [           (json array of string)
+         &quot;hex&quot;                     (string) output note commitment
+         ,...
+       ],
+       &quot;onetimePubKey&quot; : &quot;hex&quot;,  (string) the onetime public key used to encrypt the ciphertexts
+       &quot;randomSeed&quot; : &quot;hex&quot;,     (string) the random seed
+       &quot;macs&quot; : [                  (json array of string)
+         &quot;hex&quot;                     (string) input note MAC
+         ,...
+       ],
+       &quot;proof&quot; : &quot;hex&quot;,          (string) the zero-knowledge proof
+       &quot;ciphertexts&quot; : [           (json array of string)
+         &quot;hex&quot;                     (string) output note ciphertext
+         ,...
+       ]
+     }
+     ,...
+  ],
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli decoderawtransaction &quot;hexstring&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;decoderawtransaction&quot;, &quot;params&quot;: [&quot;hexstring&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="decodescript-hex">decodescript &quot;hex&quot;</h3>
+<p>Decode a hex-encoded script.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hex&quot;     (string) the hex encoded script</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;asm&quot;:&quot;asm&quot;,   (string) Script public key
+  &quot;hex&quot;:&quot;hex&quot;,   (string) hex encoded public key
+  &quot;type&quot;:&quot;type&quot;, (string) The output type
+  &quot;reqSigs&quot;: n,    (numeric) The required signatures
+  &quot;addresses&quot;: [   (json array of string)
+     &quot;address&quot;     (string) Zcash address
+     ,...
+  ],
+  &quot;p2sh&quot;,&quot;address&quot; (string) script address
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli decodescript &quot;hexstring&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;decodescript&quot;, &quot;params&quot;: [&quot;hexstring&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="fundrawtransaction-hexstring">fundrawtransaction &quot;hexstring&quot;</h3>
+<p>Add inputs to a transaction until it has enough in value to meet its out value. This will not modify existing inputs, and will add one change output to the outputs. Note that inputs which were signed may need to be resigned after completion since in/outputs have been added. The inputs added will not be signed, use signrawtransaction for that.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hexstring&quot;    (string, required) The hex string of the raw transaction</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;hex&quot;:       &quot;value&quot;, (string)  The resulting raw transaction (hex-encoded string)
+  &quot;fee&quot;:       n,         (numeric) The fee added to the transaction
+  &quot;changepos&quot;: n          (numeric) The position of the added change output, or -1
+}
+&quot;hex&quot;             </code></pre>
+<p>Examples:</p>
+<p>Create a transaction with no inputs</p>
+<pre><code>&gt; komodo-cli createrawtransaction &quot;[]&quot; &quot;{\&quot;myaddress\&quot;:0.01}&quot;</code></pre>
+<p>Add sufficient unsigned inputs to meet the output value</p>
+<pre><code>&gt; komodo-cli fundrawtransaction &quot;rawtransactionhex&quot;</code></pre>
+<p>Sign the transaction</p>
+<pre><code>&gt; komodo-cli signrawtransaction &quot;fundedtransactionhex&quot;</code></pre>
+<p>Send the transaction</p>
+<pre><code>&gt; komodo-cli sendrawtransaction &quot;signedtransactionhex&quot;</code></pre>
+<h3 id="getrawtransaction-txid-verbose">getrawtransaction &quot;txid&quot; ( verbose )</h3>
+<p><strong>NOTE</strong>: By default this function only works sometimes. This is when the tx is in the mempool or there is an unspent output in the utxo for this transaction. To make it always work, you need to maintain a transaction index, using the <code>-txindex</code> command line option.</p>
+<p>Return the raw transaction data.</p>
+<p>If <code>verbose=0</code>, returns a string that is serialized, hex-encoded data for 'txid'. If <code>verbose</code> is non-zero, returns an Object with information about 'txid'.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;txid&quot;      (string, required) The transaction id
+2. verbose       (numeric, optional, default=0) If 0, return a string, other return a json object</code></pre>
+<p>Result (if verbose is not set or set to 0):</p>
+<pre><code>&quot;data&quot;      (string) The serialized, hex-encoded data for &#39;txid&#39;</code></pre>
+<p>Result (if verbose &gt; 0):</p>
+<pre><code>{
+  &quot;hex&quot; : &quot;data&quot;,       (string) The serialized, hex-encoded data for &#39;txid&#39;
+  &quot;txid&quot; : &quot;id&quot;,        (string) The transaction id (same as provided)
+  &quot;version&quot; : n,          (numeric) The version
+  &quot;locktime&quot; : ttt,       (numeric) The lock time
+  &quot;expiryheight&quot; : ttt,   (numeric, optional) The block height after which the transaction expires
+  &quot;vin&quot; : [               (array of json objects)
+     {
+       &quot;txid&quot;: &quot;id&quot;,    (string) The transaction id
+       &quot;vout&quot;: n,         (numeric) 
+       &quot;scriptSig&quot;: {     (json object) The script
+         &quot;asm&quot;: &quot;asm&quot;,  (string) asm
+         &quot;hex&quot;: &quot;hex&quot;   (string) hex
+       },
+       &quot;sequence&quot;: n      (numeric) The script sequence number
+     }
+     ,...
+  ],
+  &quot;vout&quot; : [              (array of json objects)
+     {
+       &quot;value&quot; : x.xxx,            (numeric) The value in ZEC
+       &quot;n&quot; : n,                    (numeric) index
+       &quot;scriptPubKey&quot; : {          (json object)
+         &quot;asm&quot; : &quot;asm&quot;,          (string) the asm
+         &quot;hex&quot; : &quot;hex&quot;,          (string) the hex
+         &quot;reqSigs&quot; : n,            (numeric) The required sigs
+         &quot;type&quot; : &quot;pubkeyhash&quot;,  (string) The type, eg &#39;pubkeyhash&#39;
+         &quot;addresses&quot; : [           (json array of string)
+           &quot;zcashaddress&quot;          (string) Zcash address
+           ,...
+         ]
+       }
+     }
+     ,...
+  ],    
+  &quot;vjoinsplit&quot; : [        (array of json objects, only for version &gt;= 2)
+     {
+       &quot;vpub_old&quot; : x.xxx,         (numeric) public input value in KMD
+       &quot;vpub_new&quot; : x.xxx,         (numeric) public output value in KMD
+       &quot;anchor&quot; : &quot;hex&quot;,         (string) the anchor
+       &quot;nullifiers&quot; : [            (json array of string)
+         &quot;hex&quot;                     (string) input note nullifier
+         ,...
+       ],
+       &quot;commitments&quot; : [           (json array of string)
+         &quot;hex&quot;                     (string) output note commitment
+         ,...
+       ],
+       &quot;onetimePubKey&quot; : &quot;hex&quot;,  (string) the onetime public key used to encrypt the ciphertexts
+       &quot;randomSeed&quot; : &quot;hex&quot;,     (string) the random seed
+       &quot;macs&quot; : [                  (json array of string)
+         &quot;hex&quot;                     (string) input note MAC
+         ,...
+       ],
+       &quot;proof&quot; : &quot;hex&quot;,          (string) the zero-knowledge proof
+       &quot;ciphertexts&quot; : [           (json array of string)
+         &quot;hex&quot;                     (string) output note ciphertext
+         ,...
+       ]
+     }
+     ,...
+  ],
+  &quot;blockhash&quot; : &quot;hash&quot;,   (string) the block hash
+  &quot;confirmations&quot; : n,      (numeric) The confirmations
+  &quot;time&quot; : ttt,             (numeric) The transaction time in seconds since epoch (Jan 1 1970 GMT)
+  &quot;blocktime&quot; : ttt         (numeric) The block time in seconds since epoch (Jan 1 1970 GMT)
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getrawtransaction &quot;mytxid&quot;
+&gt; komodo-cli getrawtransaction &quot;mytxid&quot; 1
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getrawtransaction&quot;, &quot;params&quot;: [&quot;mytxid&quot;, 1] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="sendrawtransaction-hexstring-allowhighfees">sendrawtransaction &quot;hexstring&quot; ( allowhighfees )</h3>
+<p>Submits raw transaction (serialized, hex-encoded) to local node and network.</p>
+<p>Also see createrawtransaction and signrawtransaction calls.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hexstring&quot;    (string, required) The hex string of the raw transaction)
+2. allowhighfees    (boolean, optional, default=false) Allow high fees</code></pre>
+<p>Result:</p>
+<pre><code>&quot;hex&quot;             (string) The transaction hash in hex</code></pre>
+<p>Examples:</p>
+<p>Create a transaction</p>
+<pre><code>&gt; komodo-cli createrawtransaction &quot;[{\&quot;txid\&quot; : \&quot;mytxid\&quot;,\&quot;vout\&quot;:0}]&quot; &quot;{\&quot;myaddress\&quot;:0.01}&quot;</code></pre>
+<p>Sign the transaction, and get back the hex</p>
+<pre><code>&gt; komodo-cli signrawtransaction &quot;myhex&quot;</code></pre>
+<p>Send the transaction (signed hex)</p>
+<pre><code>&gt; komodo-cli sendrawtransaction &quot;signedhex&quot;</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;sendrawtransaction&quot;, &quot;params&quot;: [&quot;signedhex&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="signrawtransaction-hexstring-txididvoutnscriptpubkeyhexredeemscripthex...-privatekey1...-sighashtype">signrawtransaction &quot;hexstring&quot; ( [{&quot;txid&quot;:&quot;id&quot;,&quot;vout&quot;:n,&quot;scriptPubKey&quot;:&quot;hex&quot;,&quot;redeemScript&quot;:&quot;hex&quot;},...] [&quot;privatekey1&quot;,...] sighashtype )</h3>
+<p>Sign inputs for raw transaction (serialized, hex-encoded). The second optional argument (may be null) is an array of previous transaction outputs that this transaction depends on but may not yet be in the block chain. The third optional argument (may be null) is an array of base58-encoded private keys that, if given, will be the only keys used to sign the transaction.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;hexstring&quot;     (string, required) The transaction hex string
+2. &quot;prevtxs&quot;       (string, optional) An json array of previous dependent transaction outputs
+     [               (json array of json objects, or &#39;null&#39; if none provided)
+       {
+         &quot;txid&quot;:&quot;id&quot;,             (string, required) The transaction id
+         &quot;vout&quot;:n,                  (numeric, required) The output number
+         &quot;scriptPubKey&quot;: &quot;hex&quot;,   (string, required) script key
+         &quot;redeemScript&quot;: &quot;hex&quot;,   (string, required for P2SH) redeem script
+         &quot;amount&quot;: value            (numeric, required) The amount spent
+       }
+       ,...
+    ]
+3. &quot;privatekeys&quot;     (string, optional) A json array of base58-encoded private keys for signing
+    [                  (json array of strings, or &#39;null&#39; if none provided)
+      &quot;privatekey&quot;   (string) private key in base58-encoding
+      ,...
+    ]
+4. &quot;sighashtype&quot;     (string, optional, default=ALL) The signature hash type. Must be one of
+       &quot;ALL&quot;
+       &quot;NONE&quot;
+       &quot;SINGLE&quot;
+       &quot;ALL|ANYONECANPAY&quot;
+       &quot;NONE|ANYONECANPAY&quot;
+       &quot;SINGLE|ANYONECANPAY&quot;</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;hex&quot; : &quot;value&quot;,           (string) The hex-encoded raw transaction with signature(s)
+  &quot;complete&quot; : true|false,   (boolean) If the transaction has a complete set of signatures
+  &quot;errors&quot; : [                 (json array of objects) Script verification errors (if there are any)
+    {
+      &quot;txid&quot; : &quot;hash&quot;,           (string) The hash of the referenced, previous transaction
+      &quot;vout&quot; : n,                (numeric) The index of the output to spent and used as input
+      &quot;scriptSig&quot; : &quot;hex&quot;,       (string) The hex-encoded signature script
+      &quot;sequence&quot; : n,            (numeric) Script sequence number
+      &quot;error&quot; : &quot;text&quot;           (string) Verification or signing error related to the input
+    }
+    ,...
+  ]
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli signrawtransaction &quot;myhex&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;signrawtransaction&quot;, &quot;params&quot;: [&quot;myhex&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h2 id="util">Util</h2>
+<h3 id="createmultisig-nrequired-key...">createmultisig nrequired [&quot;key&quot;,...]</h3>
+<p>Creates a multi-signature address with n signature of m keys required. It returns a json object with the address and redeemScript.</p>
+<p>Arguments:</p>
+<pre><code>1. nrequired      (numeric, required) The number of required signatures out of the n keys or addresses.
+2. &quot;keys&quot;       (string, required) A json array of keys which are Zcash addresses or hex-encoded public keys</code></pre>
+<pre><code>[
+  &quot;key&quot;    (string) Zcash address or hex-encoded public key
+  ,...
+]</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;address&quot;:&quot;multisigaddress&quot;,  (string) The value of the new multisig address.
+  &quot;redeemScript&quot;:&quot;script&quot;       (string) The string value of the hex-encoded redemption script.
+}</code></pre>
+<p>Examples:</p>
+<p>Create a multisig address from 2 addresses</p>
+<pre><code>&gt; komodo-cli createmultisig 2 &quot;[\&quot;t16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\&quot;,\&quot;t171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\&quot;]&quot;</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;createmultisig&quot;, &quot;params&quot;: [2, &quot;[\&quot;t16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\&quot;,\&quot;t171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\&quot;]&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="estimatefee-nblocks">estimatefee nblocks</h3>
+<p>Estimates the approximate fee per kilobyte needed for a transaction to begin confirmation within nblocks blocks.</p>
+<p>Arguments:</p>
+<pre><code>1. nblocks     (numeric)</code></pre>
+<p>Result:</p>
+<pre><code>n :    (numeric) estimated fee-per-kilobyte
+
+-1.0 is returned if not enough transactions and blocks have been observed to make an estimate.</code></pre>
+<p>Example:</p>
+<pre><code>&gt; komodo-cli estimatefee 6</code></pre>
+<h3 id="estimatepriority-nblocks">estimatepriority nblocks</h3>
+<p>Estimates the approximate priority a zero-fee transaction needs to begin confirmation within nblocks blocks.</p>
+<p>Arguments:</p>
+<pre><code>1. nblocks     (numeric)</code></pre>
+<p>Result:</p>
+<pre><code>n :    (numeric) estimated priority
+
+-1.0 is returned if not enough transactions and blocks have been observed to make an estimate.</code></pre>
+<p>Example:</p>
+<pre><code>&gt; komodo-cli estimatepriority 6</code></pre>
+<h3 id="invalidateblock-hash">invalidateblock &quot;hash&quot;</h3>
+<p>Permanently marks a block as invalid, as if it violated a consensus rule.</p>
+<p>Arguments:</p>
+<pre><code>1. hash   (string, required) the hash of the block to mark as invalid</code></pre>
+<p>Result:</p>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli invalidateblock &quot;blockhash&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;invalidateblock&quot;, &quot;params&quot;: [&quot;blockhash&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="jumblr_deposit-depositaddress">jumblr_deposit &quot;depositaddress&quot;</h3>
+<p>For usage look at <span data-role="doc">using-JUMBLR</span></p>
+<h3 id="jumblr_pause">jumblr_pause</h3>
+<p>For usage look at <span data-role="doc">using-JUMBLR</span></p>
+<h3 id="jumblr_resume">jumblr_resume</h3>
+<p>For usage look at <span data-role="doc">using-JUMBLR</span></p>
+<h3 id="jumblr_secret-secretaddress">jumblr_secret &quot;secretaddress&quot;</h3>
+<p>For usage look at <span data-role="doc">using-JUMBLR</span></p>
+<h3 id="reconsiderblock-hash">reconsiderblock &quot;hash&quot;</h3>
+<p>Removes invalidity status of a block and its descendants, reconsider them for activation. This can be used to undo the effects of invalidateblock.</p>
+<p>Arguments:</p>
+<pre><code>1. hash   (string, required) the hash of the block to reconsider</code></pre>
+<p>Result:</p>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli reconsiderblock &quot;blockhash&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;reconsiderblock&quot;, &quot;params&quot;: [&quot;blockhash&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="validateaddress-komodoaddress">validateaddress &quot;komodoaddress&quot;</h3>
+<p>Return information about the given Zcash address.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashaddress&quot;     (string, required) The Zcash address to validate</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;isvalid&quot; : true|false,         (boolean) If the address is valid or not. If not, this is the only property returned.
+  &quot;address&quot; : &quot;zcashaddress&quot;,   (string) The Zcash address validated
+  &quot;scriptPubKey&quot; : &quot;hex&quot;,       (string) The hex encoded scriptPubKey generated by the address
+  &quot;ismine&quot; : true|false,          (boolean) If the address is yours or not
+  &quot;isscript&quot; : true|false,        (boolean) If the key is a script
+  &quot;pubkey&quot; : &quot;publickeyhex&quot;,    (string) The hex value of the raw public key
+  &quot;iscompressed&quot; : true|false,    (boolean) If the address is compressed
+  &quot;account&quot; : &quot;account&quot;         (string) DEPRECATED. The account associated with the address, &quot;&quot; is the default account
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli validateaddress &quot;1PSSGeFHDnKNxiEyFrD1wcEaHr9hrQDDWc&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;validateaddress&quot;, &quot;params&quot;: [&quot;1PSSGeFHDnKNxiEyFrD1wcEaHr9hrQDDWc&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="verifymessage-komodoaddress-signature-message">verifymessage &quot;komodoaddress&quot; &quot;signature&quot; &quot;message&quot;</h3>
+<p>Verify a signed message</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashaddress&quot;    (string, required) The Zcash address to use for the signature.
+2. &quot;signature&quot;       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).
+3. &quot;message&quot;         (string, required) The message that was signed.</code></pre>
+<p>Result:</p>
+<pre><code>true|false   (boolean) If the signature is verified or not.</code></pre>
+<p>Examples:</p>
+<p>Unlock the wallet for 30 seconds</p>
+<pre><code>&gt; komodo-cli walletpassphrase &quot;mypassphrase&quot; 30</code></pre>
+<p>Create the signature</p>
+<pre><code>&gt; komodo-cli signmessage &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; &quot;my message&quot;</code></pre>
+<p>Verify the signature</p>
+<pre><code>&gt; komodo-cli verifymessage &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; &quot;signature&quot; &quot;my message&quot;</code></pre>
+<p>As json rpc</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;verifymessage&quot;, &quot;params&quot;: [&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;, &quot;signature&quot;, &quot;my message&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_validateaddress-zaddr">z_validateaddress &quot;zaddr&quot;</h3>
+<p>Return information about the given z address.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zaddr&quot;     (string, required) The z address to validate</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;isvalid&quot; : true|false,      (boolean) If the address is valid or not. If not, this is the only property returned.
+  &quot;address&quot; : &quot;zaddr&quot;,         (string) The z address validated
+  &quot;ismine&quot; : true|false,       (boolean) If the address is yours or not
+  &quot;payingkey&quot; : &quot;hex&quot;,         (string) The hex value of the paying key, a_pk
+  &quot;transmissionkey&quot; : &quot;hex&quot;,   (string) The hex value of the transmission key, pk_enc
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_validateaddress &quot;zcWsmqT4X2V4jgxbgiCzyrAfRT1vi1F4sn7M5Pkh66izzw8Uk7LBGAH3DtcSMJeUb2pi3W4SQF8LMKkU2cUuVP68yAGcomL&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_validateaddress&quot;, &quot;params&quot;: [&quot;zcWsmqT4X2V4jgxbgiCzyrAfRT1vi1F4sn7M5Pkh66izzw8Uk7LBGAH3DtcSMJeUb2pi3W4SQF8LMKkU2cUuVP68yAGcomL&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h2 id="wallet">Wallet</h2>
+<h3 id="addmultisigaddress-nrequired-key...-account">addmultisigaddress nrequired [&quot;key&quot;,...] ( &quot;account&quot; )</h3>
+<p>Add a nrequired-to-sign multisignature address to the wallet. Each key is a Komodo address or hex-encoded public key. If 'account' is specified (DEPRECATED), assign address to that account.</p>
+<p>Arguments:</p>
+<pre><code>1. nrequired        (numeric, required) The number of required signatures out of the n keys or addresses.
+2. &quot;keysobject&quot;   (string, required) A json array of Zcash addresses or hex-encoded public keys
+     [
+       &quot;address&quot;  (string) Zcash address or hex-encoded public key
+       ...,
+     ]
+3. &quot;account&quot;      (string, optional) DEPRECATED. If provided, MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;zcashaddress&quot;  (string) A Zcash address associated with the keys.</code></pre>
+<p>Examples:</p>
+<p>Add a multisig address from 2 addresses</p>
+<pre><code>&gt; komodo-cli addmultisigaddress 2 &quot;[\&quot;t16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\&quot;,\&quot;t171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\&quot;]&quot;</code></pre>
+<p>As json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;addmultisigaddress&quot;, &quot;params&quot;: [2, &quot;[\&quot;t16sSauSf5pF2UkUwvKGq4qjNRzBZYqgEL5\&quot;,\&quot;t171sgjn4YtPu27adkKGrdDwzRTxnRkBfKV\&quot;]&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="backupwallet-destination">backupwallet &quot;destination&quot;</h3>
+<p>Safely copies wallet.dat to destination filename</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;destination&quot;   (string, required) The destination filename, saved in the directory set by -exportdir option.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;path&quot;             (string) The full path of the destination file</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli backupwallet &quot;backupdata&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;backupwallet&quot;, &quot;params&quot;: [&quot;backupdata&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="dumpprivkey-komodoaddress">dumpprivkey &quot;komodoaddress&quot;</h3>
+<p>Reveals the private key corresponding to 'komodoaddress'. Then the importprivkey can be used with this output</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashaddress&quot;   (string, required) The zcash address for the private key</code></pre>
+<p>Result:</p>
+<pre><code>&quot;key&quot;                (string) The private key</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli dumpprivkey &quot;myaddress&quot;
+&gt; komodo-cli importprivkey &quot;mykey&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;dumpprivkey&quot;, &quot;params&quot;: [&quot;myaddress&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="dumpwallet-filename">dumpwallet &quot;filename&quot;</h3>
+<p>Dumps taddr wallet keys in a human-readable format. Overwriting an existing file is not permitted.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;filename&quot;    (string, required) The filename, saved in folder set by zcashd -exportdir option</code></pre>
+<p>Result:</p>
+<pre><code>&quot;path&quot;           (string) The full path of the destination file</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli dumpwallet &quot;test&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;dumpwallet&quot;, &quot;params&quot;: [&quot;test&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="encryptwallet-passphrase">encryptwallet &quot;passphrase&quot;</h3>
+<p><strong>WARNING</strong>: Wallet encryption is <strong>DISABLED</strong>. This call always fails.</p>
+<p>Encrypts the wallet with <code>passphrase</code>. This is for first time encryption. After this, any calls that interact with private keys such as sending or signing will require the passphrase to be set prior the making these calls. Use the <code>walletpassphrase</code> call for this, and then <code>walletlock</code> call. If the wallet is already encrypted, use the <code>walletpassphrasechange</code> call. Note that this will shutdown the server.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;passphrase&quot;    (string) The pass phrase to encrypt the wallet with. It must be at least 1 character, but should be long.</code></pre>
+<p>Examples:</p>
+<p>Encrypt you wallet</p>
+<pre><code>&gt; komodo-cli encryptwallet &quot;my pass phrase&quot;</code></pre>
+<p>Now set the passphrase to use the wallet, such as for signing or sending Zcash</p>
+<pre><code>&gt; komodo-cli walletpassphrase &quot;my pass phrase&quot;</code></pre>
+<p>Now we can so something like sign</p>
+<pre><code>&gt; komodo-cli signmessage &quot;zcashaddress&quot; &quot;test message&quot;</code></pre>
+<p>Now lock the wallet again by removing the passphrase</p>
+<pre><code>&gt; komodo-cli walletlock </code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;encryptwallet&quot;, &quot;params&quot;: [&quot;my pass phrase&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaccount-kmd_address">getaccount &quot;KMD_address&quot;</h3>
+<p><strong>DEPRECATED</strong>. Returns the account associated with the given address.</p>
+<p>Arguments:</p>
+<ol type="1">
+<li>&quot;komodoaddress&quot; (string, required) The Komodo address for account lookup.</li>
+</ol>
+<p>Result:</p>
+<pre><code>&quot;accountname&quot;        (string) the account address</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaccount &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaccount&quot;, &quot;params&quot;: [&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getaccountaddress-account">getaccountaddress &quot;account&quot;</h3>
+<p><strong>DEPRECATED</strong>. Returns the current Komodo address for receiving payments to this account.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;account&quot;       (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.</code></pre>
+<p>Result:</p>
+<blockquote>
+<p>&quot;komodoaddress&quot; (string) The account Komodo address</p>
+</blockquote>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaccountaddress 
+&gt; komodo-cli getaccountaddress &quot;&quot;</code></pre>
+<p>&gt; komodo-cli getaccountaddress &quot;myaccount&quot; &gt; curl --user myusername --data-binary '{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaccountaddress&quot;, &quot;params&quot;: [&quot;myaccount&quot;] }' -H 'content-type: text/plain;' <a href="http://127.0.0.1:7771/" class="uri">http://127.0.0.1:7771/</a></p>
+<h3 id="getaddressesbyaccount-account">getaddressesbyaccount &quot;account&quot;</h3>
+<p><strong>DEPRECATED</strong>. Returns the list of addresses for the given account.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;account&quot;  (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.</code></pre>
+<p>Result:</p>
+<pre><code>[                     (json array of string)
+  &quot;zcashaddress&quot;  (string) a Zcash address associated with the given account
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getaddressesbyaccount &quot;tabby&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getaddressesbyaccount&quot;, &quot;params&quot;: [&quot;tabby&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getbalance-account-minconf-includewatchonly">getbalance ( &quot;account&quot; minconf includeWatchonly )</h3>
+<p>Returns the server's total available balance.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;account&quot;      (string, optional) DEPRECATED. If provided, it MUST be set to the empty string &quot;&quot; or to the string &quot;*&quot;, either of which will give the total available balance. Passing any other string will result in an error.
+2. minconf          (numeric, optional, default=1) Only include transactions confirmed at least this many times.
+3. includeWatchonly (bool, optional, default=false) Also include balance in watchonly addresses (see &#39;importaddress&#39;)</code></pre>
+<p>Result:</p>
+<pre><code>amount              (numeric) The total amount in ZEC received for this account.</code></pre>
+<p>Examples:</p>
+<p>The total amount in the wallet</p>
+<pre><code>&gt; komodo-cli getbalance </code></pre>
+<p>The total amount in the wallet at least 5 blocks confirmed</p>
+<pre><code>&gt; komodo-cli getbalance &quot;*&quot; 6</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getbalance&quot;, &quot;params&quot;: [&quot;*&quot;, 6] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getnewaddress-account">getnewaddress ( &quot;account&quot; )</h3>
+<p>Returns a new Komodo address for receiving payments.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;account&quot;        (string, optional) DEPRECATED. If provided, it MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;zcashaddress&quot;    (string) The new Zcash address</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getnewaddress 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getnewaddress&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getrawchangeaddress">getrawchangeaddress</h3>
+<p>Returns a new Komodo address, for receiving change. This is for use with raw transactions, NOT normal use.</p>
+<p>Result:</p>
+<pre><code>&quot;address&quot;    (string) The address</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getrawchangeaddress 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getrawchangeaddress&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getreceivedbyaccount-account-minconf">getreceivedbyaccount &quot;account&quot; ( minconf )</h3>
+<p><strong>DEPRECATED</strong>. Returns the total amount received by addresses with &lt;account&gt; in transactions with at least [minconf] confirmations.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;account&quot;      (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.
+2. minconf          (numeric, optional, default=1) Only include transactions confirmed at least this many times.</code></pre>
+<p>Result:</p>
+<pre><code>amount              (numeric) The total amount in ZEC received for this account.</code></pre>
+<p>Examples:</p>
+<p>Amount received by the default account with at least 1 confirmation</p>
+<pre><code>&gt; komodo-cli getreceivedbyaccount &quot;&quot;</code></pre>
+<p>Amount received at the tabby account including unconfirmed amounts with zero confirmations</p>
+<pre><code>&gt; komodo-cli getreceivedbyaccount &quot;tabby&quot; 0</code></pre>
+<p>The amount with at least 6 confirmation, very safe</p>
+<pre><code>&gt; komodo-cli getreceivedbyaccount &quot;tabby&quot; 6</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getreceivedbyaccount&quot;, &quot;params&quot;: [&quot;tabby&quot;, 6] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getreceivedbyaddress-kmd_address-minconf">getreceivedbyaddress &quot;KMD_address&quot; ( minconf )</h3>
+<p>Returns the total amount received by the given Zcash address in transactions with at least minconf confirmations.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashaddress&quot;  (string, required) The Zcash address for transactions.
+2. minconf             (numeric, optional, default=1) Only include transactions confirmed at least this many times.</code></pre>
+<p>Result:</p>
+<pre><code>amount   (numeric) The total amount in ZEC received at this address.</code></pre>
+<p>Examples:</p>
+<p>The amount from transactions with at least 1 confirmation</p>
+<pre><code>&gt; komodo-cli getreceivedbyaddress &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;</code></pre>
+<p>The amount including unconfirmed transactions, zero confirmations</p>
+<pre><code>&gt; komodo-cli getreceivedbyaddress &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; 0</code></pre>
+<p>The amount with at least 6 confirmations, very safe</p>
+<pre><code>&gt; komodo-cli getreceivedbyaddress &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; 6</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getreceivedbyaddress&quot;, &quot;params&quot;: [&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;, 6] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="gettransaction-txid-includewatchonly">gettransaction &quot;txid&quot; ( includeWatchonly )</h3>
+<p>Get detailed information about in-wallet transaction &lt;txid&gt;</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;txid&quot;    (string, required) The transaction id
+2. &quot;includeWatchonly&quot;    (bool, optional, default=false) Whether to include watchonly addresses in balance calculation and details[]</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;amount&quot; : x.xxx,        (numeric) The transaction amount in ZEC
+  &quot;confirmations&quot; : n,     (numeric) The number of confirmations
+  &quot;blockhash&quot; : &quot;hash&quot;,  (string) The block hash
+  &quot;blockindex&quot; : xx,       (numeric) The block index
+  &quot;blocktime&quot; : ttt,       (numeric) The time in seconds since epoch (1 Jan 1970 GMT)
+  &quot;txid&quot; : &quot;transactionid&quot;,   (string) The transaction id.
+  &quot;time&quot; : ttt,            (numeric) The transaction time in seconds since epoch (1 Jan 1970 GMT)
+  &quot;timereceived&quot; : ttt,    (numeric) The time received in seconds since epoch (1 Jan 1970 GMT)
+  &quot;details&quot; : [
+    {
+      &quot;account&quot; : &quot;accountname&quot;,  (string) DEPRECATED. The account name involved in the transaction, can be &quot;&quot; for the default account.
+      &quot;address&quot; : &quot;zcashaddress&quot;,   (string) The Zcash address involved in the transaction
+      &quot;category&quot; : &quot;send|receive&quot;,    (string) The category, either &#39;send&#39; or &#39;receive&#39;
+      &quot;amount&quot; : x.xxx                  (numeric) The amount in ZEC
+      &quot;vout&quot; : n,                       (numeric) the vout value
+    }
+    ,...
+  ],
+  &quot;vjoinsplit&quot; : [
+    {
+      &quot;anchor&quot; : &quot;treestateref&quot;,          (string) Merkle root of note commitment tree
+      &quot;nullifiers&quot; : [ string, ...]      (string) Nullifiers of input notes
+      &quot;commitments&quot; : [ string, ...]     (string) Note commitments for note outputs
+      &quot;macs&quot; : [ string, ...]            (string) Message authentication tags
+      &quot;vpub_old&quot; : x.xxx                  (numeric) The amount removed from the transparent value pool
+      &quot;vpub_new&quot; : x.xxx,                 (numeric) The amount added to the transparent value pool
+    }
+    ,...
+  ],
+  &quot;hex&quot; : &quot;data&quot;         (string) Raw data for transaction
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli gettransaction &quot;1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d&quot;
+&gt; komodo-cli gettransaction &quot;1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d&quot; true
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;gettransaction&quot;, &quot;params&quot;: [&quot;1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="getunconfirmedbalance">getunconfirmedbalance</h3>
+<p>Returns the server's total unconfirmed balance</p>
+<h3 id="getwalletinfo">getwalletinfo</h3>
+<p>Returns an object containing various wallet state info.</p>
+<p>Result:</p>
+<pre><code>{
+  &quot;walletversion&quot;: xxxxx,     (numeric) the wallet version
+  &quot;balance&quot;: xxxxxxx,         (numeric) the total confirmed balance of the wallet in ZEC
+  &quot;unconfirmed_balance&quot;: xxx, (numeric) the total unconfirmed balance of the wallet in ZEC
+  &quot;immature_balance&quot;: xxxxxx, (numeric) the total immature balance of the wallet in ZEC
+  &quot;txcount&quot;: xxxxxxx,         (numeric) the total number of transactions in the wallet
+  &quot;keypoololdest&quot;: xxxxxx,    (numeric) the timestamp (seconds since GMT epoch) of the oldest pre-generated key in the key pool
+  &quot;keypoolsize&quot;: xxxx,        (numeric) how many new keys are pre-generated
+  &quot;unlocked_until&quot;: ttt,      (numeric) the timestamp in seconds since epoch (midnight Jan 1 1970 GMT) that the wallet is unlocked for transfers,   or 0 if the wallet is locked
+  &quot;paytxfee&quot;: x.xxxx,         (numeric) the transaction fee configuration, set in KMD/KB
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli getwalletinfo 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;getwalletinfo&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="importaddress-address-label-rescan">importaddress &quot;address&quot; ( &quot;label&quot; rescan )</h3>
+<p>Adds an address or script (in hex) that can be watched as if it were in your wallet but cannot be used to spend.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;address&quot;          (string, required) The address
+2. &quot;label&quot;            (string, optional, default=&quot;&quot;) An optional label
+3. rescan               (boolean, optional, default=true) Rescan the wallet for transactions</code></pre>
+<p><strong>Note</strong>: This call can take minutes to complete if rescan is true.</p>
+<p>Examples:</p>
+<p>Import an address with rescan &gt; komodo-cli importaddress &quot;myaddress&quot;</p>
+<p>Import using a label without rescan &gt; komodo-cli importaddress &quot;myaddress&quot; &quot;testing&quot; false</p>
+<p>As a JSON-RPC call &gt; curl --user myusername --data-binary '{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;importaddress&quot;, &quot;params&quot;: [&quot;myaddress&quot;, &quot;testing&quot;, false] }' -H 'content-type: text/plain;' <a href="http://127.0.0.1:7771/" class="uri">http://127.0.0.1:7771/</a></p>
+<h3 id="importprivkey-komodoprivkey-label-rescan">importprivkey &quot;komodoprivkey&quot; ( &quot;label&quot; rescan )</h3>
+<p>Adds a private key (as returned by dumpprivkey) to your wallet.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashprivkey&quot;   (string, required) The private key (see dumpprivkey)
+2. &quot;label&quot;            (string, optional, default=&quot;&quot;) An optional label
+3. rescan               (boolean, optional, default=true) Rescan the wallet for transactions</code></pre>
+<p>Note: This call can take minutes to complete if rescan is true.</p>
+<p>Examples:</p>
+<p>Dump a private key</p>
+<pre><code>&gt; komodo-cli dumpprivkey &quot;myaddress&quot;</code></pre>
+<p>Import the private key with rescan</p>
+<p>:</p>
+<pre><code>&gt; komodo-cli importprivkey &quot;mykey&quot;</code></pre>
+<p>Import using a label and without rescan</p>
+<pre><code>&gt; komodo-cli importprivkey &quot;mykey&quot; &quot;testing&quot; false</code></pre>
+<p>As a JSON-RPC call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;importprivkey&quot;, &quot;params&quot;: [&quot;mykey&quot;, &quot;testing&quot;, false] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="importwallet-filename">importwallet &quot;filename&quot;</h3>
+<p>Imports taddr keys from a wallet dump file (see dumpwallet).</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;filename&quot;    (string, required) The wallet file</code></pre>
+<p>Examples:</p>
+<p>Dump the wallet</p>
+<pre><code>&gt; komodo-cli dumpwallet &quot;nameofbackup&quot;</code></pre>
+<p>Import the wallet</p>
+<pre><code>&gt; komodo-cli importwallet &quot;path/to/exportdir/nameofbackup&quot;</code></pre>
+<p>Import using the json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;importwallet&quot;, &quot;params&quot;: [&quot;path/to/exportdir/nameofbackup&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="keypoolrefill-newsize">keypoolrefill ( newsize )</h3>
+<p>Fills the keypool.</p>
+<p>Arguments</p>
+<pre><code>1. newsize     (numeric, optional, default=100) The new keypool size</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli keypoolrefill 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;keypoolrefill&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listaccounts-minconf-includewatchonly">listaccounts ( minconf includeWatchonly)</h3>
+<p><strong>DEPRECATED</strong>. Returns Object that has account names as keys, account balances as values.</p>
+<p>Arguments:</p>
+<pre><code>1. minconf          (numeric, optional, default=1) Only include transactions with at least this many confirmations
+2. includeWatchonly (bool, optional, default=false) Include balances in watchonly addresses (see &#39;importaddress&#39;)</code></pre>
+<p>Result:</p>
+<pre><code>{                      (json object where keys are account names, and values are numeric balances
+  &quot;account&quot;: x.xxx,  (numeric) The property name is the account name, and the value is the total balance for the account.
+  ...
+}</code></pre>
+<p>Examples:</p>
+<p>List account balances where there at least 1 confirmation</p>
+<pre><code>&gt; komodo-cli listaccounts </code></pre>
+<p>List account balances including zero confirmation transactions</p>
+<pre><code>&gt; komodo-cli listaccounts 0</code></pre>
+<p>List account balances for 6 or more confirmations</p>
+<pre><code>&gt; komodo-cli listaccounts 6</code></pre>
+<p>As json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listaccounts&quot;, &quot;params&quot;: [6] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listaddressgroupings">listaddressgroupings</h3>
+<p>Lists groups of addresses which have had their common ownership made public by common use as inputs or as the resulting change in past transactions</p>
+<p>Result:</p>
+<pre><code>[
+  [
+    [
+      &quot;zcashaddress&quot;,     (string) The zcash address
+      amount,                 (numeric) The amount in ZEC
+      &quot;account&quot;             (string, optional) The account (DEPRECATED)
+    ]
+    ,...
+  ]
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli listaddressgroupings 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listaddressgroupings&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listlockunspent">listlockunspent</h3>
+<p>Returns list of temporarily unspendable outputs. See the lockunspent call to lock and unlock transactions for spending.</p>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;txid&quot; : &quot;transactionid&quot;,     (string) The transaction id locked
+    &quot;vout&quot; : n                      (numeric) The vout value
+  }
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<p>List the unspent transactions</p>
+<pre><code>&gt; komodo-cli listunspent </code></pre>
+<p>Lock an unspent transaction</p>
+<pre><code>&gt; komodo-cli lockunspent false &quot;[{\&quot;txid\&quot;:\&quot;a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\&quot;,\&quot;vout\&quot;:1}]&quot;</code></pre>
+<p>List the locked transactions</p>
+<pre><code>&gt; komodo-cli listlockunspent </code></pre>
+<p>Unlock the transaction again</p>
+<pre><code>&gt; komodo-cli lockunspent true &quot;[{\&quot;txid\&quot;:\&quot;a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\&quot;,\&quot;vout\&quot;:1}]&quot;</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listlockunspent&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listreceivedbyaccount-minconf-includeempty-includewatchonly">listreceivedbyaccount ( minconf includeempty includeWatchonly)</h3>
+<p><strong>DEPRECATED</strong>. List balances by account.</p>
+<p>Arguments:</p>
+<pre><code>1. minconf      (numeric, optional, default=1) The minimum number of confirmations before payments are included.
+2. includeempty (boolean, optional, default=false) Whether to include accounts that haven&#39;t received any payments.
+3. includeWatchonly (bool, optional, default=false) Whether to include watchonly addresses (see &#39;importaddress&#39;).</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;involvesWatchonly&quot; : true,   (bool) Only returned if imported addresses were involved in transaction
+    &quot;account&quot; : &quot;accountname&quot;,  (string) The account name of the receiving account
+    &quot;amount&quot; : x.xxx,             (numeric) The total amount received by addresses with this account
+    &quot;confirmations&quot; : n           (numeric) The number of confirmations of the most recent transaction included
+  }
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli listreceivedbyaccount 
+&gt; komodo-cli listreceivedbyaccount 6 true
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listreceivedbyaccount&quot;, &quot;params&quot;: [6, true, true] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listreceivedbyaddress-minconf-includeempty-includewatchonly">listreceivedbyaddress ( minconf includeempty includeWatchonly)</h3>
+<p>List balances by receiving address.</p>
+<p>Arguments:</p>
+<pre><code>1. minconf       (numeric, optional, default=1) The minimum number of confirmations before payments are included.
+2. includeempty  (numeric, optional, default=false) Whether to include addresses that haven&#39;t received any payments.
+3. includeWatchonly (bool, optional, default=false) Whether to include watchonly addresses (see &#39;importaddress&#39;).</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;involvesWatchonly&quot; : true,        (bool) Only returned if imported addresses were involved in transaction
+    &quot;address&quot; : &quot;receivingaddress&quot;,  (string) The receiving address
+    &quot;account&quot; : &quot;accountname&quot;,       (string) DEPRECATED. The account of the receiving address. The default account is &quot;&quot;.
+    &quot;amount&quot; : x.xxx,                  (numeric) The total amount in ZEC received by the address
+    &quot;confirmations&quot; : n                (numeric) The number of confirmations of the most recent transaction included
+  }
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli listreceivedbyaddress 
+&gt; komodo-cli listreceivedbyaddress 6 true
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listreceivedbyaddress&quot;, &quot;params&quot;: [6, true, true] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listsinceblock-blockhash-target-confirmations-includewatchonly">listsinceblock ( &quot;blockhash&quot; target-confirmations includeWatchonly)</h3>
+<p>Get all transactions in blocks since block [blockhash], or all transactions if omitted</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;blockhash&quot;   (string, optional) The block hash to list transactions since
+2. target-confirmations:    (numeric, optional) The confirmations required, must be 1 or more
+3. includeWatchonly:        (bool, optional, default=false) Include transactions to watchonly addresses (see &#39;importaddress&#39;)</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;transactions&quot;: [
+  &quot;account&quot;:&quot;accountname&quot;,       (string) DEPRECATED. The account name associated with the transaction. Will be &quot;&quot; for the default account.
+  &quot;address&quot;:&quot;zcashaddress&quot;,    (string) The Zcash address of the transaction. Not present for move transactions (category = move).
+  &quot;category&quot;:&quot;send|receive&quot;,     (string) The transaction category. &#39;send&#39; has negative amounts, &#39;receive&#39; has positive amounts.
+  &quot;amount&quot;: x.xxx,          (numeric) The amount in ZEC. This is negative for the &#39;send&#39; category, and for the &#39;move&#39; category for moves 
+                                      outbound. It is positive for the &#39;receive&#39; category, and for the &#39;move&#39; category for inbound funds.
+    &quot;vout&quot; : n,               (numeric) the vout value
+    &quot;fee&quot;: x.xxx,             (numeric) The amount of the fee in ZEC. This is negative and only available for the &#39;send&#39; category of transactions.
+    &quot;confirmations&quot;: n,       (numeric) The number of confirmations for the transaction. Available for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;blockhash&quot;: &quot;hashvalue&quot;,     (string) The block hash containing the transaction. Available for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;blockindex&quot;: n,          (numeric) The block index containing the transaction. Available for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;blocktime&quot;: xxx,         (numeric) The block time in seconds since epoch (1 Jan 1970 GMT).
+    &quot;txid&quot;: &quot;transactionid&quot;,  (string) The transaction id. Available for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;time&quot;: xxx,              (numeric) The transaction time in seconds since epoch (Jan 1 1970 GMT).
+    &quot;timereceived&quot;: xxx,      (numeric) The time received in seconds since epoch (Jan 1 1970 GMT). Available for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;comment&quot;: &quot;...&quot;,       (string) If a comment is associated with the transaction.
+    &quot;to&quot;: &quot;...&quot;,            (string) If a comment to is associated with the transaction.
+  ],
+  &quot;lastblock&quot;: &quot;lastblockhash&quot;     (string) The hash of the last block
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli listsinceblock 
+&gt; komodo-cli listsinceblock &quot;000000000000000bacf66f7497b7dc45ef753ee9a7d38571037cdb1a57f663ad&quot; 6
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listsinceblock&quot;, &quot;params&quot;: [&quot;000000000000000bacf66f7497b7dc45ef753ee9a7d38571037cdb1a57f663ad&quot;, 6] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listtransactions-account-count-from-includewatchonly">listtransactions ( &quot;account&quot; count from includeWatchonly)</h3>
+<p>Returns up to 'count' most recent transactions skipping the first 'from' transactions for account 'account'.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;account&quot;    (string, optional) DEPRECATED. The account name. Should be &quot;*&quot;.
+2. count          (numeric, optional, default=10) The number of transactions to return
+3. from           (numeric, optional, default=0) The number of transactions to skip
+4. includeWatchonly (bool, optional, default=false) Include transactions to watchonly addresses (see &#39;importaddress&#39;)</code></pre>
+<p>Result:</p>
+<pre><code>[
+  {
+    &quot;account&quot;:&quot;accountname&quot;,       (string) DEPRECATED. The account name associated with the transaction. 
+                                                It will be &quot;&quot; for the default account.
+    &quot;address&quot;:&quot;zcashaddress&quot;,    (string) The Zcash address of the transaction. Not present for 
+                                                move transactions (category = move).
+    &quot;category&quot;:&quot;send|receive|move&quot;, (string) The transaction category. &#39;move&#39; is a local (off blockchain)
+                                                transaction between accounts, and not associated with an address,
+                                                transaction id or block. &#39;send&#39; and &#39;receive&#39; transactions are 
+                                                associated with an address, transaction id and block details
+    &quot;amount&quot;: x.xxx,          (numeric) The amount in ZEC. This is negative for the &#39;send&#39; category, and for the
+                                         &#39;move&#39; category for moves outbound. It is positive for the &#39;receive&#39; category,
+                                         and for the &#39;move&#39; category for inbound funds.
+    &quot;vout&quot; : n,               (numeric) the vout value
+    &quot;fee&quot;: x.xxx,             (numeric) The amount of the fee in ZEC. This is negative and only available for the 
+                                         &#39;send&#39; category of transactions.
+    &quot;confirmations&quot;: n,       (numeric) The number of confirmations for the transaction. Available for &#39;send&#39; and 
+                                         &#39;receive&#39; category of transactions.
+    &quot;blockhash&quot;: &quot;hashvalue&quot;, (string) The block hash containing the transaction. Available for &#39;send&#39; and &#39;receive&#39;
+                                          category of transactions.
+    &quot;blockindex&quot;: n,          (numeric) The block index containing the transaction. Available for &#39;send&#39; and &#39;receive&#39;
+                                          category of transactions.
+    &quot;txid&quot;: &quot;transactionid&quot;, (string) The transaction id. Available for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;time&quot;: xxx,              (numeric) The transaction time in seconds since epoch (midnight Jan 1 1970 GMT).
+    &quot;timereceived&quot;: xxx,      (numeric) The time received in seconds since epoch (midnight Jan 1 1970 GMT). Available 
+                                          for &#39;send&#39; and &#39;receive&#39; category of transactions.
+    &quot;comment&quot;: &quot;...&quot;,       (string) If a comment is associated with the transaction.
+    &quot;otheraccount&quot;: &quot;accountname&quot;,  (string) For the &#39;move&#39; category of transactions, the account the funds came 
+                                          from (for receiving funds, positive amounts), or went to (for sending funds,
+                                          negative amounts).
+    &quot;size&quot;: n,                (numeric) Transaction size in bytes
+  }
+]</code></pre>
+<p>Examples:</p>
+<p>List the most recent 10 transactions in the systems</p>
+<pre><code>&gt; komodo-cli listtransactions </code></pre>
+<p>List transactions 100 to 120</p>
+<pre><code>&gt; komodo-cli listtransactions &quot;*&quot; 20 100</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listtransactions&quot;, &quot;params&quot;: [&quot;*&quot;, 20, 100] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="listunspent-minconf-maxconf-address...">listunspent ( minconf maxconf [&quot;address&quot;,...] )</h3>
+<p>Returns array of unspent transaction outputs with between minconf and maxconf (inclusive) confirmations. Optionally filter to only include txouts paid to specified addresses. Results are an array of Objects, each of which has: {txid, vout, scriptPubKey, amount, confirmations}</p>
+<p>Arguments:</p>
+<pre><code>1. minconf          (numeric, optional, default=1) The minimum confirmations to filter
+2. maxconf          (numeric, optional, default=9999999) The maximum confirmations to filter
+3. &quot;addresses&quot;    (string) A json array of Zcash addresses to filter
+
+    [
+      &quot;address&quot;   (string) Zcash address
+      ,...
+    ]</code></pre>
+<p>Result:</p>
+<pre><code>[                   (array of json object)
+  {
+    &quot;txid&quot; : &quot;txid&quot;,        (string) the transaction id 
+    &quot;vout&quot; : n,               (numeric) the vout value
+    &quot;generated&quot; : true|false  (boolean) true if txout is a coinbase transaction output
+    &quot;address&quot; : &quot;address&quot;,  (string) the Zcash address
+    &quot;account&quot; : &quot;account&quot;,  (string) DEPRECATED. The associated account, or &quot;&quot; for the default account
+    &quot;scriptPubKey&quot; : &quot;key&quot;, (string) the script key
+    &quot;amount&quot; : x.xxx,         (numeric) the transaction amount in ZEC
+    &quot;confirmations&quot; : n       (numeric) The number of confirmations
+  }
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli listunspent 
+&gt; komodo-cli listunspent 6 9999999 &quot;[\&quot;t1PGFqEzfmQch1gKD3ra4k18PNj3tTUUSqg\&quot;,\&quot;t1LtvqCaApEdUGFkpKMM4MstjcaL4dKg8SP\&quot;]&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;listunspent&quot;, &quot;params&quot;: [6, 9999999 &quot;[\&quot;t1PGFqEzfmQch1gKD3ra4k18PNj3tTUUSqg\&quot;,\&quot;t1LtvqCaApEdUGFkpKMM4MstjcaL4dKg8SP\&quot;]&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="lockunspent-unlock-txidtxidvoutn...">lockunspent unlock [{&quot;txid&quot;:&quot;txid&quot;,&quot;vout&quot;:n},...]</h3>
+<p>Updates list of temporarily unspendable outputs. Temporarily lock (unlock=false) or unlock (unlock=true) specified transaction outputs. A locked transaction output will not be chosen by automatic coin selection, when spending Zcash. Locks are stored in memory only. Nodes start with zero locked outputs, and the locked output list is always cleared (by virtue of process exit) when a node stops or fails. Also see the listunspent call</p>
+<p>Arguments:</p>
+<pre><code>1. unlock            (boolean, required) Whether to unlock (true) or lock (false) the specified transactions
+2. &quot;transactions&quot;  (string, required) A json array of objects. Each object the txid (string) vout (numeric)
+     [           (json array of json objects)
+       {
+         &quot;txid&quot;:&quot;id&quot;,    (string) The transaction id
+         &quot;vout&quot;: n         (numeric) The output number
+       }
+       ,...
+     ]</code></pre>
+<p>Result:</p>
+<pre><code>true|false    (boolean) Whether the command was successful or not</code></pre>
+<p>Examples:</p>
+<p>List the unspent transactions</p>
+<pre><code>&gt; komodo-cli listunspent </code></pre>
+<p>Lock an unspent transaction</p>
+<pre><code>&gt; komodo-cli lockunspent false &quot;[{\&quot;txid\&quot;:\&quot;a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\&quot;,\&quot;vout\&quot;:1}]&quot;</code></pre>
+<p>List the locked transactions</p>
+<pre><code>&gt; komodo-cli listlockunspent </code></pre>
+<p>Unlock the transaction again</p>
+<pre><code>&gt; komodo-cli lockunspent true &quot;[{\&quot;txid\&quot;:\&quot;a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\&quot;,\&quot;vout\&quot;:1}]&quot;</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;lockunspent&quot;, &quot;params&quot;: [false, &quot;[{\&quot;txid\&quot;:\&quot;a08e6907dbbd3d809776dbfc5d82e371b764ed838b5655e72f463568df1aadf0\&quot;,\&quot;vout\&quot;:1}]&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="move-fromaccount-toaccount-amount-minconf-comment">move &quot;fromaccount&quot; &quot;toaccount&quot; amount ( minconf &quot;comment&quot; )</h3>
+<p><strong>DEPRECATED</strong>. Move a specified amount from one account in your wallet to another.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;fromaccount&quot;   (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.
+2. &quot;toaccount&quot;     (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.
+3. amount            (numeric) Quantity of ZEC to move between accounts.
+4. minconf           (numeric, optional, default=1) Only use funds with at least this many confirmations.
+5. &quot;comment&quot;       (string, optional) An optional comment, stored in the wallet only.</code></pre>
+<p>Result:</p>
+<pre><code>true|false           (boolean) true if successful.</code></pre>
+<p>Examples:</p>
+<p>Move 0.01 ZEC from the default account to the account named tabby</p>
+<pre><code>&gt; komodo-cli move &quot;&quot; &quot;tabby&quot; 0.01</code></pre>
+<p>Move 0.01 ZEC timotei to akiko with a comment and funds have 6 confirmations</p>
+<pre><code>&gt; komodo-cli move &quot;timotei&quot; &quot;akiko&quot; 0.01 6 &quot;happy birthday!&quot;</code></pre>
+<p>As a json rpc call</p>
+<dl>
+<dt>::</dt>
+<dd><p>&gt; curl --user myusername --data-binary '{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;move&quot;, &quot;params&quot;: [&quot;timotei&quot;, &quot;akiko&quot;, 0.01, 6, &quot;happy birthday!&quot;] }' -H 'content-type: text/plain;' <a href="http://127.0.0.1:7771/" class="uri">http://127.0.0.1:7771/</a></p>
+</dd>
+</dl>
+<h3 id="resendwallettransactions">resendwallettransactions</h3>
+<p>Immediately re-broadcast unconfirmed wallet transactions to all peers. Intended only for testing; the wallet code periodically re-broadcasts automatically.</p>
+<p>Returns array of transaction ids that were re-broadcast.</p>
+<h3 id="sendfrom-fromaccount-tokmdaddress-amount-minconf-comment-comment-to">sendfrom &quot;fromaccount&quot; &quot;toKMDaddress&quot; amount ( minconf &quot;comment&quot; &quot;comment-to&quot; )</h3>
+<p><strong>DEPRECATED</strong> (use sendtoaddress). Sent an amount from an account to a Zcash address. The amount is a real and is rounded to the nearest 0.00000001.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;fromaccount&quot;       (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.
+2. &quot;tozcashaddress&quot;  (string, required) The Zcash address to send funds to.
+3. amount                (numeric, required) The amount in ZEC (transaction fee is added on top).
+4. minconf               (numeric, optional, default=1) Only use funds with at least this many confirmations.
+5. &quot;comment&quot;           (string, optional) A comment used to store what the transaction is for. 
+                                     This is not part of the transaction, just kept in your wallet.
+6. &quot;comment-to&quot;        (string, optional) An optional comment to store the name of the person or organization 
+                                 to which you&#39;re sending the transaction. This is not part of the transaction, 
+                                 it is just kept in your wallet.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;transactionid&quot;        (string) The transaction id.</code></pre>
+<p>Examples:</p>
+<p>Send 0.01 ZEC from the default account to the address, must have at least 1 confirmation</p>
+<pre><code>&gt; komodo-cli sendfrom &quot;&quot; &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; 0.01</code></pre>
+<p>Send 0.01 from the tabby account to the given address, funds must have at least 6 confirmations</p>
+<pre><code>&gt; komodo-cli sendfrom &quot;tabby&quot; &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; 0.01 6 &quot;donation&quot; &quot;seans outpost&quot;</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;sendfrom&quot;, &quot;params&quot;: [&quot;tabby&quot;, &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot;, 0.01, 6, &quot;donation&quot;, &quot;seans outpost&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="sendmany-fromaccount-addressamount...-minconf-comment-address...">sendmany &quot;fromaccount&quot; {&quot;address&quot;:amount,...} ( minconf &quot;comment&quot; [&quot;address&quot;,...] )</h3>
+<p>Send multiple times. Amounts are double-precision floating point numbers.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;fromaccount&quot;         (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.
+2. &quot;amounts&quot;             (string, required) A json object with addresses and amounts
+    {
+      &quot;address&quot;:amount   (numeric) The Zcash address is the key, the numeric amount in ZEC is the value
+      ,...
+    }
+3. minconf                 (numeric, optional, default=1) Only use the balance confirmed at least this many times.
+4. &quot;comment&quot;             (string, optional) A comment
+5. subtractfeefromamount   (string, optional) A json array with addresses.
+                           The fee will be equally deducted from the amount of each selected address.
+                           Those recipients will receive less Zcash than you enter in their corresponding amount field.
+                           If no addresses are specified here, the sender pays the fee.
+    [
+      &quot;address&quot;            (string) Subtract fee from this address
+      ,...
+    ]</code></pre>
+<p>Result:</p>
+<pre><code>&quot;transactionid&quot;          (string) The transaction id for the send. Only 1 transaction is created regardless of 
+                                the number of addresses.</code></pre>
+<p>Examples:</p>
+<p>Send two amounts to two different addresses:</p>
+<pre><code>&gt; komodo-cli sendmany &quot;&quot; &quot;{\&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1\&quot;:0.01,\&quot;t1353tsE8YMTA4EuV7dgUXGjNFf9KpVvKHz\&quot;:0.02}&quot;</code></pre>
+<p>Send two amounts to two different addresses setting the confirmation and comment:</p>
+<pre><code>&gt; komodo-cli sendmany &quot;&quot; &quot;{\&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1\&quot;:0.01,\&quot;t1353tsE8YMTA4EuV7dgUXGjNFf9KpVvKHz\&quot;:0.02}&quot; 6 &quot;testing&quot;</code></pre>
+<p>Send two amounts to two different addresses, subtract fee from amount:</p>
+<pre><code>&gt; komodo-cli sendmany &quot;&quot; &quot;{\&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1\&quot;:0.01,\&quot;t1353tsE8YMTA4EuV7dgUXGjNFf9KpVvKHz\&quot;:0.02}&quot; 1 &quot;&quot; &quot;[\&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1\&quot;,\&quot;t1353tsE8YMTA4EuV7dgUXGjNFf9KpVvKHz\&quot;]&quot;</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;sendmany&quot;, &quot;params&quot;: [&quot;&quot;, &quot;{\&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1\&quot;:0.01,\&quot;t1353tsE8YMTA4EuV7dgUXGjNFf9KpVvKHz\&quot;:0.02}&quot;, 6, &quot;testing&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="sendtoaddress-kmd_address-amount-comment-comment-to-subtractfeefromamount">sendtoaddress &quot;KMD_address&quot; amount ( &quot;comment&quot; &quot;comment-to&quot; subtractfeefromamount )</h3>
+<p>Send an amount to a given address. The amount is a real and is rounded to the nearest 0.00000001</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;komodoaddress&quot;  (string, required) The Komodo address to send to.
+2. &quot;amount&quot;      (numeric, required) The amount in Komodo to send. eg 0.1
+3. &quot;comment&quot;     (string, optional) A comment used to store what the transaction is for. 
+                             This is not part of the transaction, just kept in your wallet.
+4. &quot;comment-to&quot;  (string, optional) A comment to store the name of the person or organization 
+                             to which you&#39;re sending the transaction. This is not part of the 
+                             transaction, just kept in your wallet.
+5. subtractfeefromamount  (boolean, optional, default=false) The fee will be deducted from the amount being sent.
+                             The recipient will receive less Zcash than you enter in the amount field.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;transactionid&quot;  (string) The transaction id.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli sendtoaddress &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; 0.1
+&gt; komodo-cli sendtoaddress &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; 0.1 &quot;donation&quot; &quot;seans outpost&quot;
+&gt; komodo-cli sendtoaddress &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; 0.1 &quot;&quot; &quot;&quot; true
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;sendtoaddress&quot;, &quot;params&quot;: [&quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot;, 0.1, &quot;donation&quot;, &quot;seans outpost&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="setaccount-kmd_address-account">setaccount &quot;KMD_address&quot; &quot;account&quot;</h3>
+<p><strong>DEPRECATED</strong>. Sets the account associated with the given address.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashaddress&quot;  (string, required) The Zcash address to be associated with an account.
+2. &quot;account&quot;         (string, required) MUST be set to the empty string &quot;&quot; to represent the default account. Passing any other string will result in an error.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli setaccount &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; &quot;tabby&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;setaccount&quot;, &quot;params&quot;: [&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;, &quot;tabby&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="settxfee-amount">settxfee amount</h3>
+<p>Set the transaction fee per kB.</p>
+<p>Arguments:</p>
+<pre><code>1. amount         (numeric, required) The transaction fee in ZEC/kB rounded to the nearest 0.00000001</code></pre>
+<p>Result</p>
+<pre><code>true|false        (boolean) Returns true if successful</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli settxfee 0.00001
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;settxfee&quot;, &quot;params&quot;: [0.00001] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="signmessage-kmd-address-message">signmessage &quot;KMD address&quot; &quot;message&quot;</h3>
+<p>Sign a message with the private key of an address</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zcashaddress&quot;  (string, required) The Zcash address to use for the private key.
+2. &quot;message&quot;         (string, required) The message to create a signature of.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;signature&quot;          (string) The signature of the message encoded in base 64</code></pre>
+<p>Examples:</p>
+<p>Unlock the wallet for 30 seconds</p>
+<pre><code>&gt; komodo-cli walletpassphrase &quot;mypassphrase&quot; 30</code></pre>
+<p>Create the signature</p>
+<pre><code>&gt; komodo-cli signmessage &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; &quot;my message&quot;</code></pre>
+<p>Verify the signature</p>
+<pre><code>&gt; komodo-cli verifymessage &quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot; &quot;signature&quot; &quot;my message&quot;</code></pre>
+<p>As json rpc</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;signmessage&quot;, &quot;params&quot;: [&quot;t14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1&quot;, &quot;my message&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_exportkey-zaddr">z_exportkey &quot;zaddr&quot;</h3>
+<p>Reveals the zkey corresponding to 'zaddr'. Then the z_importkey can be used with this output</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zaddr&quot;   (string, required) The zaddr for the private key</code></pre>
+<p>Result:</p>
+<pre><code>&quot;key&quot;                  (string) The private key</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_exportkey &quot;myaddress&quot;
+&gt; komodo-cli z_importkey &quot;mykey&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_exportkey&quot;, &quot;params&quot;: [&quot;myaddress&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_exportviewingkey-zaddr">z_exportviewingkey &quot;zaddr&quot;</h3>
+<p>Reveals the viewing key corresponding to 'zaddr'. Then the z_importviewingkey can be used with this output</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zaddr&quot;   (string, required) The zaddr for the viewing key</code></pre>
+<p>Result:</p>
+<pre><code>&quot;vkey&quot;                  (string) The viewing key</code></pre>
+<p>Examples:</p>
+<blockquote>
+<p>&gt; komodo-cli z_exportviewingkey &quot;myaddress&quot; &gt; curl --user myusername --data-binary '{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_exportviewingkey&quot;, &quot;params&quot;: [&quot;myaddress&quot;] }' -H 'content-type: text/plain;' <a href="http://127.0.0.1:7771/" class="uri">http://127.0.0.1:7771/</a></p>
+</blockquote>
+<h3 id="z_exportwallet-filename">z_exportwallet &quot;filename&quot;</h3>
+<p>Exports all wallet keys, for taddr and zaddr, in a human-readable format. Overwriting an existing file is not permitted.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;filename&quot;    (string, required) The filename, saved in folder set by zcashd -exportdir option</code></pre>
+<p>Result:</p>
+<blockquote>
+<p>&quot;path&quot; (string) The full path of the destination file</p>
+</blockquote>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_exportwallet &quot;test&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_exportwallet&quot;, &quot;params&quot;: [&quot;test&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_getbalance-address-minconf">z_getbalance &quot;address&quot; ( minconf )</h3>
+<p>Returns the balance of a taddr or zaddr belonging to the node’s wallet.</p>
+<p><code>CAUTION</code>: If address is a watch-only zaddr, the returned balance may be larger than the actual balance, because spends cannot be detected with incoming viewing keys.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;address&quot;      (string) The selected address. It may be a transparent or private address.
+2. minconf          (numeric, optional, default=1) Only include transactions confirmed at least this many times.</code></pre>
+<p>Result:</p>
+<pre><code>amount              (numeric) The total amount in KMD received for this address.</code></pre>
+<p>Examples:</p>
+<p>The total amount received by address &quot;myaddress&quot;</p>
+<pre><code>&gt; komodo-cli z_getbalance &quot;myaddress&quot;</code></pre>
+<p>The total amount received by address &quot;myaddress&quot; at least 5 blocks confirmed</p>
+<pre><code>&gt; komodo-cli z_getbalance &quot;myaddress&quot; 5</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_getbalance&quot;, &quot;params&quot;: [&quot;myaddress&quot;, 5] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_getnewaddress">z_getnewaddress</h3>
+<p>Returns a new zaddr for receiving payments.</p>
+<p>Arguments:</p>
+<p>Result:</p>
+<pre><code>&quot;zcashaddress&quot;    (string) The new zaddr</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_getnewaddress 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_getnewaddress&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_getoperationresult-operationid-...">z_getoperationresult ([&quot;operationid&quot;, ...])</h3>
+<p>Retrieve the result and status of an operation which has finished, and then remove the operation from memory.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;operationid&quot;         (array, optional) A list of operation ids we are interested in.  If not provided, examine all operations known to the node.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;    [object, ...]&quot;      (array) A list of JSON objects</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_getoperationresult &#39;[&quot;operationid&quot;, ... ]&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_getoperationresult&quot;, &quot;params&quot;: [&#39;[&quot;operationid&quot;, ...]&#39;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_getoperationstatus-operationid-...">z_getoperationstatus ([&quot;operationid&quot;, ...])</h3>
+<p>Get operation status and any associated result or error data. The operation will remain in memory.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;operationid&quot;         (array, optional) A list of operation ids we are interested in.  If not provided, examine all operations known to the node.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;    [object, ...]&quot;      (array) A list of JSON objects</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_getoperationstatus &#39;[&quot;operationid&quot;, ... ]&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_getoperationstatus&quot;, &quot;params&quot;: [&#39;[&quot;operationid&quot;, ...]&#39;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_gettotalbalance-minconf-includewatchonly">z_gettotalbalance ( minconf includeWatchonly )</h3>
+<p>Return the total value of funds stored in the node’s wallet.</p>
+<p><strong>CAUTION</strong>: If the wallet contains watch-only zaddrs, the returned private balance may be larger than the actual balance, because spends cannot be detected with incoming viewing keys.</p>
+<p>Arguments:</p>
+<pre><code>1. minconf          (numeric, optional, default=1) Only include private and transparent transactions confirmed at least this many times.
+2. includeWatchonly (bool, optional, default=false) Also include balance in watchonly addresses (see &#39;importaddress&#39; and &#39;z_importviewingkey&#39;)</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;transparent&quot;: xxxxx,     (numeric) the total balance of transparent funds
+  &quot;private&quot;: xxxxx,         (numeric) the total balance of private funds
+  &quot;total&quot;: xxxxx,           (numeric) the total balance of both transparent and private funds
+}</code></pre>
+<p>Examples:</p>
+<p>The total amount in the wallet</p>
+<pre><code>&gt; komodo-cli z_gettotalbalance </code></pre>
+<p>The total amount in the wallet at least 5 blocks confirmed</p>
+<pre><code>&gt; komodo-cli z_gettotalbalance 5</code></pre>
+<p>As a json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_gettotalbalance&quot;, &quot;params&quot;: [5] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_importkey-zkey-rescan-startheight">z_importkey &quot;zkey&quot; ( rescan startHeight )</h3>
+<p>Adds a zkey (as returned by z_exportkey) to your wallet.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;zkey&quot;             (string, required) The zkey (see z_exportkey)
+2. rescan             (string, optional, default=&quot;whenkeyisnew&quot;) Rescan the wallet for transactions - can be &quot;yes&quot;, &quot;no&quot; or &quot;whenkeyisnew&quot;
+3. startHeight        (numeric, optional, default=0) Block height to start rescan from</code></pre>
+<p><strong>Note</strong>: This call can take minutes to complete if rescan is true.</p>
+<p>Examples:</p>
+<p>Export a zkey</p>
+<pre><code>&gt; komodo-cli z_exportkey &quot;myaddress&quot;</code></pre>
+<p>Import the zkey with rescan</p>
+<pre><code>&gt; komodo-cli z_importkey &quot;mykey&quot;</code></pre>
+<p>Import the zkey with partial rescan</p>
+<pre><code>&gt; komodo-cli z_importkey &quot;mykey&quot; whenkeyisnew 30000</code></pre>
+<p>Re-import the zkey with longer partial rescan</p>
+<pre><code>&gt; komodo-cli z_importkey &quot;mykey&quot; yes 20000</code></pre>
+<p>As a JSON-RPC call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_importkey&quot;, &quot;params&quot;: [&quot;mykey&quot;, &quot;no&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_importviewingkey-vkey-rescan-startheight">z_importviewingkey &quot;vkey&quot; ( rescan startHeight )</h3>
+<p>Adds a viewing key (as returned by z_exportviewingkey) to your wallet.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;vkey&quot;             (string, required) The viewing key (see z_exportviewingkey)
+2. rescan             (string, optional, default=&quot;whenkeyisnew&quot;) Rescan the wallet for transactions - can be &quot;yes&quot;, &quot;no&quot; or &quot;whenkeyisnew&quot;
+3. startHeight        (numeric, optional, default=0) Block height to start rescan from</code></pre>
+<p><strong>Note</strong>: This call can take minutes to complete if rescan is true.</p>
+<p>Examples:</p>
+<p>Import a viewing key</p>
+<pre><code>&gt; komodo-cli z_importviewingkey &quot;vkey&quot;</code></pre>
+<p>Import the viewing key without rescan</p>
+<pre><code>&gt; komodo-cli z_importviewingkey &quot;vkey&quot;, no</code></pre>
+<p>Import the viewing key with partial rescan</p>
+<pre><code>&gt; komodo-cli z_importviewingkey &quot;vkey&quot; whenkeyisnew 30000</code></pre>
+<p>Re-import the viewing key with longer partial rescan</p>
+<pre><code>&gt; komodo-cli z_importviewingkey &quot;vkey&quot; yes 20000</code></pre>
+<p>As a JSON-RPC call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_importviewingkey&quot;, &quot;params&quot;: [&quot;vkey&quot;, &quot;no&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_importwallet-filename">z_importwallet &quot;filename&quot;</h3>
+<p>Imports taddr and zaddr keys from a wallet export file (see z_exportwallet).</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;filename&quot;    (string, required) The wallet file</code></pre>
+<p>Examples:</p>
+<p>Dump the wallet</p>
+<pre><code>&gt; komodo-cli z_exportwallet &quot;nameofbackup&quot;</code></pre>
+<p>Import the wallet</p>
+<pre><code>&gt; komodo-cli z_importwallet &quot;path/to/exportdir/nameofbackup&quot;</code></pre>
+<p>Import using the json rpc call</p>
+<pre><code>&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_importwallet&quot;, &quot;params&quot;: [&quot;path/to/exportdir/nameofbackup&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_listaddresses-includewatchonly">z_listaddresses ( includeWatchonly )</h3>
+<p>Returns the list of zaddr belonging to the wallet.</p>
+<p>Arguments:</p>
+<pre><code>1. includeWatchonly (bool, optional, default=false) Also include watchonly addresses (see &#39;z_importviewingkey&#39;)</code></pre>
+<p>Result:</p>
+<pre><code>[                     (json array of string)
+  &quot;zaddr&quot;           (string) a zaddr belonging to the wallet
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_listaddresses 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_listaddresses&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_listoperationids">z_listoperationids</h3>
+<p>Returns the list of operation ids currently known to the wallet.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;status&quot;         (string, optional) Filter result by the operation&#39;s state e.g. &quot;success&quot;.</code></pre>
+<p>Result:</p>
+<pre><code>[                     (json array of string)
+  &quot;operationid&quot;       (string) an operation id belonging to the wallet
+  ,...
+]</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_listoperationids 
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_listoperationids&quot;, &quot;params&quot;: [] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_listreceivedbyaddress-address-minconf">z_listreceivedbyaddress &quot;address&quot; ( minconf )</h3>
+<p>Return a list of amounts received by a zaddr belonging to the node’s wallet.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;address&quot;      (string) The private address.
+2. minconf          (numeric, optional, default=1) Only include transactions confirmed at least this many times.</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;txid&quot;: xxxxx,     (string) the transaction id
+  &quot;amount&quot;: xxxxx,   (numeric) the amount of value in the note
+  &quot;memo&quot;: xxxxx,     (string) hexademical string representation of memo field
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_listreceivedbyaddress &quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_listreceivedbyaddress&quot;, &quot;params&quot;: [&quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_mergetoaddress-fromaddress-...-toaddress-fee-transparent_limit-shielded_limit-memo">z_mergetoaddress [&quot;fromaddress&quot;, ...] &quot;toaddress&quot; ( fee ) ( transparent_limit ) ( shielded_limit ) ( memo )</h3>
+<p><strong>WARNING</strong>: z_mergetoaddress is DISABLED but can be enabled as an experimental feature.</p>
+<p>Merge multiple UTXOs and notes into a single UTXO or note. Coinbase UTXOs are ignored; use <code>z_shieldcoinbase</code> to combine those into a single note.</p>
+<p>This is an asynchronous operation, and UTXOs selected for merging will be locked. If there is an error, they are unlocked. The RPC call listlockunspent can be used to return a list of locked UTXOs.</p>
+<p>The number of UTXOs and notes selected for merging can be limited by the caller. If the transparent limit parameter is set to zero, the -mempooltxinputlimit option will determine the number of UTXOs. Any limit is constrained by the consensus rule defining a maximum transaction size of 100000 bytes.</p>
+<p>Arguments:</p>
+<pre><code>1. fromaddresses         (string, required) A JSON array with addresses.
+                         The following special strings are accepted inside the array:
+                             - &quot;*&quot;: Merge both UTXOs and notes from all addresses belonging to the wallet.
+                             - &quot;ANY_TADDR&quot;: Merge UTXOs from all t-addrs belonging to the wallet.
+                             - &quot;ANY_ZADDR&quot;: Merge notes from all z-addrs belonging to the wallet.
+                         If a special string is given, any given addresses of that type will be ignored.
+    [
+      &quot;address&quot;          (string) Can be a t-addr or a z-addr
+      ,...
+    ]
+2. &quot;toaddress&quot;           (string, required) The t-addr or z-addr to send the funds to.
+3. fee                   (numeric, optional, default=0.0001) The fee amount to attach to this transaction.
+4. transparent_limit     (numeric, optional, default=50) Limit on the maximum number of UTXOs to merge.  Set to 0 to use node option -mempooltxinputlimit.
+4. shielded_limit        (numeric, optional, default=10) Limit on the maximum number of notes to merge.  Set to 0 to merge as many as will fit in the transaction.
+5. &quot;memo&quot;                (string, optional) Encoded as hex. When toaddress is a z-addr, this will be stored in the memo field of the new note.</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;remainingUTXOs&quot;: xxx               (numeric) Number of UTXOs still available for merging.
+  &quot;remainingTransparentValue&quot;: xxx    (numeric) Value of UTXOs still available for merging.
+  &quot;remainingNotes&quot;: xxx               (numeric) Number of notes still available for merging.
+  &quot;remainingShieldedValue&quot;: xxx       (numeric) Value of notes still available for merging.
+  &quot;mergingUTXOs&quot;: xxx                 (numeric) Number of UTXOs being merged.
+  &quot;mergingTransparentValue&quot;: xxx      (numeric) Value of UTXOs being merged.
+  &quot;mergingNotes&quot;: xxx                 (numeric) Number of notes being merged.
+  &quot;mergingShieldedValue&quot;: xxx         (numeric) Value of notes being merged.
+  &quot;opid&quot;: xxx          (string) An operationid to pass to z_getoperationstatus to get the result of the operation.
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_mergetoaddress &#39;[&quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot;]&#39; ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_mergetoaddress&quot;, &quot;params&quot;: [[&quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot;], &quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_sendmany-fromaddress-address...amount......-minconf-fee">z_sendmany &quot;fromaddress&quot; [{&quot;address&quot;:...,&quot;amount&quot;:...},...] ( minconf ) ( fee )</h3>
+<p>Send multiple times. Amounts are double-precision floating point numbers. Change from a taddr flows to a new taddr address, while change from zaddr returns to itself. When sending coinbase UTXOs to a zaddr, change is not allowed. The entire value of the UTXO(s) must be consumed. Currently, the maximum number of zaddr outputs is 54 due to transaction size limits.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;fromaddress&quot;         (string, required) The taddr or zaddr to send the funds from.
+2. &quot;amounts&quot;             (array, required) An array of json objects representing the amounts to send.
+    [{
+      &quot;address&quot;:address  (string, required) The address is a taddr or zaddr
+      &quot;amount&quot;:amount    (numeric, required) The numeric amount in KMD is the value
+      &quot;memo&quot;:memo        (string, optional) If the address is a zaddr, raw data represented in hexadecimal string format
+    }, ...]
+3. minconf               (numeric, optional, default=1) Only use funds confirmed at least this many times.
+4. fee                   (numeric, optional, default=0.0001) The fee amount to attach to this transaction.</code></pre>
+<p>Result:</p>
+<pre><code>&quot;operationid&quot;          (string) An operationid to pass to z_getoperationstatus to get the result of the operation.</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_sendmany &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; &#39;[{&quot;address&quot;: &quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot; ,&quot;amount&quot;: 5.0}]&#39;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_sendmany&quot;, &quot;params&quot;: [&quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot;, [{&quot;address&quot;: &quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot; ,&quot;amount&quot;: 5.0}]] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="z_shieldcoinbase-fromaddress-tozaddress-fee-limit">z_shieldcoinbase &quot;fromaddress&quot; &quot;tozaddress&quot; ( fee ) ( limit )</h3>
+<p>Shield transparent coinbase funds by sending to a shielded zaddr. This is an asynchronous operation and utxos selected for shielding will be locked. If there is an error, they are unlocked. The RPC call listlockunspent can be used to return a list of locked utxos. The number of coinbase utxos selected for shielding can be limited by the caller. If the limit parameter is set to zero, the -mempooltxinputlimit option will determine the number of uxtos. Any limit is constrained by the consensus rule defining a maximum transaction size of 100000 bytes.</p>
+<p>Arguments:</p>
+<pre><code>1. &quot;fromaddress&quot;         (string, required) The address is a taddr or &quot;*&quot; for all taddrs belonging to the wallet.
+2. &quot;toaddress&quot;           (string, required) The address is a zaddr.
+3. fee                   (numeric, optional, default=0.0001) The fee amount to attach to this transaction.
+4. limit                 (numeric, optional, default=50) Limit on the maximum number of utxos to shield.  Set to 0 to use node option -mempooltxinputlimit.</code></pre>
+<p>Result:</p>
+<pre><code>{
+  &quot;remainingUTXOs&quot;: xxx       (numeric) Number of coinbase utxos still available for shielding.
+  &quot;remainingValue&quot;: xxx       (numeric) Value of coinbase utxos still available for shielding.
+  &quot;shieldingUTXOs&quot;: xxx        (numeric) Number of coinbase utxos being shielded.
+  &quot;shieldingValue&quot;: xxx        (numeric) Value of coinbase utxos being shielded.
+  &quot;opid&quot;: xxx          (string) An operationid to pass to z_getoperationstatus to get the result of the operation.
+}</code></pre>
+<p>Examples:</p>
+<pre><code>&gt; komodo-cli z_shieldcoinbase &quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot; &quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot;
+&gt; curl --user myusername --data-binary &#39;{&quot;jsonrpc&quot;: &quot;1.0&quot;, &quot;id&quot;:&quot;curltest&quot;, &quot;method&quot;: &quot;z_shieldcoinbase&quot;, &quot;params&quot;: [&quot;t1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd&quot;, &quot;ztfaW34Gj9FrnGUEf833ywDVL62NWXBM81u6EQnM6VR45eYnXhwztecW1SjxA7JrmAXKJhxhj3vDNEpVCQoSvVoSpmbhtjf&quot;] }&#39; -H &#39;content-type: text/plain;&#39; http://127.0.0.1:7771/</code></pre>
+<h3 id="zcbenchmark-benchmarktype-samplecount">zcbenchmark benchmarktype samplecount</h3>
+<p>Runs a benchmark of the selected type samplecount times, returning the running times of each sample.</p>
+<p>Output:</p>
+<pre><code>[
+  {
+    &quot;runningtime&quot;: runningtime
+  },
+  {
+    &quot;runningtime&quot;: runningtime
+  }
+  ...
+]</code></pre>
+<h3 id="zcrawjoinsplit-rawtx-inputs-outputs-vpub_old-vpub_new">zcrawjoinsplit rawtx inputs outputs vpub_old vpub_new</h3>
+<blockquote>
+<p>inputs: a JSON object mapping {note: zcsecretkey, ...} outputs: a JSON object mapping {zcaddr: value, ...}</p>
+</blockquote>
+<p><strong>DEPRECATED</strong>. Splices a joinsplit into rawtx. Inputs are unilaterally confidential. Outputs are confidential between sender/receiver. The vpub_old and vpub_new values are globally public and move transparent value into or out of the confidential value store, respectively.</p>
+<p>Note: The caller is responsible for delivering the output enc1 and enc2 to the appropriate recipients, as well as signing rawtxout and ensuring it is mined. (A future RPC call will deliver the confidential payments in-band on the blockchain.)</p>
+<p>Output:</p>
+<pre><code>{
+  &quot;encryptednote1&quot;: enc1,
+  &quot;encryptednote2&quot;: enc2,
+  &quot;rawtxn&quot;: rawtxout
+}</code></pre>
+<h3 id="zcrawkeygen">zcrawkeygen</h3>
+<p><strong>DEPRECATED</strong>. Generate a zcaddr which can send and receive confidential values.</p>
+<p>Output:</p>
+<pre><code>{
+  &quot;zcaddress&quot;: zcaddr,
+  &quot;zcsecretkey&quot;: zcsecretkey,
+  &quot;zcviewingkey&quot;: zcviewingkey,
+}</code></pre>
+<h3 id="zcrawreceive-zcsecretkey-encryptednote">zcrawreceive zcsecretkey encryptednote</h3>
+<p><strong>DEPRECATED</strong>. Decrypts encryptednote and checks if the coin commitments are in the blockchain as indicated by the &quot;exists&quot; result.</p>
+<p>Output:</p>
+<pre><code>{
+  &quot;amount&quot;: value,
+  &quot;note&quot;: noteplaintext,
+  &quot;exists&quot;: exists
+}</code></pre>
+<h3 id="zcsamplejoinsplit">zcsamplejoinsplit</h3>
+<p>Perform a joinsplit and return the JSDescription.</p>

@@ -1,0 +1,133 @@
+<h1 id="step-by-step-setup-guide-for-eth-erc20-token-swap-using-barterdex">Step by Step Setup Guide for ETH (ERC20) Token Swap Using barterDEX</h1>
+<div class="warning">
+<div class="admonition-title">
+<p>Warning</p>
+</div>
+<p><strong>Dragons ahead!</strong></p>
+</div>
+<div class="note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p><strong>THIS GUIDE IS HIGHLY EXPERIMENTAL, DON'T TRY UNLESS YOU KNOW WHAT YOU ARE DOING!</strong></p>
+</div>
+<p><strong>This guide will set you up with ETH swaps in BarterDEX. If you are not looking for non ETH based token swap, please follow this</strong> <span data-role="doc">installation guide &lt;/barterDEX/install-barterDEX-CLI&gt;</span> <strong>. The project is still in development. It is for ETH testnet, but mainnet for the BTC protocol coins. This guide may change accordingly in the future. Make sure you are following the latest guide before reporting anything is broken.</strong></p>
+<h2 id="installation-steps">Installation steps</h2>
+<p>Please follow all the steps by their order of appearance in this guide. If you get any error for any step and skip to the next, things will not work for you. If you have any questions or need help, head over to <code>#etomic</code> channel in Komodo Platform <a href="https://discord.gg/SCdf4eh">Discord</a> and ask there.</p>
+<h3 id="install-required-dependencies">Install required dependencies</h3>
+<p>Install all the following dependencies. Without installing these, your <code>marketmaker</code> binary may crash and not work.</p>
+<h3 id="linux">Linux</h3>
+<h4 id="install-gcc-7.2-g-7.2-and-symlink-them-as-gcc-g">Install gcc-7.2 &amp; g++-7.2 and symlink them as gcc &amp; g++</h4>
+<p>The following are steps to install them in Ubuntu. If you are using Debian use</p>
+<pre class="sourceCode shell"><code>echo &quot;deb http://ftp.us.debian.org/debian testing main contrib non-free&quot; | sudo tee /etc/apt/sources.list.d/forgcc.list </code></pre>
+<p>to add the repository and continue from the <code>sudo apt-get update</code> command.</p>
+<pre class="sourceCode shell"><code>sudo add-apt-repository ppa:jonathonf/gcc-7.2
+sudo apt-get update
+sudo apt-get install gcc-7 g++-7
+sudo rm /usr/bin/gcc &amp;&amp; sudo rm /usr/bin/g++
+sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc
+sudo ln -s /usr/bin/g++-7 /usr/bin/g++</code></pre>
+<h4 id="install-cmake-3.10.2">Install <code>cmake 3.10.2</code></h4>
+<pre class="sourceCode shell"><code>wget https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.sh
+chmod +x cmake-3.10.2-Linux-x86_64.sh
+sudo ./cmake-3.10.2-Linux-x86_64.sh --prefix=/usr
+
+# OR on Ubuntu 16.04 you can use repository:
+sudo add-apt-repository ppa:nschloe/cmake-nightly
+sudo apt-get update
+sudo apt install cmake</code></pre>
+<p><code>accept license</code> when it asks &quot;Do you want to include the subdirectory cmake-3.10.2-Linux-x86_64&quot; choose <code>NO</code></p>
+<h4 id="install-leveldb">Install <code>LevelDB</code></h4>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/google/leveldb.git
+cd leveldb
+make  
+sudo scp -r out-static/lib* out-shared/lib* /usr/local/lib/
+cd include
+sudo scp -r leveldb /usr/local/include/
+sudo ldconfig</code></pre>
+<h4 id="delete-local-nanomsg-from-home-directory">Delete local <code>nanomsg</code> from home directory</h4>
+<pre class="sourceCode shell"><code>cd ~
+rm -rf nanomsg</code></pre>
+<h3 id="macos">MacOS</h3>
+<h4 id="to-install-latest-cmake-3.10.2-gcc-7.3.0-and-leveldb-1.20.2">To install latest cmake 3.10.2, gcc 7.3.0 and Leveldb 1.20.2</h4>
+<pre class="sourceCode shell"><code>brew install cmake
+brew install gcc
+brew install leveldb</code></pre>
+<h4 id="to-upgrade-to-latest-cmake-3.10.2-gcc-7.3.0-and-leveldb-1.20.2">To upgrade to latest cmake 3.10.2, gcc 7.3.0 and Leveldb 1.20.2</h4>
+<pre class="sourceCode shell"><code>brew upgrade cmake
+brew upgrade gcc
+brew ugprade leveldb</code></pre>
+<h4 id="to-check-which-version-of-cmake-gcc-and-leveldb">To check which version of cmake, gcc and leveldb</h4>
+<pre class="sourceCode shell"><code>brew info cmake
+brew info gcc
+brew info leveldb</code></pre>
+<h3 id="copy-the-source-repo-and-compile">Copy the source repo and compile</h3>
+<h4 id="clone-supernet-repo-and-compile-marketmaker-for-eth-swaps">Clone <code>SuperNET</code> repo and compile <code>marketmaker</code> for ETH swaps</h4>
+<pre class="sourceCode shell"><code>cd ~
+git clone https://github.com/jl777/SuperNET
+cd ~/SuperNET
+git checkout dev
+git submodule update --init --recursive
+mkdir build
+cd build
+cmake ..
+cmake --build . --target marketmaker-mainnet
+cmake --build . --target marketmaker-testnet
+cd ~/SuperNET/build/iguana/exchanges/
+strip marketmaker-mainnet
+strip marketmaker-testnet</code></pre>
+<h4 id="copy-marketmaker-binary-to-iguana-dir">Copy <code>marketmaker</code> binary to <code>iguana</code> dir</h4>
+<p>The compiled <code>marketmaker</code> binary file can be found in <code>~/SuperNET/build/iguana/exchanges</code>. Copy <code>marketmaker</code> into <code>~/SuperNET/iguana/</code> dir.</p>
+<pre class="sourceCode shell"><code>cp ~/SuperNET/build/iguana/exchanges/marketmaker-mainnet ~/SuperNET/iguana/marketmaker</code></pre>
+<h3 id="install-barterdex-preparation">Install barterDEX &amp; preparation</h3>
+<h4 id="install-copy-passphrase-file-from-exchanges-dir-to-dexscripts-dir">Install, copy <code>passphrase</code> file from <code>exchanges</code> dir to <code>dexscripts</code> dir</h4>
+<p>The following command will install <code>barterDEX</code> and copy all the required API scripts in <code>~/SuperNET/iguana/dexscripts</code> dir. You need to issue all the required API scripts (e.g.: <code>client</code>, <code>run</code>, <code>orderbook</code>, <code>buy</code>, <code>sell</code>, <code>balance</code>, <code>stop</code>) from <code>~/SuperNET/iguana/dexscripts</code> dir while running as normal after installation.</p>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/exchanges
+./install
+cp passphrase ../dexscripts/passphrase
+cd ~/SuperNET/iguana/dexscripts
+nano passphrase</code></pre>
+<p>Enter a strong 24 words seed passphrase or WIF key or SHA256 of <code>userpass</code> or ETH private key in between <code>&quot;&quot;</code>, save the file and close nano editor using <code>CTRL+X</code> then <code>Y</code> then <code>ENTER</code>.</p>
+<h4 id="edit-the-client-script">Edit the <code>client</code> script</h4>
+<p>You need to edit the <code>client</code> or <code>run</code> script to disable <code>git pull</code> &amp; <code>./m_mm</code> commands. Otherwise, the commands will compile the <code>marketmaker</code> for non ETH/ERC20 token swap. After the changes, the file should look like similar to the following:</p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source passphrase
+source coins
+./stop
+#git pull;
+cd ..; 
+#./m_mm;
+pkill -15 marketmaker; 
+./marketmaker &quot;{\&quot;gui\&quot;:\&quot;nogui\&quot;,\&quot;client\&quot;:1, \&quot;userhome\&quot;:\&quot;/${HOME#&quot;/&quot;}\&quot;, \&quot;passphrase\&quot;:\&quot;$passphrase\&quot;, \&quot;coins\&quot;:$coins}&quot; &amp;</code></pre>
+<h4 id="run-marketmaker-using-client-script-for-the-first-time-to-get-the-userpass-value">Run marketmaker using client script for the first time to get the userpass value</h4>
+<pre class="sourceCode shell"><code>./client &amp;
+./setpassphrase</code></pre>
+<p>This should display the <code>userpass</code> value and your smartaddresses in console. Make a note of the <code>userpass</code>. Stop <code>maketmaker</code> using the following command before proceeding to the next step.</p>
+<pre class="sourceCode shell"><code>pkill -15 marketmaker</code></pre>
+<p><strong>The above command should always be used to stop the</strong> <code>marketmaker</code> <strong>binary.</strong></p>
+<h4 id="copy-the-userpass-file-from-exchanges-dir-to-dexscripts-dir-and-enter-userpass-value">Copy the <code>userpass</code> file from <code>exchanges</code> dir to <code>dexscripts</code> dir and enter userpass value</h4>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/exhanges
+cp userpass ../dexscripts/userpass
+cd ~/SuperNET/iguana/dexscripts
+nano userpass</code></pre>
+<p>Enter the passphrase we got earlier in between &quot;&quot;, save the file and close nano editor using <code>CTRL+X</code> then <code>Y</code> then <code>ENTER</code>. All these scripts found in <code>~/SuperNET/iguana/dexscripts</code> are expecting a userpass file, which contains the definition of the <code>$userpass</code> variable (found inside scripts) to authenticate API access. This is to prevent malicious webpages from issuing port 7783 calls to steal your money.</p>
+<h4 id="edit-coins-file-to-add-dec8-jst-token">Edit <code>coins</code> file to add <code>DEC8</code> &amp; <code>JST</code> token</h4>
+<p>Edit the <code>coins</code> file in <code>dexscripts</code> dir and add the following lines for adding <code>DEC8</code> &amp; <code>JST</code> ERC20 test tokens. Without these, you will not be able to add these coins and use them.</p>
+<pre class="sourceCode shell"><code>{\&quot;coin\&quot;:\&quot;ETH\&quot;,\&quot;name\&quot;:\&quot;ethereum\&quot;,\&quot;etomic\&quot;:\&quot;0x0000000000000000000000000000000000000000\&quot;,\&quot;rpcport\&quot;:80},  {\&quot;coin\&quot;:\&quot;JST\&quot;,\&quot;name\&quot;:\&quot;JST\&quot;,\&quot;etomic\&quot;:\&quot;0x996a8ae0304680f6a69b8a9d7c6e37d65ab5ab56\&quot;,\&quot;rpcport\&quot;:80},   {\&quot;coin\&quot;:\&quot;DEC8\&quot;,\&quot;name\&quot;:\&quot;DEC8\&quot;,\&quot;etomic\&quot;:\&quot;0x3ab100442484dc2414aa75b2952a0a6f03f8abfd\&quot;,\&quot;rpcport\&quot;:80},     {\&quot;coin\&quot;:\&quot;EOS\&quot;,\&quot;name\&quot;:\&quot;EOS\&quot;,\&quot;etomic\&quot;:\&quot;0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0\&quot;,\&quot;rpcport\&quot;:80},</code></pre>
+<h3 id="run-etomic">Run ETOMIC</h3>
+<p>You need to have ETOMIC running in native mode or electrum mode and KMD or other coins either running native or electrum (native is faster). If running native mode, make sure you have blockchain synced and seed passphrase / WIF key / private key imported into the chain.</p>
+<p>For ETOMIC you need to have utxos. You can get free BEER from <a href="http://atomicexplorer.com/#/faucet">this faucet</a> and swap it for ETOMIC in normal BarterDEX. You also need to have ETH testnet coins as long as we are testing testnet. Use main-net ETH when testing main-net. If you are unsure which net to use, ask in <a href="https://discord.gg/SCdf4eh">Discord</a>.</p>
+<pre class="sourceCode shell"><code>cd ~/SuperNET/iguana/dexscripts
+./client &amp;
+./setpassphrase</code></pre>
+<p>Then, we need to enable ETH and other coins/tokens to start trading. Check the following example script:</p>
+<p>Example <code>enable</code> script:</p>
+<pre class="sourceCode shell"><code>#!/bin/bash
+source userpass
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;enable\&quot;,\&quot;coin\&quot;:\&quot;BEER\&quot;}&quot;
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;enable\&quot;,\&quot;coin\&quot;:\&quot;ETOMIC\&quot;}&quot;
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;enable\&quot;,\&quot;coin\&quot;:\&quot;DEC8\&quot;}&quot;
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;enable\&quot;,\&quot;coin\&quot;:\&quot;JST\&quot;}&quot;
+curl --url &quot;http://127.0.0.1:7783&quot; --data &quot;{\&quot;userpass\&quot;:\&quot;$userpass\&quot;,\&quot;method\&quot;:\&quot;enable\&quot;,\&quot;coin\&quot;:\&quot;ETH\&quot;}&quot;</code></pre>
+<p>And, rest of things are same as normal BarterDEX. More helpful info is available in the following links: <span data-role="doc">Komodo Platform HOME &lt;/home-barterDEX&gt;</span>, <span data-role="doc">BarterDEX API Summary &lt;/barterDEX/barterDEX-API&gt;</span>, <span data-role="doc">enable-native-wallet-coins</span>, <span data-role="doc">enable-electrum-wallet-coins</span>, <span data-role="doc">electrum-servers-list</span> , <span data-role="doc">trade</span></p>
