@@ -11,7 +11,72 @@ const base = path.join(__dirname + '/SidRebuild/docs');
 
 /* Starting next */
 
-const projectIndex = dest + '/index.html';
+let contentIndex;
+fs.readFile(path.join(__dirname + '/KomodoPlatformdocs/docs/source/index.rst'), 'utf8', (err, res) => {
+  if (err) {
+    console.error(err);
+    process.exit();
+  }
+  contentIndex = res;
+  return;
+});
+
+let navbarTreeArray = [];
+
+const parseContentIndex = function(indexFile) {
+  console.log(`\n\n***\n\nthe indexFile var is:\n\n${indexFile}\n\n***\n\n`);
+  let newIndexFile;
+  let front;
+  let rear;
+  newIndexFile = indexFile;
+  front = newIndexFile.indexOf(':caption:'); // Cut to the next caption
+  if (front === -1) {
+    return false;
+  } else {
+    newIndexFile = newIndexFile.slice(front);
+    rear = newIndexFile.indexOf('\n');
+    navbarTreeArray.push(newIndexFile.slice(0, rear));
+    newIndexFile = newIndexFile.slice(rear);
+    return parseContentIndex(newIndexFile);
+  }
+}
+
+setTimeout(() => {
+  parseContentIndex(contentIndex);
+  fs.readFile(base + '/home-komodo.html', 'utf8', (err, res) => {
+    if (err) {
+      console.error(err);
+    }
+    testSecondary = res;
+    return;
+  });
+
+  sequelize.sync({ force: true }).then((res) => {
+    this.primaryTopic;
+    this.secondaryTopic;
+    PrimaryTopic.create({
+      title: navbarTreeArray[0],
+      content: contentIndex
+    }).then((primaryTopic) => {
+      this.primaryTopic = primaryTopic;
+      SecondaryTopic.create({
+        title: 'Test run',
+        content: testSecondary,
+        primaryTopicId: this.primaryTopic.id
+      }).then((secondaryTopic) => {
+        this.secondaryTopic = secondaryTopic;
+        console.log(`finished`);
+        process.exit();
+      });
+    })
+    .catch((err) => {
+      return console.error(err);
+      process.exit();
+    });
+  });
+}, 3000);
+
+let testSecondary;
 
 /*
   set base path within directory

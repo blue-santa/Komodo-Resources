@@ -30,6 +30,10 @@ a:visited {
   text-decoration: underline;
 }
 
+hr {
+  clear: both;
+}
+
 .sidebar {
   flex-grow: 2;
   flex-shrink: 2;
@@ -194,14 +198,6 @@ a:visited {
   */
 }
 
-h1 {
-  font-family: 'Roboto Condensed', serif;
-  font-weight: 700;
-  font-size: 3rem;
-  text-align: center;
-  text-transform: uppercase;
-}
-
 .site-title a:link, .site-title a:visited, .site-title a:hover {
   color: hsla(360,0%,100%,.9);
   text-decoration: underline;
@@ -226,7 +222,32 @@ h2 {
   flex-direction: column;
 }
 
-.topic-list li {
+.site-content h1, .site-content h2, .site-content h3, .site-content h4 {
+  margin-bottom: .5rem;
+  margin-top: 1.2rem;
+  float: left;
+  clear: both;
+  font-family: 'Roboto Condensed', serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.site-content p {
+  line-height: 1.3rem;
+  clear: both;
+}
+
+.site-content ul {
+  clear: both;
+}
+
+.breadcrumb h1 small {
+  font-size:.8rem;
+}
+
+.ist li {
   line-height: 1.5rem;
   margin: 0rem 0rem 0.1rem 0rem;
   padding: .5rem .5rem .5rem .5rem;

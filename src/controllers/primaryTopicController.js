@@ -30,8 +30,6 @@ function buildTree() {
 
 buildTree();
 
-let testKDoc = fs.readFileSync(base + 'test/assetchains-guide-Komodo-Notary-Node.html');
-
 module.exports = {
   index(req, res, next) {
     primaryTopicQueries.getAllPrimaryTopics((err, primaryTopics) => {
@@ -69,7 +67,7 @@ module.exports = {
         res.redirect(404, '/');
       } else {
         buildTree();
-        res.render('primaryTopics/show', { primaryTopic, topicTree, testKDoc });
+        res.render('primaryTopics/show', { primaryTopic, topicTree });
       }
     });
   },

@@ -10,14 +10,17 @@
 
       <main class="content">
         <div class="site-content content-flex-container unique-row">
-          <h1><%= secondaryTopic.title %></h1>
+          <h1>[insert breadcrumb]</h1>
+          <!--
           <form action='/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>/edit' method='get'>
             <button type="submit" class="btn">Edit</button>
           </form>
           <form action='/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>/delete' method='post'>
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
+          -->
         </div>
+        <hr>
         <div class="site-content">
           <p><%- secondaryTopic.content %></p>
         </div>
