@@ -22,30 +22,92 @@ fs.readFile(path.join(__dirname + '/KomodoPlatformdocs/docs/source/index.rst'), 
 });
 
 let navbarTreeArray = [];
+let captionMarker = ':caption: ';
+let nextSectionMarker = '..';
+let nextLineMarker = '\n';
 
-const parseContentIndex = function(indexFile) {
-  console.log(`\n\n***\n\nthe indexFile var is:\n\n${indexFile}\n\n***\n\n`);
+const parseContentIndex = function(indexFile, newCurrentCount) {
+  let currentCount = newCurrentCount;
+  console.log(`currentCount is: ${currentCount}`);
   let newIndexFile;
   let front;
   let rear;
   newIndexFile = indexFile;
-  front = newIndexFile.indexOf(':caption:'); // Cut to the next caption
-  if (front === -1) {
+  front = newIndexFile.indexOf(captionMarker); // Cut to the next caption
+  let isLast = front === -1;
+  if (isLast) {
+    console.log(`this is the last one`);
+    let subbranches = [];
+    while (newIndexFile.length > 0) {
+      while (newIndexFile.indexOf(nextLineMarker) === 0 || newIndexFile.indexOf(' ') === 0) {
+        if (newIndexFile.indexOf(nextLineMarker) === 0) {
+          newIndexFile = newIndexFile.slice(nextLineMarker.length);
+        } else if (newIndexFile.indexOf(' ') === 0) {
+          newIndexFile = newIndexFile.slice(1);
+        } else {
+          console.error(`ya dun messed up!`);
+          process.exit();
+        }
+      }
+      if (newIndexFile.indexOf(nextLineMarker) !== -1) {
+        rear = newIndexFile.indexOf(nextLineMarker);
+        subbranches.push(newIndexFile.slice(0, rear));
+        newIndexFile = newIndexFile.slice(rear);
+      } else if (newIndexFile.indexOf(nextLineMarker) === -1) {
+        if (newIndexFile.length > 0) {
+          console.log(`***\n\n***Something's wrong.\n\nThe newIndexFile is: ${newIndexFile}\n\n`);
+        }
+      }
+    }
+    navbarTreeArray[currentCount - 1].subbranches = subbranches;
     return false;
   } else {
-    newIndexFile = newIndexFile.slice(front);
-    rear = newIndexFile.indexOf('\n');
-    navbarTreeArray.push(newIndexFile.slice(0, rear));
+    newIndexFile = newIndexFile.slice(front + captionMarker.length);
+    rear = newIndexFile.indexOf(nextLineMarker);
+    let curPrimaryTopicTitle = newIndexFile.slice(0, rear);
+    navbarTreeArray.push({
+      title: curPrimaryTopicTitle,
+      subbranches: ''
+    });
     newIndexFile = newIndexFile.slice(rear);
-    return parseContentIndex(newIndexFile);
+    let subbranches = [];
+    while (newIndexFile.indexOf(nextSectionMarker) !== 0 && newIndexFile.indexOf(nextLineMarker) !== -1 && newIndexFile.indexOf(nextSectionMarker) !== -1) {
+      while (newIndexFile.indexOf(nextLineMarker) === 0 || newIndexFile.indexOf(' ') === 0) {
+        if (newIndexFile.indexOf(nextLineMarker) === 0) {
+          newIndexFile = newIndexFile.slice(nextLineMarker.length);
+        } else if (newIndexFile.indexOf(' ') === 0) {
+          newIndexFile = newIndexFile.slice(1);
+        } else {
+          console.error(`ya dun messed up`);
+          process.exit();
+        }
+      }
+      /* need to switch the above so that the ' ' part comes during the push process, since we're clipping through lines already */
+
+      console.log('now its at: ' + newIndexFile.indexOf(nextLineMarker));
+      if (newIndexFile.indexOf(nextSectionMarker) !== 0) {
+        rear = newIndexFile.indexOf(nextLineMarker);
+        let nextSubbranch = newIndexFile.slice(0, rear);
+        subbranches.push(nextSubbranch);
+        newIndexFile = newIndexFile.slice(rear);
+      } else if (newIndexFile.indexOf(nextSectionMarker === 0)) {
+      } else {
+        console.error(`ya dun messed up, son`);
+        process.exit();
+      }
+    }
+    navbarTreeArray[currentCount].subbranches = subbranches;
+    currentCount = currentCount + 1;
+    return parseContentIndex(newIndexFile, currentCount);
   }
-}
+};
 
 setTimeout(() => {
-  parseContentIndex(contentIndex);
+  parseContentIndex(contentIndex, 0);
   fs.readFile(base + '/home-komodo.html', 'utf8', (err, res) => {
     if (err) {
       console.error(err);
+      process.exit();
     }
     testSecondary = res;
     return;
@@ -55,7 +117,7 @@ setTimeout(() => {
     this.primaryTopic;
     this.secondaryTopic;
     PrimaryTopic.create({
-      title: navbarTreeArray[0],
+      title: navbarTreeArray[0].title,
       content: contentIndex
     }).then((primaryTopic) => {
       this.primaryTopic = primaryTopic;
@@ -66,15 +128,25 @@ setTimeout(() => {
       }).then((secondaryTopic) => {
         this.secondaryTopic = secondaryTopic;
         console.log(`finished`);
+        for (let i = 0; i < navbarTreeArray.length; i++) {
+          console.log(`navbarTreeArray[${i}] is:\n${navbarTreeArray[i].title}\n\n`);
+          for (let j = 0; j < navbarTreeArray[i].subbranches.length; j++) {
+            console.log(`navbarTreeArray[${i}].subbranches[${j}] is:\n${navbarTreeArray[i].subbranches[j]}\n\n`);
+          }
+        }
         process.exit();
+      })
+      .catch((err) => {
+        console.error(err);
+        return process.exit();
       });
     })
     .catch((err) => {
-      return console.error(err);
-      process.exit();
+      console.error(err);
+      return process.exit();
     });
   });
-}, 3000);
+}, 1000);
 
 let testSecondary;
 
