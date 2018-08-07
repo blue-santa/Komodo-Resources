@@ -12,7 +12,7 @@ const base = path.join(__dirname + '/SidRebuild/docs');
 /* Starting next */
 
 let contentIndex;
-fs.readFile(path.join(__dirname + '/index.rst', 'utf8', (err, res) => {
+fs.readFile(path.join(__dirname + '/index.rst'), 'utf8', (err, res) => {
   if (err) {
     console.error(err);
     process.exit();
