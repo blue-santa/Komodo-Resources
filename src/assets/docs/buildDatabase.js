@@ -49,18 +49,24 @@ const parseContentIndex = function(indexFile, newCurrentCount, callback) {
       }
       if (newIndexFile.indexOf(nextLineMarker) !== -1) {
         rear = newIndexFile.indexOf(nextLineMarker);
-        subbranches.push(newIndexFile.slice(0, rear));
+        let nextPush = newIndexFile.slice(0, rear);
         newIndexFile = newIndexFile.slice(rear);
+        if (nextPush.includes('.rst')) {
+          let rstRear = nextPush.indexOf('.rst');
+          nextPush = nextPush.slice(0, rstRear);
+          nextPush = nextPush + '.html';
+        }
+        subbranches.push(nextPush);
       } else if (newIndexFile.indexOf(nextLineMarker) === -1) {
         if (newIndexFile.length > 0) {
           console.log(`***\n\n***Something's wrong.\n\nThe newIndexFile is: ${newIndexFile}\n\n`);
         }
       }
     }
-
-    /* end of the partContentIndex() function; */
-
     navbarTreeArray[currentCount - 1].subbranches = subbranches;
+    if (typeof callback === 'function') {
+      callback(null, navbarTreeArray);
+    }
     return false;
   } else {
     newIndexFile = newIndexFile.slice(front + captionMarker.length);
@@ -86,9 +92,14 @@ const parseContentIndex = function(indexFile, newCurrentCount, callback) {
       /* need to switch the above so that the ' ' part comes during the push process, since we're clipping through lines already */
       if (newIndexFile.indexOf(nextSectionMarker) !== 0) {
         rear = newIndexFile.indexOf(nextLineMarker);
-        let nextSubbranch = newIndexFile.slice(0, rear);
-        subbranches.push(nextSubbranch);
+        let nextPush = newIndexFile.slice(0, rear);
         newIndexFile = newIndexFile.slice(rear);
+        if (nextPush.includes('.rst')) {
+          let rstRear = nextPush.indexOf('.rst');
+          nextPush = nextPush.slice(0,rstRear);
+          nextPush = nextPush + '.html';
+        }
+        subbranches.push(nextPush);
       } else if (newIndexFile.indexOf(nextSectionMarker === 0)) {
       } else {
         console.error(`ya dun messed up, son`);
@@ -97,60 +108,68 @@ const parseContentIndex = function(indexFile, newCurrentCount, callback) {
     }
     navbarTreeArray[currentCount].subbranches = subbranches;
     currentCount = currentCount + 1;
-    if (typeof callback === 'function') {
-      callback(navbarTreeArray);
-    }
-    return parseContentIndex(newIndexFile, currentCount);
+    return parseContentIndex(newIndexFile, currentCount, callback);
   }
 };
 
+const getFileValue = (filePath, callback) => {
+  let pathValue;
+  if (fs.existsSync(filePath)) {
+    fs.readFile(filePath, 'utf8', (err, res) => {
+      if (err) {
+        console.error(`There was an error while perf fs.readFile: ${err}`);
+        process.exit();
+      }
+      callback(null, res);
+    });
+  } else if (fs.existsSync(filePath + '.html')) {
+    fs.readFile(filePath + '.html', 'utf8', (err, res) => {
+      if (err) {
+        console.error(`There was an error while perf fs.readFile: ${err}`);
+        process.exit();
+      }
+      callback(null, res);
+    });
+  }
+}
+
 setTimeout(() => {
   let newTreeThing = [];
-  parseContentIndex(contentIndex, 0, (res) => {
+  parseContentIndex(contentIndex, 0, (err, res) => {
     newTreeThing = res;
-  });
-  console.log(`\n\n***\n\nnewTreeThing: ${newTreeThing[0].title}\n\n***\n\n`);
-  /* #Stuff for the parseContentIndex callback function
-    , (err, finalOutput) => {
-      if (err) {
-        return console.error(err);
-      }
-      newTreeThing = finalOutput;
-    }
-  */
-  fs.readFile(base + '/home-komodo.html', 'utf8', (err, res) => {
-    if (err) {
-      console.error(err);
-      process.exit();
-    }
-    testSecondary = res;
-    return;
   });
 
   sequelize.sync({ force: true }).then((res) => {
     this.primaryTopic;
     this.secondaryTopic;
     PrimaryTopic.create({
-      title: navbarTreeArray[0].title,
-      content: contentIndex
+      title: newTreeThing[0].title,
+      content: 'I\'m a little teapot'
     }).then((primaryTopic) => {
       this.primaryTopic = primaryTopic;
-      SecondaryTopic.create({
-        title: 'Test run',
-        content: testSecondary,
-        primaryTopicId: this.primaryTopic.id
-      }).then((secondaryTopic) => {
-        this.secondaryTopic = secondaryTopic;
-        for (let i = 0; i < navbarTreeArray.length; i++) {
-          for (let j = 0; j < navbarTreeArray[i].subbranches.length; j++) {
+      let options;
+      for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
+        console.log(i);
+        getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
+          if (err) {
+            console.error(err);
+            process.exit();
           }
-        }
-        process.exit();
-      })
-      .catch((err) => {
-        console.error(err);
-        return process.exit();
-      });
+          options = {
+            title: newTreeThing[0].subbranches[i],
+            content: res,
+            primaryTopicId: this.primaryTopic.id
+          };
+          SecondaryTopic.create(options).then((secondaryTopic) => {
+            this.secondaryTopic = secondaryTopic;
+            setTimeout(() => { process.exit() }, 5000);
+          })
+          .catch((err) => {
+            console.error(err);
+            return process.exit();
+          });
+        });
+      }
     })
     .catch((err) => {
       console.error(err);
@@ -158,8 +177,6 @@ setTimeout(() => {
     });
   });
 }, 1000);
-
-let testSecondary;
 
 module.exports = {
 

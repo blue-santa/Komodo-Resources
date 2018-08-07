@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     content: {
-      type: DataTypes.STRING(8000),
+      type: DataTypes.STRING(1000000),
       allowNull: false
     },
     primaryTopicId: {
