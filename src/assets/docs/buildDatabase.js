@@ -149,7 +149,6 @@ setTimeout(() => {
       this.primaryTopic = primaryTopic;
       let options;
       for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
-        console.log(i);
         getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
           if (err) {
             console.error(err);
