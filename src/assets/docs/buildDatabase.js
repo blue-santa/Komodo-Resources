@@ -12,7 +12,7 @@ const base = path.join(__dirname + '/SidRebuild/docs');
 /* Starting next */
 
 let contentIndex;
-fs.readFile('src/assets/docs/KomodoPlatformdocs/docs/source/index.rst', 'utf8', (err, res) => {
+fs.readFile(path.join(__dirname + '/index.rst'), 'utf8', (err, res) => {
   if (err) {
     console.error(err);
     process.exit();
@@ -149,7 +149,6 @@ setTimeout(() => {
       this.primaryTopic = primaryTopic;
       let options;
       for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
-        console.log(i);
         getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
           if (err) {
             console.error(err);
