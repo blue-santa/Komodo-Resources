@@ -12,6 +12,16 @@ module.exports = {
     .catch((err) => {
       callback(err);
     });
+  },
+
+  getThirdTopic(id, callback) {
+    return ThirdTopic.findById(id)
+    .then((thirdTopic) => {
+      callback(null, thirdTopic);
+    })
+    .catch((err) => {
+      callback(err);
+    });
   }
 
 }

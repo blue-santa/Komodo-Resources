@@ -65,6 +65,18 @@ describe('routes : posts', () => {
     });
   });
 
+  describe('GET /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/:id', () => {
+
+    it('should render a view with the selected thirdTopics', (done) => {
+      request.get(`${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/${this.thirdTopic.id}`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain('Title: Third Topic 1');
+        done();
+      });
+    });
+
+  });
+
   describe('POST /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/create', () => {
 
     it('should create a new third topic and redirect', (done) => {

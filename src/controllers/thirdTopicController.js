@@ -1,4 +1,35 @@
 const thirdTopicQueries = require('../db/queries.thirdTopics.js');
+const primaryTopicQueries = require('../db/queries.primaryTopics.js');
+const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
+const allTopicQueries = require('../db/queries.allTopics.js');
+const fs = require('fs');
+const path = require('path');
+
+const base = path.join(__dirname + '../../assets/docs/');
+
+let topicTree = [];
+
+function buildTree() {
+  allTopicQueries.buildTopicTree((err, topicTreeCall) => {
+    if (topicTreeCall === undefined ) {
+      topicTreeCall = [];
+      topicTreeCall.push({
+        title: `I'm a little teapot`,
+        primaryTopicId: 0
+      });
+    }
+    if (topicTreeCall[0].secondaryTopics === undefined) {
+      topicTreeCall[0].secondaryTopics = [];
+      topicTreeCall[0].secondaryTopics.push({
+        title: `short and stout`,
+        secondaryTopicId: 0
+      });
+    }
+    return topicTree = topicTreeCall;
+  });
+}
+
+buildTree();
 
 module.exports = {
 
@@ -18,6 +49,17 @@ module.exports = {
         res.redirect(500, '/thirdTopics/new');
       } else {
         res.redirect(303, `/primaryTopics/${thirdTopic.primaryTopicId}/secondaryTopics/${thirdTopic.secondaryTopicId}/thirdTopics/${thirdTopic.id}`);
+      }
+    });
+  },
+
+  show(req, res, next) {
+    thirdTopicQueries.getThirdTopic(req.params.id, (err, thirdTopic) => {
+      if (err || thirdTopic === null) {
+        res.redirect(404, '/');
+      } else {
+        buildTree();
+        res.render('thirdTopics/show', { thirdTopic, topicTree });
       }
     });
   }
