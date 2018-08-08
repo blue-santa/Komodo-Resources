@@ -55,4 +55,14 @@ describe('routes : posts', () => {
     });
   });
 
+  describe('GET /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/new', () => {
+    it('should render a new third topic form', (done) => {
+      request.get(`${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/new`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain('New Third Topic');
+        done();
+      });
+    });
+  });
+
 });
