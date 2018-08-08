@@ -23,6 +23,15 @@
         <hr>
         <div class="site-content">
           <p><%- secondaryTopic.content %></p>
+          <hr>
+          <h1>Third Topics</h1>
+          <ul class="list-group">
+            <% secondaryTopic.thirdTopics.forEach((thirdTopic) => { %>
+              <li class="topic-list">
+                <a href="/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= thirdTopic.secondaryTopicId %>/thirdTopics/<%= thirdTopic.id %>"><%= thirdTopic.title %></a>
+              </li>
+            <% }); %>
+          </ul>
         </div>
       </main>
     </div>
