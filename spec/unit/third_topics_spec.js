@@ -26,6 +26,7 @@ describe('ThirdTopic', () => {
           ThirdTopic.create({
             title: 'Title: Third Topic 1',
             content: 'Content: Third Topic 1',
+            primaryTopicId: this.primaryTopic.id,
             secondaryTopicId: this.secondaryTopic.id
           }).then((thirdTopic) => {
             this.thirdTopic = thirdTopic;
@@ -54,6 +55,7 @@ describe('ThirdTopic', () => {
       ThirdTopic.create({
         title: 'Title: Third Topic 2',
         content: 'Content: Third Topic 2',
+        primaryTopicId: this.primaryTopic.id,
         secondaryTopicId: this.secondaryTopic.id
       })
       .then((thirdTopic) => {
@@ -77,6 +79,7 @@ describe('ThirdTopic', () => {
       .catch((err) => {
         expect(err.message).toContain('ThirdTopic.content cannot be null');
         expect(err.message).toContain('ThirdTopic.secondaryTopicId cannot be null');
+        expect(err.message).toContain('ThirdTopic.primaryTopicId cannot be null');
         done();
       });
     });

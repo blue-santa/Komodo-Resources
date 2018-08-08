@@ -16,6 +16,16 @@ module.exports = {
         type: Sequelize.STRING(1000000),
         allowNull: false
       },
+      primaryTopicId: {
+        type:Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        allowNull: false,
+        references: {
+          model: 'PrimaryTopics',
+          key: 'id',
+          as: 'primaryTopicId'
+        }
+      },
       secondaryTopicId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
