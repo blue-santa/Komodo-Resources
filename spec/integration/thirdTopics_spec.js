@@ -77,6 +77,19 @@ describe('routes : posts', () => {
 
   });
 
+  describe('GET /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/:id/edit', () => {
+
+    it('should render a view with an edit third topic form', (done) => {
+      request.get(`${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/${this.thirdTopic.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain('Edit Third Topic');
+        expect(body).toContain('Title: Third Topic 1');
+        done();
+      });
+    });
+
+  });
+
   describe('POST /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/create', () => {
 
     it('should create a new third topic and redirect', (done) => {
@@ -106,6 +119,62 @@ describe('routes : posts', () => {
       );
     });
 
+  });
+
+  describe('/primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/:id/update', () => {
+
+    it('should return a status code 302', (done) => {
+      request.post({
+        url: `${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/${this.thirdTopic.id}/update`,
+        form: {
+          title: `Title: Third Topic 2`,
+          content: `Content: Third Topic 2`
+        }
+      }, (err, res, body) => {
+        expect(res.statusCode).toBe(302);
+        done();
+      });
+    });
+
+    it('should update the third topic with the given values', (done) => {
+      const options = {
+        url: `${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/${this.thirdTopic.id}/update`,
+        form: {
+          title: 'Title: Third Topic 3',
+        }
+      };
+      request.post(options,
+        (err, res, body) => {
+          expect(err).toBeNull();
+          ThirdTopic.findOne({
+            where: {id: this.thirdTopic.id}
+          })
+          .then((thirdTopic) => {
+            expect(thirdTopic.title).toBe('Title: Third Topic 3');
+            done();
+          })
+          .catch((err) => {
+            console.error(err);
+            done();
+          });
+        }
+      );
+    });
+
+  });
+
+  describe('POST /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/destroy', () => {
+    it('should delete the third topic with the associated Id', (done) => {
+      expect(this.thirdTopic.id).toBe(1);
+      request.post(`${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/${this.thirdTopic.id}/destroy`, (err, res, body) => {
+        ThirdTopic.findById(1)
+        .then((thirdTopic) => {
+          expect(err).toBeNull();
+          expect(thirdTopic).toBeNull();
+          done();
+        });
+      });
+    });
   });
 
 });
