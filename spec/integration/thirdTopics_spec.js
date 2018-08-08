@@ -65,4 +65,35 @@ describe('routes : posts', () => {
     });
   });
 
+  describe('POST /primaryTopics/:primaryTopicId/secondaryTopics/:secondaryTopicId/thirdTopics/create', () => {
+
+    it('should create a new third topic and redirect', (done) => {
+      const options = {
+        url: `${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}/thirdTopics/create`,
+        form: {
+          title: 'Title: Third Topic 2',
+          content: 'Content: Third Topic 2'
+        }
+      };
+      request.post(options,
+        (err, res, body) => {
+          ThirdTopic.findOne({where: {title: 'Title: Third Topic 2'}})
+          .then((thirdTopic) => {
+            expect(thirdTopic).not.toBeNull();
+            expect(thirdTopic.title).toBe('Title: Third Topic 2');
+            expect(thirdTopic.content).toBe('Content: Third Topic 2');
+            expect(thirdTopic.primaryTopicId).not.toBeNull();
+            expect(thirdTopic.secondaryTopicId).not.toBeNull();
+            done();
+          })
+          .catch((err) => {
+            console.error(err);
+            done();
+          });
+        }
+      );
+    });
+
+  });
+
 });
