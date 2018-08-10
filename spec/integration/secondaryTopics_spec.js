@@ -11,7 +11,6 @@ describe('routes : secondaryTopics', () => {
   beforeEach((done) => {
     this.primaryTopic;
     this.secondaryTopic;
-
     sequelize.sync({ force: true }).then((res) => {
       PrimaryTopic.create({
         title: 'Title: Hello World - 1',

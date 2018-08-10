@@ -1,5 +1,5 @@
 module.exports = {
-  init(app){
+  init(app) {
     const staticRoutes = require('../routes/static');
     const primaryTopicRoutes = require('../routes/primaryTopics');
     const secondaryTopicRoutes = require('../routes/secondaryTopics');

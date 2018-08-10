@@ -16,10 +16,17 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "primaryTopicId",
       as: "secondaryTopics"
     });
-
     PrimaryTopic.hasMany(models.ThirdTopic, {
       foreignKey: 'primaryTopicId',
       as: 'thirdTopics'
+    });
+    PrimaryTopic.hasMany(models.FourthTopic, {
+      foreignKey: 'primaryTopicId',
+      as: 'fourthTopics'
+    });
+    PrimaryTopic.hasMany(models.FifthTopic, {
+      foreignKey: 'primaryTopicId',
+      as: 'fifthTopics'
     });
   };
   return PrimaryTopic;

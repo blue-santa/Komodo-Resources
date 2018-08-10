@@ -1,14 +1,8 @@
 # resources
 A collection of Komodo-related resources.
 
-### Introduction
+Project is currently under construction.
 
-### dPoW: delayed Proof of Work
+First stage is to build a repository for existing documentation.
 
-### The Decentralized Initial Coin Offering
-
-### Komodo's Atomic-Swap Powered, Decentralized Exchange: BarterDEX
-
-### Privacy in Komodo: zk-SNARKs
-
-### Additional Komodo Information
+From there, we intend to create an automated quarterly report of our notary nodes' work, and distribute it to ecosystem users.

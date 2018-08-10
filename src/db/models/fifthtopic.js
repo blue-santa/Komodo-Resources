@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var ThirdTopic = sequelize.define('ThirdTopic', {
+  var FifthTopic = sequelize.define('FifthTopic', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
     },
     content: {
-      type: DataTypes.STRING(1000000),
+      type: DataTypes.STRING,
       allowNull: false
     },
     primaryTopicId: {
@@ -16,28 +16,34 @@ module.exports = (sequelize, DataTypes) => {
     secondaryTopicId: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    thirdTopicId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    fourthTopicId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {});
-  ThirdTopic.associate = function(models) {
+  FifthTopic.associate = function(models) {
     // associations can be defined here
-    ThirdTopic.belongsTo(models.PrimaryTopic, {
+    FifthTopic.belongsTo(models.PrimaryTopic, {
       foreignKey: 'primaryTopicId',
       onDelete: 'CASCADE'
     });
-
-    ThirdTopic.belongsTo(models.SecondaryTopic, {
+    FifthTopic.belongsTo(models.SecondaryTopic, {
       foreignKey: 'secondaryTopicId',
       onDelete: 'CASCADE'
     });
-
-    ThirdTopic.hasMany(models.FourthTopic, {
+    FifthTopic.belongsTo(models.ThirdTopic, {
       foreignKey: 'thirdTopicId',
-      as: 'fourthTopics'
+      onDelete: 'CASCADE'
     });
-    ThirdTopic.hasMany(models.FifthTopic, {
-      foreignKey: 'thirdTopicId',
-      as: 'fifthTopics'
+    FifthTopic.belongsTo(models.FourthTopic, {
+      foreignKey: 'fourthTopicId',
+      onDelete: 'CASCADE'
     });
   };
-  return ThirdTopic;
+  return FifthTopic;
 };

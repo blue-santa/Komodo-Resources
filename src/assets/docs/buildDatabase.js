@@ -6,6 +6,7 @@ const prompt = require('prompt');
 const sequelize = require('../../db/models/index').sequelize;
 const PrimaryTopic = require('../../db/models').PrimaryTopic;
 const SecondaryTopic = require('../../db/models').SecondaryTopic;
+const ThirdTopic = require('../../db/models').ThirdTopic;
 
 const base = path.join(__dirname + '/SidRebuild/docs');
 

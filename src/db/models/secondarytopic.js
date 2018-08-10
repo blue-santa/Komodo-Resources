@@ -25,6 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'secondaryTopicId',
       as: 'thirdTopics'
     });
+    SecondaryTopic.hasMany(models.FourthTopic, {
+      foreignKey: 'secondaryTopicId',
+      as: 'fourthTopics'
+    });
+    SecondaryTopic.hasMany(models.FifthTopic, {
+      foreignKey: 'secondaryTopicId',
+      as: 'fifthTopics'
+    });
   };
   return SecondaryTopic;
 };
