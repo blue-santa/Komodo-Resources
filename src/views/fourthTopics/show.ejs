@@ -2,11 +2,10 @@
 <html>
   <head>
       <% include ../partials/head.ejs %>
-      <title><%= thirdTopic.title %>: Komodo Resources</title>
+      <title><%= fourthTopic.title %>: Komodo Resources</title>
   </head>
   <body>
     <div class="flex-container">
-      <% include ../partials/navbar.ejs %>
 
       <main class="content">
         <div class="site-content content-flex-container unique-row">
@@ -14,13 +13,13 @@
         </div>
         <hr>
         <div class="site-content">
-          <p><%- thirdTopic.content %></p>
+          <p><%- fourthTopic.content %></p>
           <hr>
-          <h1>Fourth Topics</h1>
+          <h1>Fifth Topics</h1>
           <ul class="list-group">
-            <% thirdTopic.fourthTopics.forEach((fourthTopic) => { %>
+            <% fourthTopic.fifthTopics.forEach((fifthTopic) => { %>
               <li class="topic-list">
-                <a href="/primaryTopics/<%= fourthTopic.primaryTopicId %>/secondaryTopics/<%= fourthTopic.secondaryTopicId %>/thirdTopics/<%= fourthTopic.thirdTopicId %>/fourthTopics/<%= fourthTopic.id %>"><%= fourthTopic.title %></a>
+                <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>/fourthTopics/<%= fifthTopic.fourthTopicId %>/fifthTopics/<%= fifthTopic.id %>"><%= fifthTopic.title %></a>
               </li>
             <% }); %>
           </ul>

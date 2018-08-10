@@ -1,6 +1,7 @@
 const PrimaryTopic = require('./models').PrimaryTopic;
 const SecondaryTopic = require('./models').SecondaryTopic;
 const ThirdTopic = require('./models').ThirdTopic;
+const FourthTopic = require('./models').FourthTopic;
 
 module.exports = {
 
@@ -15,7 +16,12 @@ module.exports = {
   },
 
   getThirdTopic(id, callback) {
-    return ThirdTopic.findById(id)
+    return ThirdTopic.findById(id, {
+      include: [{
+        model: FourthTopic,
+        as: 'fourthTopics'
+      }]
+    })
     .then((thirdTopic) => {
       callback(null, thirdTopic);
     })

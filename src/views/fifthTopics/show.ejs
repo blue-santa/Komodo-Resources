@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <% include ../partials/head.ejs %>
+      <title><%= fifthTopic.title %>: Komodo Resources</title>
+  </head>
+  <body>
+    <div class="flex-container">
+
+      <main class="content">
+        <div class="site-content content-flex-container unique-row">
+          <h1>[insert breadcrumb]</h1>
+        </div>
+        <hr>
+        <div class="site-content">
+          <p><%- fifthTopic.content %></p>
+        </div>
+      </main>
+    </div>
+    <% include ../partials/baseScripts.ejs %>
+  </body>
+</html>

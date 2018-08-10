@@ -28,7 +28,7 @@
           <ul class="list-group">
             <% secondaryTopic.thirdTopics.forEach((thirdTopic) => { %>
               <li class="topic-list">
-                <a href="/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= thirdTopic.secondaryTopicId %>/thirdTopics/<%= thirdTopic.id %>"><%= thirdTopic.title %></a>
+                <a href="/primaryTopics/<%= thirdTopic.primaryTopicId %>/secondaryTopics/<%= thirdTopic.secondaryTopicId %>/thirdTopics/<%= thirdTopic.id %>"><%= thirdTopic.title %></a>
               </li>
             <% }); %>
           </ul>

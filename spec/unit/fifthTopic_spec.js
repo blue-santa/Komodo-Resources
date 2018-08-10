@@ -2,6 +2,8 @@ const sequelize = require('../../src/db/models/index').sequelize;
 const PrimaryTopic = require('../../src/db/models').PrimaryTopic;
 const SecondaryTopic = require('../../src/db/models').SecondaryTopic;
 const ThirdTopic = require('../../src/db/models').ThirdTopic;
+const FourthTopic = require('../../src/db/models').FourthTopic;
+const FifthTopic = require('../../src/db/models').FifthTopic;
 
 describe('FourthTopic', () => {
 
@@ -83,7 +85,7 @@ describe('FourthTopic', () => {
 
   describe('#create()', () => {
 
-    it('should create a fourth topic object with a title, body, and assigned primary, secondary, and third topics', (done) => {
+    it('should create a fifth topic object with a title, body, and assigned primary, secondary, and third topics', (done) => {
       FifthTopic.create({
         title: 'Title: Fifth Topic 2',
         content: 'Content: Fifth Topic 2',
@@ -99,6 +101,63 @@ describe('FourthTopic', () => {
         expect(fifthTopic.secondaryTopicId).toBe(this.secondaryTopic.id);
         expect(fifthTopic.thirdTopicId).toBe(this.thirdTopic.id);
         expect(fifthTopic.fourthTopicId).toBe(this.fourthTopic.id);
+        done();
+      })
+      .catch((err) => {
+        console.error(err);
+        done();
+      });
+    });
+
+    it('should not create a fifth topic object if it is missing properties', (done) => {
+      FifthTopic.create({
+        title: 'Shouldnt see me'
+      })
+      .then()
+      .catch((err) => {
+        expect(err.message).toContain('FifthTopic.content cannot be null');
+        expect(err.message).toContain('FifthTopic.primaryTopicId cannot be null');
+        expect(err.message).toContain('FifthTopic.secondaryTopicId cannot be null');
+        expect(err.message).toContain('FifthTopic.thirdTopicId cannot be null');
+        expect(err.message).toContain('FifthTopic.fourthTopicId cannot be null');
+        done();
+      });
+    });
+
+  });
+
+  describe('#setFourthTopic', () => {
+
+    it('should associate a fifth and fourth topic together', (done) => {
+      FourthTopic.create({
+        title: 'Title: Fourth Topic 2',
+        content: 'Content: Fourth Topic 2',
+        primaryTopicId: this.primaryTopic.id,
+        secondaryTopicId: this.secondaryTopic.id,
+        thirdTopicId: this.thirdTopic.id
+      })
+      .then((newFourthTopic) => {
+        expect(this.fifthTopic.fourthTopicId).toBe(this.fourthTopic.id);
+        this.fifthTopic.setFourthTopic(newFourthTopic)
+        .then((fifthTopic) => {
+          expect(this.fifthTopic.fourthTopicId).toBe(newFourthTopic.id);
+          done();
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        done();
+      });
+    });
+
+  });
+
+  describe('#getFourthTopic', () => {
+
+    it('should return the associated fourth topic', (done) => {
+      this.fifthTopic.getFourthTopic()
+      .then((associatedFourthTopic) => {
+        expect(associatedFourthTopic.title).toBe('Title: Fourth Topic 1');
         done();
       })
       .catch((err) => {

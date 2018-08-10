@@ -2,6 +2,7 @@ const sequelize = require('../../src/db/models/index').sequelize;
 const PrimaryTopic = require('../../src/db/models').PrimaryTopic;
 const SecondaryTopic = require('../../src/db/models').SecondaryTopic;
 const ThirdTopic = require('../../src/db/models').ThirdTopic;
+const FourthTopic = require('../../src/db/models').FourthTopic;
 
 describe('FourthTopic', () => {
 
@@ -81,6 +82,65 @@ describe('FourthTopic', () => {
         expect(fourthTopic.primaryTopicId).toBe(this.primaryTopic.id);
         expect(fourthTopic.secondaryTopicId).toBe(this.secondaryTopic.id);
         expect(fourthTopic.thirdTopicId).toBe(this.thirdTopic.id);
+        done();
+      })
+      .catch((err) => {
+        console.error(err);
+        done();
+      });
+    });
+
+    it('should not create a fourth topic if it is missing paramters', (done) => {
+      FourthTopic.create({
+        title: 'Shouldn`t see me'
+      })
+      .then((fourthTopic) => {})
+      .catch((err) => {
+        expect(err.message).toContain('FourthTopic.content cannot be null');
+        expect(err.message).toContain('FourthTopic.primaryTopicId cannot be null');
+        expect(err.message).toContain('FourthTopic.secondaryTopicId cannot be null');
+        expect(err.message).toContain('FourthTopic.thirdTopicId cannot be null');
+        done();
+      });
+    });
+
+  });
+
+  describe('#setThirdTopic()', () => {
+
+    it('should associate a third topic and a fourth topic together', (done) => {
+      ThirdTopic.create({
+        title: 'Title: Third Topic 2',
+        content: 'Content: Third Topic 2',
+        primaryTopicId: this.primaryTopic.id,
+        secondaryTopicId: this.secondaryTopic.id
+      })
+      .then((newThirdTopic) => {
+        expect(this.fourthTopic.thirdTopicId).toBe(this.thirdTopic.id);
+        this.fourthTopic.setThirdTopic(newThirdTopic)
+        .then((fourthTopic) => {
+          expect(this.fourthTopic.thirdTopicId).toBe(newThirdTopic.id);
+          done();
+        })
+        .catch((err) => {
+          console.error(err);
+          done();
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        done();
+      });
+    });
+
+  });
+
+  describe('#getThirdTopic()', () => {
+
+    it('should get the associated third topic', (done) => {
+      this.fourthTopic.getThirdTopic()
+      .then((associatedThirdTopic) => {
+        expect(associatedThirdTopic.title).toBe('Title: Third Topic 1');
         done();
       })
       .catch((err) => {
