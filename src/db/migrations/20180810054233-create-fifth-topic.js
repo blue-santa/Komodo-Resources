@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1000000),
         allowNull: false
       },
       primaryTopicId: {

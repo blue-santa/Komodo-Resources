@@ -13,13 +13,13 @@ module.exports = {
         allowNull: false
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1000000),
         allowNull: false
       },
       primaryTopicId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         allowNull: false,
-        onDelete: "CASCADE",
         references: {
           model: 'PrimaryTopics',
           key: 'id',
@@ -28,8 +28,8 @@ module.exports = {
       },
       secondaryTopicId: {
         type: Sequelize.INTEGER,
-        allowNull: false
         onDelete: 'CASCADE',
+        allowNull: false,
         references: {
           model: 'SecondaryTopics',
           key: 'id',
@@ -38,8 +38,8 @@ module.exports = {
       },
       thirdTopicId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         onDelete: 'CASCADE',
+        allowNull: false,
         references: {
           model: 'ThirdTopics',
           key: 'id',

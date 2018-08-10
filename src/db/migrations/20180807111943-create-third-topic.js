@@ -17,7 +17,7 @@ module.exports = {
         allowNull: false
       },
       primaryTopicId: {
-        type:Sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,
         references: {
