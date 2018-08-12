@@ -1,25 +1,17 @@
-const treeQueries = require('../src/db/queries.tree.js');
-const path = require('path');
-const fs = require('fs-extra');
+const buildDatabaseNames = (DatabaseNameStr, callback) => {
+  let camelSingular = DatabaseNameStr.slice(0,1);
+  camelSingular = camelSingular.toLowerCase();
+  camelSingular = camelSingular + DatabaseNameStr.slice(1, DatabaseNameStr.length);
+  let camelPlural = DatabaseNameStr.slice(0,1);
+  camelPlural = camelPlural.toLowerCase();
+  camelPlural = camelPlural + DatabaseNameStr.slice(1, DatabaseNameStr.length) + 's';
+  let databaseNameStr = `{ "capsSingular": ${"\"" + DatabaseNameStr + "\""}, "capsPlural": ${"\"" + DatabaseNameStr + 's' + "\""}, "camelSingular": ${"\"" + camelSingular + "\""}, "camelPlural": ${"\"" + camelPlural + "\""} }`;
+  let names = JSON.parse(databaseNameStr);
+  return callback(names);
+};
 
-let primaryTopics;
+let dbName = 'PrimaryTopic';
 
-treeQueries.buildTree((err, res) => {
-  if (err) {
-    console.error(err);
-    return process.exit();
-  }
-  treeQueries.callTree((err, res) => {
-    if (err) {
-      console.error(err);
-      return process.exit();
-    }
-    primaryTopics = res;
-    console.log(`the end`);
-    console.log(primaryTopics[0].secondaryTopics[0].title);
-    return process.exit();
-  });
+buildDatabaseNames(dbName, (res) => {
+  console.log(res);
 });
-
-setTimeout(() => {
-}, 1000);
