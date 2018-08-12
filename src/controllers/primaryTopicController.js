@@ -8,27 +8,29 @@ const base = path.join(__dirname + '../../assets/docs/');
 
 let topicTree = [];
 
-function buildTree() {
-  allTopicQueries.buildTopicTree((err, topicTreeCall) => {
-    if (topicTreeCall === undefined ) {
-      topicTreeCall = [];
-      topicTreeCall.push({
-        title: `I'm a little teapot`,
-        primaryTopicId: 0
-      });
-    }
-    if (topicTreeCall[0].secondaryTopics === undefined) {
-      topicTreeCall[0].secondaryTopics = [];
-      topicTreeCall[0].secondaryTopics.push({
-        title: `short and stout`,
-        secondaryTopicId: 0
-      });
-    }
-    return topicTree = topicTreeCall;
-  });
-}
+// function buildTree() {
+//   allTopicQueries.buildTopicTree((err, topicTreeCall) => {
+//     if (topicTreeCall === undefined ) {
+//       topicTreeCall = [];
+//       topicTreeCall.push({
+//         title: `I'm a little teapot`,
+//         primaryTopicId: 0
+//       });
+//     }
+//     if (topicTreeCall[0].secondaryTopics === undefined) {
+//       topicTreeCall[0].secondaryTopics = [];
+//       topicTreeCall[0].secondaryTopics.push({
+//         title: `short and stout`,
+//         secondaryTopicId: 0
+//       });
+//     }
+//     return topicTree = topicTreeCall;
+//   });
+// };
+//
+// buildTree();
 
-buildTree();
+let tree = '';
 
 module.exports = {
   index(req, res, next) {
@@ -37,6 +39,9 @@ module.exports = {
         res.redirect(500, 'static/index');
       } else {
         buildTree();
+        allTopicQueries.callTree((newTree) => {
+          return tree = newTree;
+        });
         res.render('primaryTopics/index', { primaryTopics, topicTree });
       }
     });

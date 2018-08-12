@@ -3,27 +3,27 @@ const allTopicQueries = require('../db/queries.allTopics.js');
 
 let topicTree = [];
 
-function buildTree() {
-  allTopicQueries.buildTopicTree((err, topicTreeCall) => {
-    if (topicTreeCall === undefined ) {
-      topicTreeCall = [];
-      topicTreeCall.push({
-        title: `I'm a little teapot`,
-        primaryTopicId: 0
-      });
-    }
-    if (topicTreeCall[0].secondaryTopics === undefined) {
-      topicTreeCall[0].secondaryTopics = [];
-      topicTreeCall[0].secondaryTopics.push({
-        title: `short and stout`,
-        secondaryTopicId: 0
-      });
-    }
-    return topicTree = topicTreeCall;
-  });
-}
-
-buildTree();
+// function buildTree() {
+//   allTopicQueries.buildTopicTree((err, topicTreeCall) => {
+//     if (topicTreeCall === undefined ) {
+//       topicTreeCall = [];
+//       topicTreeCall.push({
+//         title: `I'm a little teapot`,
+//         primaryTopicId: 0
+//       });
+//     }
+//     if (topicTreeCall[0].secondaryTopics === undefined) {
+//       topicTreeCall[0].secondaryTopics = [];
+//       topicTreeCall[0].secondaryTopics.push({
+//         title: `short and stout`,
+//         secondaryTopicId: 0
+//       });
+//     }
+//     return topicTree = topicTreeCall;
+//   });
+// }
+//
+// buildTree();
 
 module.exports = {
   index(req, res, next) {
