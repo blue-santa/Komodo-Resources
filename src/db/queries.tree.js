@@ -10,82 +10,76 @@ const EventEmitter = require('events');
 class Emitter extends EventEmitter {};
 
 const buildDatabase = (callback) => {
-    this.primaryTopic;
-    this.secondaryTopic;
-    this.thirdTopic;
-    this.fourthTopic;
-    this.fifthTopic;
+  this.primaryTopic;
+  this.secondaryTopic;
+  this.thirdTopic;
+  this.fourthTopic;
+  this.fifthTopic;
 
-    sequelize.sync({force: true}).then((res) => {
-      PrimaryTopic.create({
-        title: 'Title: Primary Topic 1',
-        content: 'Content: Primary Topic 1'
+  sequelize.sync({force: true})
+  .then((res) => {
+    PrimaryTopic.create({
+      title: 'Title: Primary Topic 1',
+      content: 'Content: Primary Topic 1'
+    })
+    .then((primaryTopic) => {
+      this.primaryTopic = primaryTopic;
+      SecondaryTopic.create({
+        title: 'Title: Secondary Topic 1',
+        content: 'Content: Secondary Topic 1',
+        primaryTopicId: this.primaryTopic.id
       })
-      .then((primaryTopic) => {
-        this.primaryTopic = primaryTopic;
-        SecondaryTopic.create({
-          title: 'Title: Secondary Topic 1',
-          content: 'Content: Secondary Topic 1',
-          primaryTopicId: this.primaryTopic.id
+      .then((secondaryTopic) => {
+        this.secondaryTopic = secondaryTopic;
+        ThirdTopic.create({
+          title: 'Title: Third Topic 1',
+          content: 'Content: Third Topic 1',
+          primaryTopicId: this.primaryTopic.id,
+          secondaryTopicId: this.secondaryTopic.id
         })
-        .then((secondaryTopic) => {
-          this.secondaryTopic = secondaryTopic;
-          ThirdTopic.create({
-            title: 'Title: Third Topic 1',
-            content: 'Content: Third Topic 1',
+        .then((thirdTopic) => {
+          this.thirdTopic = thirdTopic;
+          FourthTopic.create({
+            title: 'Title: Fourth Topic 1',
+            content: 'Content: Fourth Topic 1',
             primaryTopicId: this.primaryTopic.id,
-            secondaryTopicId: this.secondaryTopic.id
+            secondaryTopicId: this.secondaryTopic.id,
+            thirdTopicId: this.thirdTopic.id
           })
-          .then((thirdTopic) => {
-            this.thirdTopic = thirdTopic;
-            FourthTopic.create({
-              title: 'Title: Fourth Topic 1',
-              content: 'Content: Fourth Topic 1',
+          .then((fourthTopic) => {
+            this.fourthTopic = fourthTopic;
+            FifthTopic.create({
+              title: 'Title: Fifth Topic 1',
+              content: 'Content: Fifth Topic 1',
               primaryTopicId: this.primaryTopic.id,
               secondaryTopicId: this.secondaryTopic.id,
-              thirdTopicId: this.thirdTopic.id
+              thirdTopicId: this.thirdTopic.id,
+              fourthTopicId: this.fourthTopic.id
             })
-            .then((fourthTopic) => {
-              this.fourthTopic = fourthTopic;
-              FifthTopic.create({
-                title: 'Title: Fifth Topic 1',
-                content: 'Content: Fifth Topic 1',
-                primaryTopicId: this.primaryTopic.id,
-                secondaryTopicId: this.secondaryTopic.id,
-                thirdTopicId: this.thirdTopic.id,
-                fourthTopicId: this.fourthTopic.id
-              })
-              .then((fifthTopic) => {
-                this.fifthTopic = fifthTopic;
-                done();
-              })
-              .catch((err) => {
-                console.error(err);
-                done();
-              });
+            .then((fifthTopic) => {
+              this.fifthTopic = fifthTopic;
+              return callback(null, this.primaryTopic);
             })
             .catch((err) => {
-              console.error(err);
-              done();
-            })
+              callback(err);
+            });
           })
           .catch((err) => {
-            console.error(err);
-            done();
-          });
+            callback(err);
+          })
         })
         .catch((err) => {
-          console.error(err);
-          done();
+          callback(err);
         });
       })
       .catch((err) => {
-        console.error(err);
-        done();
+        callback(err);
       });
+    })
+    .catch((err) => {
+      callback(err);
     });
-
-  return callback(this.primaryTopic);
+  });
 }
 
 const buildDatabaseNames = (DatabaseNameStr, callback) => {
@@ -121,67 +115,70 @@ const isAnotherDatabase = (DatabaseName, id, NextDatabaseName) => {
   });
 };
 
-const searchDatabase = (first, i, current, next, list, callback) => {
-  if (typeof first === 'string') {
-    first = buildDatabaseNames(first);
-    current = buildDatabaseNames(current);
-    next = buildDatabaseNames(next);
-  }
-  if (first === current) {
-    this.first = current;
-    let topicTree = [];
-    const isSearchFinished = new Emitter();
-    console.log(`emitter created`);
-    isSearchFinished.on('finished', () => {
-      console.log(`the search is done`);
-      callback(null, this.primaryTopicsShort);
-    });
-  }
-  current.CapsSingular.all()
-  .then((res) => {
-    current.camelPlural = res;
-    if (if current.camelPlural.length !== 0) {
-      for (let j = 0; j < currentParsed.camelPlural.length; j++) {
-        if (first === current) {
-          this.first[i].current[j].title = current.camelPlural[j].title,
-          this.first[i].current[j].id = current.camelPlural[j].id
-          next.camelSingular = []
-        } else {
-          this.first[i]..current[j].title = current.camelPlural[j].title,
-          this.first[i].id = current.camelPlural[j].id,
-          next.camelSingular = []
-        }
-        let isNext = isAnotherDatabase(current.)
-        searchDatabase(null, j, next, list[i + 1], list, callback).bind(this);
-      }
-    } else {
-      callback(null, this.first);
-    }
-  })
-  .catch((err) => {
-    callback(err);
-  });
-};
+// const searchDatabase = (first, i, current, next, list, callback) => {
+//   if (typeof first === 'string') {
+//     first = buildDatabaseNames(first);
+//     current = buildDatabaseNames(current);
+//     next = buildDatabaseNames(next);
+//   }
+//   if (first === current) {
+//     this.first = current;
+//     let topicTree = [];
+//     const isSearchFinished = new Emitter();
+//     console.log(`emitter created`);
+//     isSearchFinished.on('finished', () => {
+//       console.log(`the search is done`);
+//       callback(null, this.primaryTopicsShort);
+//     });
+//   }
+//   current.CapsSingular.all()
+//   .then((res) => {
+//     current.camelPlural = res;
+//     if (if current.camelPlural.length !== 0) {
+//       for (let j = 0; j < currentParsed.camelPlural.length; j++) {
+//         if (first === current) {
+//           this.first[i].current[j].title = current.camelPlural[j].title,
+//           this.first[i].current[j].id = current.camelPlural[j].id
+//           next.camelSingular = []
+//         } else {
+//           this.first[i]..current[j].title = current.camelPlural[j].title,
+//           this.first[i].id = current.camelPlural[j].id,
+//           next.camelSingular = []
+//         }
+//         let isNext = isAnotherDatabase(current.)
+//         searchDatabase(null, j, next, list[i + 1], list, callback).bind(this);
+//       }
+//     } else {
+//       callback(null, this.first);
+//     }
+//   })
+//   .catch((err) => {
+//     callback(err);
+//   });
+// };
 
 const buildTopicTreeFromCurrentDatabase = (callback) => {
   let topicTree = [];
-  let isFinished = false;
   const isSearchFinished = new Emitter();
-  console.log(`emitter created`);
   isSearchFinished.on('finished', () => {
-    console.log(`the search is done`);
-    if (isFinished = true) {
-      callback(null, this.primaryTopicsShort)
+    if (isFinished === 0) {
+      callback(null, this.primaryTopicsShort);
     };
   });
   /* need to go back and refactor -- violates DRY */
   this.primaryTopicsShort = [];
+  let isFinished = 0;
+  isFinished = isFinished++;
   PrimaryTopic.all()
   .then((primaryTopics) => {
     if (primaryTopics.length === 0) {
       return callback('no Primary Topics defined');
     }
+    isFinished = isFinished + primaryTopics.length;
     for (let i = 0; i < primaryTopics.length; i++) {
+      if (i === 0) {
+        var isLastPrimary = false;
+      };
       this.primaryTopicsShort[i] = {
         title: primaryTopics[i].title,
         id: primaryTopics[i].id,
@@ -194,8 +191,17 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
         }]
       })
       .then((currentPrimaryTopic) => {
-        if (currentPrimaryTopic.secondaryTopics.length !== 0) {
+        isFinished = isFinished - 1 + currentPrimaryTopic.secondaryTopics.length;
+        if (i === primaryTopics.length - 1) {
+          isLastPrimary = true;
+        };
+        if (currentPrimaryTopic.secondaryTopics.length === 0 && isLastPrimary) {
+          isSearchFinished.emit('finished');
+        } else if (currentPrimaryTopic.secondaryTopics.length !== 0) {
           for (let j = 0; j < currentPrimaryTopic.secondaryTopics.length; j++) {
+            if (j === 0) {
+              var isLastSecondary = false;
+            }
             this.primaryTopicsShort[i].secondaryTopics[j] = {
               title: currentPrimaryTopic.secondaryTopics[j].title,
               id: currentPrimaryTopic.secondaryTopics[j].id,
@@ -208,11 +214,17 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
               }]
             })
             .then((currentSecondaryTopic) => {
-              if (currentPrimaryTopic.secondaryTopics.length - 1 === j) {
-                isSearchFinished.emit('finished');
+              isFinished = isFinished - 1 + currentSecondaryTopic.thirdTopics.length;
+              if (j === currentPrimaryTopic.secondaryTopics.length - 1) {
+                isLastSecondary = true;
               }
-              if (currentSecondaryTopic.thirdTopics.length !== 0) {
+              if (currentSecondaryTopic.thirdTopics.length === 0 && isLastPrimary && isLastSecondary) {
+                isSearchFinished.emit('finished');
+              } else if (currentSecondaryTopic.thirdTopics.length !== 0) {
                 for (let k = 0; k < currentSecondaryTopic.thirdTopics.length; k++) {
+                  if (k === 0) {
+                    var isLastThird = false;
+                  };
                   this.primaryTopicsShort[i].secondaryTopics[j].thirdTopics[k] = {
                     title: currentSecondaryTopic.thirdTopics[k].title,
                     id: currentSecondaryTopic.thirdTopics[k].id,
@@ -224,12 +236,21 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
                       as: 'fourthTopics'
                     }]
                   })
-                  .then((currentThirdTopics) => {
-                    if (currentThirdTopics.fourthTopics.length !== 0) {
-                      for (let l = 0; l < currentThirdTopics.fourthTopics.length; l++) {
+                  .then((currentThirdTopic) => {
+                    isFinished = isFinished - 1 + currentThirdTopic.fourthTopics.length;
+                    if (k === currentSecondaryTopic.thirdTopics.length - 1) {
+                      isLastThird = true;
+                    };
+                    if (currentThirdTopic.fourthTopics.length === 0 && isLastPrimary && isLastSecondary && isLastThird) {
+                      isSearchFinished.emit('finished');
+                    } else if (currentThirdTopic.fourthTopics.length !== 0) {
+                      for (let l = 0; l < currentThirdTopic.fourthTopics.length; l++) {
+                        if (l = 0) {
+                          var isLastFourth = false;
+                        }
                         this.primaryTopicsShort[i].secondaryTopics[j].thirdTopics[k].fourthTopics[k] = {
-                          title: currentThirdTopics.fourthTopics[l].title,
-                          id: currentThirdTopics.fourthTopics[l].id,
+                          title: currentThirdTopic.fourthTopics[l].title,
+                          id: currentThirdTopic.fourthTopics[l].id,
                           fifthTopics: []
                         }
                         FourthTopic.findById(this.primaryTopicsShort[i].secondaryTopics[j].thirdTopics[k].fourthTopics[l].id, {
@@ -239,12 +260,28 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
                           }]
                         })
                         .then((currentFourthTopics) => {
-                          if (currentFourthTopics.fifthTopics.length !== 0) {
-                            for (let m = 0; m < currentFourthTopics.fifthTopics.length; m++) {
-                              this.primaryTopicsShort[i].secondaryTopics[j].thirdTopics[k].fourthTopics[k].fifthTopics[m] = {
-                                title: currentFourthTopics.fifthTopics[m].title,
-                                id: currentFourthTopics.fifthTopics[m].id
+                          isFinished = isFinished - 1 + currentFourthTopics.fifthTopics.length;
+                          if (l = currentThirdTopic.fourthTopics.length - 1) {
+                            isLastFourth = true;
+                          }
+                          if (currentFourthTopic.fifthTopics.length === 0 && isLastPrimary && isLastSecondary && isLastThird && isLastFourth) {
+                            isSearchFinished.emit('finished');
+                          } else if (currentFourthTopic.fifthTopics.length !== 0) {
+                            for (let m = 0; m < currentFourthTopic.fifthTopics.length; m++) {
+                              if (m = 0) {
+                                var isLastFifth = false;
                               }
+                              if (m === currentFourthTopic.fifthTopics.length - 1) {
+                                isLastFifth = true;
+                              }
+                              this.primaryTopicsShort[i].secondaryTopics[j].thirdTopics[k].fourthTopics[k].fifthTopics[m] = {
+                                title: currentFourthTopic.fifthTopics[m].title,
+                                id: currentFourthTopic.fifthTopics[m].id
+                              };
+                              if (isLastPrimary === true && isLastSecondary === true && isLastThird === true && isLastFourth === true && isLastFifth === true) {
+                                isFinished = isFinished - 1;
+                                isSearchFinished.emit('finished');
+                              };
                             }
                           }
                         })
@@ -268,7 +305,7 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
       })
       .catch((err) => {
         callback(err);
-      })
+      });
     }
   })
   .catch((err) => {
@@ -290,16 +327,17 @@ const emptyTree = (callback) => {
 };
 
 const setTree = (treeVal, callback) => {
-  let treeDb = JSON.stringify(treeVal);
-  return Tree.create({
-    title: 'Tree',
-    content: treeDb
+  let contentVal = JSON.stringify(treeVal);
+  Tree.create({
+    title: 'topicTree',
+    content: contentVal
   })
   .then((treeStr) => {
     let primaryTopics = JSON.parse(treeStr.content);
     callback(null, primaryTopics);
   })
   .catch((err) => {
+    console.log(`going here?`);
     callback(err);
   });
 }
@@ -311,34 +349,29 @@ module.exports = {
   buildTree(callback) {
     let topicTree = '';
     emptyTree((errEmptyTree, res) => {
-
       if (errEmptyTree) {
         return callback(errEmptyTree);
       }
       buildTopicTreeFromCurrentDatabase((err, topicTreeAfterQuery) => {
-        /* Why is this getting called multiple times? */
         if (err) {
           return callback(err);
         }
-        topicTree = topicTreeAfterQuery;
-        if (topicTree === undefined) {
-          buildDatabase((temporaryPrimaryTopics) => {
-            topicTree = temporaryPrimaryTopics;
+        if (topicTreeAfterQuery === undefined) {
+          buildDatabase((err, temporaryPrimaryTopics) => {
             if (err) {
               callback(err);
             }
-            topicTree = newQuery;
+            topicTree = temporaryPrimaryTopics;
             callback(null, topicTree);
           });
         } else {
           /* this is violating DRY again */
-          setTree(topicTree, (err, treePlaced) => {
+          setTree(topicTreeAfterQuery, (err, treePlaced) => {
             if (err) {
+              console.log(`error is here?`);
               callback(err);
             }
-            console.log('second', treePlaced);
-            let newTopicTree = treePlaced;
-            callback(null, newTopicTree);
+            callback(null, treePlaced);
           });
         }
       });
@@ -348,10 +381,13 @@ module.exports = {
   callTree(callback) {
     return Tree.findOne({
       where: {
-        title: 'Tree'
+        title: 'topicTree'
       }
     })
     .then((treeStr) => {
+      if (treeStr === null) {
+        return false;
+      }
       let primaryTopics = treeStr.content;
       primaryTopics = JSON.parse(primaryTopics);
       callback(null, primaryTopics);

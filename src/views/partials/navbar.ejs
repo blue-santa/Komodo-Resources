@@ -7,11 +7,11 @@
     <ol class="sidebar-links">
       <% topicTree.forEach((primaryTopicNav) => { %>
         <li class="sidebar-main-link">
-          <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>"> <%= primaryTopicNav.title %> </a>
+          <a href="/primaryTopics/<%= primaryTopicNav.id %>"> <%= primaryTopicNav.title %> </a>
           <ol class="sidebar-links">
             <% primaryTopicNav.secondaryTopics.forEach((secondaryTopicNav) => { %>
               <li class="sidebar-second-link">
-                <a href="/primaryTopics/<%= primaryTopicNav.primaryTopicId %>/secondaryTopics/<%= secondaryTopicNav.secondaryTopicId %>"> <%= secondaryTopicNav.title %> </a>
+                <a href="/primaryTopics/<%= primaryTopicNav.id %>/secondaryTopics/<%= secondaryTopicNav.id %>"> <%= secondaryTopicNav.title %> </a>
               </li>
             <% }); %>
           </ol>

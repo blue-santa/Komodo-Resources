@@ -1,17 +1,25 @@
-const buildDatabaseNames = (DatabaseNameStr, callback) => {
-  let camelSingular = DatabaseNameStr.slice(0,1);
-  camelSingular = camelSingular.toLowerCase();
-  camelSingular = camelSingular + DatabaseNameStr.slice(1, DatabaseNameStr.length);
-  let camelPlural = DatabaseNameStr.slice(0,1);
-  camelPlural = camelPlural.toLowerCase();
-  camelPlural = camelPlural + DatabaseNameStr.slice(1, DatabaseNameStr.length) + 's';
-  let databaseNameStr = `{ "capsSingular": ${"\"" + DatabaseNameStr + "\""}, "capsPlural": ${"\"" + DatabaseNameStr + 's' + "\""}, "camelSingular": ${"\"" + camelSingular + "\""}, "camelPlural": ${"\"" + camelPlural + "\""} }`;
-  let names = JSON.parse(databaseNameStr);
-  return callback(names);
-};
+const treeQueries = require('../src/db/queries.tree');
+const PrimaryTopic = require('../src/db/models').PrimaryTopic;
+const ThirdTopic = require('../src/db/models').ThirdTopic;
 
-let dbName = 'PrimaryTopic';
-
-buildDatabaseNames(dbName, (res) => {
-  console.log(res);
+treeQueries.buildTree((err, res) => {
+  if (err) {
+    console.error(err);
+  }
+  treeQueries.callTree((err, res) => {
+    if (err) {
+      console.error(err);
+    }
+    const primaryTopics = res;
+    res.forEach((primaryTopic) => {
+      console.log(`\n`, primaryTopic.title);
+      primaryTopic.secondaryTopics.forEach((secondaryTopic) => {
+        console.log(`  `, secondaryTopic.title);
+        secondaryTopic.thirdTopics.forEach((thirdTopic) => {
+          console.log(`    `, thirdTopic.title);
+        });
+      });
+    });
+    process.exit();
+  });
 });

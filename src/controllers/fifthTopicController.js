@@ -1,4 +1,4 @@
-const allTopicQueries = require('../db/queries.allTopics.js');
+const treeQueries = require('../db/queries.tree');
 const primaryTopicQueries = require('../db/queries.primaryTopics.js');
 const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
 const thirdTopicQueries = require('../db/queries.thirdTopics.js');
@@ -10,10 +10,19 @@ const path = require('path');
 
 const base = path.join(__dirname + '../../assets/docs/');
 
+let topicTree = [];
+
+treeQueries.callTree((err, res) => {
+  if (err) {
+    return console.error(err);
+  }
+  return topicTree = res;
+});
+
 module.exports = {
 
   new(req, res, next) {
-    res.render('fifthTopics/new', { primaryTopicId: req.params.primaryTopicId, secondaryTopicId: req.params.secondaryTopicId, thirdTopicId: req.params.thirdTopicId, fourthTopicId: req.params.fourthTopicId })
+    res.render('fifthTopics/new', { primaryTopicId: req.params.primaryTopicId, secondaryTopicId: req.params.secondaryTopicId, thirdTopicId: req.params.thirdTopicId, fourthTopicId: req.params.fourthTopicId, topicTree })
   },
 
   create(req, res, next) {
@@ -39,7 +48,7 @@ module.exports = {
       if (err || fifthTopic === null) {
         res.redirect(404, '/');
       } else {
-        res.render('fifthTopics/show', { fifthTopic });
+        res.render('fifthTopics/show', { fifthTopic, topicTree });
       }
     });
   },
@@ -49,7 +58,7 @@ module.exports = {
       if (err || fifthTopic === null) {
         res.redirect(404, '/');
       } else {
-        res.render('fifthTopics/edit', { fifthTopic });
+        res.render('fifthTopics/edit', { fifthTopic, topicTree });
       }
     });
   },
