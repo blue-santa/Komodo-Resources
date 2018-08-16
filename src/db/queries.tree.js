@@ -241,6 +241,7 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
                     if (k === currentSecondaryTopic.thirdTopics.length - 1) {
                       isLastThird = true;
                     };
+                    console.log(currentThirdTopic.title, currentThirdTopic.fourthTopics.length);
                     if (currentThirdTopic.fourthTopics.length === 0 && isLastPrimary && isLastSecondary && isLastThird) {
                       isSearchFinished.emit('finished');
                     } else if (currentThirdTopic.fourthTopics.length !== 0) {

@@ -9,16 +9,11 @@
       <% include ../partials/navbar.ejs %>
 
       <main class="content">
-        <div class="site-content content-flex-container unique-row">
-          <% include ../partials/breadcrumb.ejs %>
-          <!--
-          <form action='/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>/edit' method='get'>
-            <button type="submit" class="btn">Edit</button>
-          </form>
-          <form action='/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>/delete' method='post'>
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-          -->
+        <div class="site-title content-flex-container unique-row breadcrumb">
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= secondaryTopic.primaryTopicId %>" class="breadcrumb-link"><%= topicTree[secondaryTopic.primaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>" class="breadcrumb-link"><%= topicTree[secondaryTopic.primaryTopicId - 1].secondaryTopics[secondaryTopic.id - 1].title %></a>
         </div>
         <div class="site-content">
           <hr>

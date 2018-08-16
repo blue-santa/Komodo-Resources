@@ -8,11 +8,20 @@
     <div class="flex-container">
 
       <main class="content">
-        <div class="site-content content-flex-container unique-row">
-          <% include ../partials/breadcrumb.ejs %>
+        <div class="site-title content-flex-container unique-row breadcrumb">
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].secondaryTopics[fifthTopic.secondaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].secondaryTopics[fifthTopic.secondaryTopicId - 1].thirdTopics[fifthTopic.thirdTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>/fourthTopics/<%= fifthTopic.fourthTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].secondaryTopics[fifthTopic.secondaryTopicId - 1].thirdTopics[fifthTopic.thirdTopicId - 1].fourthTopics[fifthTopic.fourthTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+            <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>/fourthTopics/<%= fifthTopic.fourthTopicId" class="breadcrumb-link"><%= fifthTopic.title %></a>
         </div>
-        <hr>
         <div class="site-content">
+          <hr>
           <p><%- fifthTopic.content %></p>
         </div>
         <hr>
