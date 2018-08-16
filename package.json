@@ -29,6 +29,7 @@
     "fs-extra": "^7.0.0",
     "html": "^1.0.0",
     "nodemon": "^1.18.3",
+    "perfect-scrollbar": "^1.4.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "prompt": "^1.0.0",

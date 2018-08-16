@@ -7,29 +7,35 @@ const sequelize = require('../../db/models/index').sequelize;
 const PrimaryTopic = require('../../db/models').PrimaryTopic;
 const SecondaryTopic = require('../../db/models').SecondaryTopic;
 const ThirdTopic = require('../../db/models').ThirdTopic;
+const FourthTopic = require('../../db/models').FourthTopic;
+const FifthTopic = require('../../db/models').FifthTopic;
+const treeQueries = require('../../db/queries.tree');
 
 const base = path.join(__dirname + '/SidRebuild/docs');
-
+const indexFilePath = path.join(__dirname + '/SidRebuild/docs/index.html');
+let navbarTreeArray = [];
+let newTreeThing = [];
+let contentIndex;
 /* Starting next */
 
-let contentIndex;
-fs.readFile(path.join(__dirname + '/index.rst'), 'utf8', (err, res) => {
-  if (err) {
-    console.error(err);
-    process.exit();
-  }
-  contentIndex = res;
-  return;
-});
-
-let navbarTreeArray = [];
+const importIndex = (filePath, callback) => {
+  fs.readFile(filePath, 'utf8', (err, res) => {
+    if (err) {
+      console.error(err);
+      process.exit();
+    }
+    callback(null, res);
+  });
+};
 
 const parseContentIndex = function(indexFile, newCurrentCount, callback) {
-  let captionMarker = ':caption: ';
+  let captionMarker = '<div class="toctree">';
   let nextSectionMarker = '..';
   let nextLineMarker = '\n';
   let currentCount = newCurrentCount;
   let newIndexFile;
+  let rstFileExtension = '.rst';
+  let htmlFileExtension = '.html';
   let front;
   let rear;
   newIndexFile = indexFile;
@@ -96,12 +102,13 @@ const parseContentIndex = function(indexFile, newCurrentCount, callback) {
         let nextPush = newIndexFile.slice(0, rear);
         newIndexFile = newIndexFile.slice(rear);
         if (nextPush.includes('.rst')) {
-          let rstRear = nextPush.indexOf('.rst');
+          let rstRear = nextPush.indexOf(rstFileExtension);
           nextPush = nextPush.slice(0,rstRear);
-          nextPush = nextPush + '.html';
+          nextPush = nextPush + htmlFileExtension;
         }
         subbranches.push(nextPush);
       } else if (newIndexFile.indexOf(nextSectionMarker === 0)) {
+        console.log(`I'm here`);
       } else {
         console.error(`ya dun messed up, son`);
         process.exit();
@@ -134,49 +141,57 @@ const getFileValue = (filePath, callback) => {
   }
 }
 
-setTimeout(() => {
-  let newTreeThing = [];
+importIndex(indexFilePath, (err, res) => {
+  if (err) {
+    console.error(err);
+    process.exit();
+  }
+  contentIndex = res;
   parseContentIndex(contentIndex, 0, (err, res) => {
     newTreeThing = res;
-  });
+    sequelize.sync({ force: true }).then((res) => {
 
-  sequelize.sync({ force: true }).then((res) => {
-    this.primaryTopic;
-    this.secondaryTopic;
-    PrimaryTopic.create({
-      title: newTreeThing[0].title,
-      content: 'I\'m a little teapot'
-    }).then((primaryTopic) => {
-      this.primaryTopic = primaryTopic;
-      let options;
-      for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
-        getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
-          if (err) {
-            console.error(err);
-            process.exit();
-          }
-          options = {
-            title: newTreeThing[0].subbranches[i],
-            content: res,
-            primaryTopicId: this.primaryTopic.id
-          };
-          SecondaryTopic.create(options).then((secondaryTopic) => {
-            this.secondaryTopic = secondaryTopic;
-            setTimeout(() => { process.exit() }, 5000);
-          })
-          .catch((err) => {
-            console.error(err);
-            return process.exit();
+      this.primaryTopic;
+      this.secondaryTopic;
+      this.thirdTopic;
+      this.fourthTopic;
+      this.fifthTopic;
+
+      PrimaryTopic.create({
+        title: newTreeThing[0].title,
+        content: 'I\'m a little teapot'
+      }).then((primaryTopic) => {
+        this.primaryTopic = primaryTopic;
+        let options;
+        for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
+          getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
+            if (err) {
+              console.error(err);
+              process.exit();
+            }
+            options = {
+              title: newTreeThing[0].subbranches[i],
+              content: res,
+              primaryTopicId: this.primaryTopic.id
+            };
+            SecondaryTopic.create(options).then((secondaryTopic) => {
+              this.secondaryTopic = secondaryTopic;
+              setTimeout(() => { process.exit() }, 5000);
+            })
+            .catch((err) => {
+              console.error(err);
+              return process.exit();
+            });
           });
-        });
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      return process.exit();
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        return process.exit();
+      });
     });
   });
-}, 1000);
+});
 
 module.exports = {
 

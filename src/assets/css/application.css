@@ -182,11 +182,16 @@ hr {
   clear: both;
 }
 
+.breadcrumb-link {
+  padding-left: .3rem;
+}
+
 .site-title {
   float: left;
-  margin: .5vw;
+  margin: 1rem;
   align-items: center;
   flex-direction: row;
+  font-weight: 700;
 
   /*
   flex-direction: row || column || row-reverse || column-reverse;
@@ -215,7 +220,7 @@ h2 {
 }
 
 .site-content {
-  margin: .5vw;
+  margin: .7rem;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   clear: both;
@@ -227,27 +232,37 @@ h2 {
   margin-top: 1.2rem;
   float: left;
   clear: both;
-  font-family: 'Roboto Condensed', serif;
+  font-family: 'Roboto', serif;
   font-weight: 700;
   font-size: 2.2rem;
   text-align: left;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .site-content p {
   line-height: 1.3rem;
+  margin-bottom: 1rem;
   clear: both;
 }
 
 .site-content ul {
   clear: both;
+  line-height: 1.3rem;
 }
 
-.breadcrumb h1 small {
-  font-size:.8rem;
+.site-footer h1, .site-footer h2, .site-footer h3 {
+  font-family: 'Roboto-Medium', sans-serif;
+  font-weight: 700;
+  font-size: .7rem;
+  margin-bottom: 2.5rem;
 }
 
-.ist li {
+.copyright-symbol {
+  font-size: .6rem;
+  margin-right: .3rem;
+}
+
+.topic-list li {
   line-height: 1.5rem;
   margin: 0rem 0rem 0.1rem 0rem;
   padding: .5rem .5rem .5rem .5rem;

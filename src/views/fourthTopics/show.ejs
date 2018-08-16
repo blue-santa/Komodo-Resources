@@ -9,7 +9,7 @@
 
       <main class="content">
         <div class="site-content content-flex-container unique-row">
-          <h1>[insert breadcrumb]</h1>
+          <% include ../partials/breadcrumb.ejs %>
         </div>
         <hr>
         <div class="site-content">
@@ -23,6 +23,10 @@
               </li>
             <% }); %>
           </ul>
+          <hr>
+          <div class="site-footer">
+            <h3><span class="copyright-symbol">&#9400;</span><%= (new Date()).getFullYear() %> Komodo Platform</h3>
+          </div>
         </div>
       </main>
     </div>

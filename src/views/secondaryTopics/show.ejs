@@ -10,7 +10,7 @@
 
       <main class="content">
         <div class="site-content content-flex-container unique-row">
-          <h1>[insert breadcrumb]</h1>
+          <% include ../partials/breadcrumb.ejs %>
           <!--
           <form action='/primaryTopics/<%= secondaryTopic.primaryTopicId %>/secondaryTopics/<%= secondaryTopic.id %>/edit' method='get'>
             <button type="submit" class="btn">Edit</button>
@@ -20,8 +20,8 @@
           </form>
           -->
         </div>
-        <hr>
         <div class="site-content">
+          <hr>
           <p><%- secondaryTopic.content %></p>
           <hr>
           <h1>Third Topics</h1>
@@ -32,6 +32,10 @@
               </li>
             <% }); %>
           </ul>
+          <hr>
+          <div class="site-footer">
+            <h3><span class="copyright-symbol">&#9400;</span><%= (new Date()).getFullYear() %> Komodo Platform</h3>
+          </div>
         </div>
       </main>
     </div>
