@@ -241,12 +241,11 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
                     if (k === currentSecondaryTopic.thirdTopics.length - 1) {
                       isLastThird = true;
                     };
-                    console.log(currentThirdTopic.title, currentThirdTopic.fourthTopics.length);
                     if (currentThirdTopic.fourthTopics.length === 0 && isLastPrimary && isLastSecondary && isLastThird) {
                       isSearchFinished.emit('finished');
                     } else if (currentThirdTopic.fourthTopics.length !== 0) {
                       for (let l = 0; l < currentThirdTopic.fourthTopics.length; l++) {
-                        if (l = 0) {
+                        if (l === 0) {
                           var isLastFourth = false;
                         }
                         this.primaryTopicsShort[i].secondaryTopics[j].thirdTopics[k].fourthTopics[k] = {
@@ -260,16 +259,16 @@ const buildTopicTreeFromCurrentDatabase = (callback) => {
                             as: 'fifthTopics'
                           }]
                         })
-                        .then((currentFourthTopics) => {
-                          isFinished = isFinished - 1 + currentFourthTopics.fifthTopics.length;
-                          if (l = currentThirdTopic.fourthTopics.length - 1) {
+                        .then((currentFourthTopic) => {
+                          isFinished = isFinished - 1 + currentFourthTopic.fifthTopics.length;
+                          if (l === currentThirdTopic.fourthTopics.length - 1) {
                             isLastFourth = true;
-                          }
+                          };
                           if (currentFourthTopic.fifthTopics.length === 0 && isLastPrimary && isLastSecondary && isLastThird && isLastFourth) {
                             isSearchFinished.emit('finished');
                           } else if (currentFourthTopic.fifthTopics.length !== 0) {
                             for (let m = 0; m < currentFourthTopic.fifthTopics.length; m++) {
-                              if (m = 0) {
+                              if (m === 0) {
                                 var isLastFifth = false;
                               }
                               if (m === currentFourthTopic.fifthTopics.length - 1) {

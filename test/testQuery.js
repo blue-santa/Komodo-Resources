@@ -15,9 +15,6 @@ treeQueries.buildTree((err, res) => {
       console.log(`\n`, primaryTopic.title);
       primaryTopic.secondaryTopics.forEach((secondaryTopic) => {
         console.log(`  `, secondaryTopic.title);
-        secondaryTopic.thirdTopics.forEach((thirdTopic) => {
-          console.log(`    `, thirdTopic.title);
-        });
       });
     });
     process.exit();

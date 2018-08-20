@@ -6,6 +6,7 @@ const sequelize = require('../../src/db/models/index').sequelize;
 const PrimaryTopic = require('../../src/db/models').PrimaryTopic;
 const SecondaryTopic = require('../../src/db/models').SecondaryTopic;
 const ThirdTopic = require('../../src/db/models').ThirdTopic;
+const treeQueries = require('../../src/db/queries.tree');
 
 describe('routes : posts', () => {
 
@@ -36,7 +37,12 @@ describe('routes : posts', () => {
           })
           .then((thirdTopic) => {
             this.thirdTopic = thirdTopic;
-            done();
+            treeQueries.buildTree((err, res) => {
+              if (err) {
+                console.error(err);
+              }
+              done();
+            });
           })
           .catch((err) => {
             console.error(err);

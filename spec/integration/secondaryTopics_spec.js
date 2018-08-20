@@ -5,6 +5,7 @@ const base = 'http://localhost:3000/primaryTopics';
 const sequelize = require('../../src/db/models/index').sequelize;
 const PrimaryTopic = require('../../src/db/models').PrimaryTopic;
 const SecondaryTopic = require('../../src/db/models').SecondaryTopic;
+const treeQueries = require('../../src/db/queries.tree');
 
 describe('routes : secondaryTopics', () => {
 
@@ -25,7 +26,12 @@ describe('routes : secondaryTopics', () => {
         })
         .then((secondaryTopic) => {
           this.secondaryTopic = secondaryTopic;
-          done();
+          treeQueries.buildTree((err, res) => {
+            if (err) {
+              console.error(err);
+            }
+            done();
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -51,7 +57,7 @@ describe('routes : secondaryTopics', () => {
     it('should render a view with the selected secondary topic', (done) => {
       request.get(`${base}/${this.primaryTopic.id}/secondaryTopics/${this.secondaryTopic.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain('Hello World - 2');
+        expect(body).toContain('Title: Hello World - 2');
         done();
       });
     });
