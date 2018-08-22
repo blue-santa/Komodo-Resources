@@ -44,12 +44,26 @@ h2 {
 code {
   background-color: hsla(360,0%,15%,1);
   color: hsla(360,0%,100%,1);
-  padding: .1rem .4rem;
-  margin-left: .1rem;
-  margin-right: .1rem;
+  padding: .2rem .4rem .1rem .4rem;
+  margin: .2rem .1rem;
   border-radius: .2rem;
   font-family: 'Roboto-Mono', monospace;
   font-weight: 400;
+  line-height: 1.2rem;
+  word-wrap: break-word;
+  white-space:pre-wrap;
+  clear: both;
+}
+
+pre {
+  font-family: 'Roboto-Mono', monospace;
+  white-space: pre-wrap;
+  margin: 0.5rem 1rem;
+  line-height: 1.5rem;
+  display: block;
+  background-color: hsla(360,0%,15%,1);
+  padding: .5rem;
+  clear: both;
 }
 
 dl {
@@ -67,6 +81,55 @@ dd {
   margin-bottom: .5rem;
   padding: .3rem;
   font-family: 'Roboto-Mono', monospace;
+}
+
+blockquote {
+  background-color: hsla(360,0%,90%,1);
+  color: hsla(360,0%,10%,1);
+  clear: both;
+  margin: 0.5rem 1rem;
+  line-height: 1.5rem;
+  display: block;
+  background-color: hsla(360,0%,95%,1);
+  padding: .5rem;
+}
+
+p {
+  clear: both;
+}
+
+strong {
+  font-weight: 700;
+}
+
+ul {
+  list-style-type: square;
+  list-style-position: outside;
+  clear: both;
+  line-height: 1.2rem;
+  margin-left: 2rem;
+  padding: .2rem;
+}
+
+.site-content ol {
+  list-style-type:lower-latin;
+  list-style-position: outside;
+  clear: both;
+  line-height: 1.2rem;
+  margin: .5rem 2rem;
+  padding: .2rem;
+}
+
+.site-content ol li, .site-content ul li {
+  margin-bottom: .3rem;
+}
+
+h1, h2, h3, h4 {
+  clear: both;
+}
+
+blockquote a::before, blockquote a::after, blockquote a:link {
+  color: hsla(360,0%,10%,1);
 }
 
 .sidebar {
@@ -217,6 +280,7 @@ dd {
   color: hsla(360,0%,100%,1);
   padding: 1rem;
   margin-bottom: 1rem;
+  clear: both;
 }
 
 
@@ -307,11 +371,11 @@ dd {
 }
 
 .site-content h3 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .site-content h4 {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .site-content p {
