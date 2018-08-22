@@ -64,13 +64,7 @@ describe('routes : posts', () => {
                   if (err) {
                     console.error(err);
                   }
-                  treeQueries.callTree((err, res) => {
-                    if (err) {
-                      console.error(err);
-                    }
-                    console.log(res[0].secondaryTopics[0].thirdTopics[0].fourthTopics[0].fifthTopics[0].title);
-                    done();
-                  });
+                  done();
                 });
               })
               .catch((err) => {
