@@ -121,7 +121,7 @@ ul {
 }
 
 .site-content ol li, .site-content ul li {
-  margin-bottom: .3rem;
+  margin: .3rem 0rem;
 }
 
 h1, h2, h3, h4 {
