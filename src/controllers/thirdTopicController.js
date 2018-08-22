@@ -1,7 +1,7 @@
-const thirdTopicQueries = require('../db/queries.thirdTopics.js');
-const primaryTopicQueries = require('../db/queries.primaryTopics.js');
-const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
-const allTopicQueries = require('../db/queries.allTopics.js');
+const treeQueries = require('../db/queries.tree');
+const primaryTopicQueries = require('../db/queries.primaryTopics');
+const secondaryTopicQueries = require('../db/queries.secondaryTopics');
+const thirdTopicQueries = require('../db/queries.thirdTopics');
 const fs = require('fs');
 const path = require('path');
 
@@ -9,32 +9,17 @@ const base = path.join(__dirname + '../../assets/docs/');
 
 let topicTree = [];
 
-function buildTree() {
-  allTopicQueries.buildTopicTree((err, topicTreeCall) => {
-    if (topicTreeCall === undefined ) {
-      topicTreeCall = [];
-      topicTreeCall.push({
-        title: `I'm a little teapot`,
-        primaryTopicId: 0
-      });
-    }
-    if (topicTreeCall[0].secondaryTopics === undefined) {
-      topicTreeCall[0].secondaryTopics = [];
-      topicTreeCall[0].secondaryTopics.push({
-        title: `short and stout`,
-        secondaryTopicId: 0
-      });
-    }
-    return topicTree = topicTreeCall;
-  });
-}
-
-buildTree();
+treeQueries.callTree((err, res) => {
+  if (err) {
+    return console.error(err);
+  }
+  return topicTree = res;
+});
 
 module.exports = {
 
   new(req, res, next) {
-    res.render('thirdTopics/new', { primaryTopicId: req.params.primaryTopicId, secondaryTopicId: req.params.secondaryTopicId })
+    res.render('thirdTopics/new', { primaryTopicId: req.params.primaryTopicId, secondaryTopicId: req.params.secondaryTopicId, topicTree })
   },
 
   create(req, res, next) {
@@ -58,7 +43,6 @@ module.exports = {
       if (err || thirdTopic === null) {
         res.redirect(404, '/');
       } else {
-        buildTree();
         res.render('thirdTopics/show', { thirdTopic, topicTree });
       }
     });

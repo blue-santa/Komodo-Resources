@@ -8,12 +8,25 @@
     <div class="flex-container">
 
       <main class="content">
-        <div class="site-content content-flex-container unique-row">
-          <h1>[insert breadcrumb]</h1>
+        <div class="site-title content-flex-container unique-row breadcrumb">
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].secondaryTopics[fifthTopic.secondaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].secondaryTopics[fifthTopic.secondaryTopicId - 1].thirdTopics[fifthTopic.thirdTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>/fourthTopics/<%= fifthTopic.fourthTopicId %>" class="breadcrumb-link"><%= topicTree[fifthTopic.primaryTopicId - 1].secondaryTopics[fifthTopic.secondaryTopicId - 1].thirdTopics[fifthTopic.thirdTopicId - 1].fourthTopics[fifthTopic.fourthTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+            <a href="/primaryTopics/<%= fifthTopic.primaryTopicId %>/secondaryTopics/<%= fifthTopic.secondaryTopicId %>/thirdTopics/<%= fifthTopic.thirdTopicId %>/fourthTopics/<%= fifthTopic.fourthTopicId %>" class="breadcrumb-link"><%= fifthTopic.title %></a>
+        </div>
+        <div class="site-content">
+          <hr>
+          <p><%- fifthTopic.content %></p>
         </div>
         <hr>
-        <div class="site-content">
-          <p><%- fifthTopic.content %></p>
+        <div class="site-footer">
+          <h3><span class="copyright-symbol">&#9400;</span><%= (new Date()).getFullYear() %> Komodo Platform</h3>
         </div>
       </main>
     </div>

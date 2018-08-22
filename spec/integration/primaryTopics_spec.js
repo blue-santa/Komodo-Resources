@@ -1,7 +1,13 @@
 const request = require('request');
 const server = require('../../src/server');
 const sequelize = require('../../src/db/models/index').sequelize;
+
 const PrimaryTopic = require('../../src/db/models').PrimaryTopic;
+const SecondaryTopic = require('../../src/db/models').SecondaryTopic;
+const ThirdTopic = require('../../src/db/models').ThirdTopic;
+const Tree = require('../../src/db/models').Tree;
+
+const treeQueries = require('../../src/db/queries.tree');
 
 const base = 'http://localhost:3000/primaryTopics';
 
@@ -17,7 +23,12 @@ describe('routes : primaryTopics', () => {
       })
       .then((primaryTopic) => {
         this.primaryTopic = primaryTopic;
-        done();
+        treeQueries.buildTree((err, res) => {
+          if (err) {
+            console.error(err);
+          }
+          done();
+        });
       })
       .catch((err) => {
         console.log(err);

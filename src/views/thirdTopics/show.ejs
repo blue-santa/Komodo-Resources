@@ -9,8 +9,13 @@
       <% include ../partials/navbar.ejs %>
 
       <main class="content">
-        <div class="site-content content-flex-container unique-row">
-          <h1>[insert breadcrumb]</h1>
+        <div class="site-title content-flex-container unique-row breadcrumb">
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= thirdTopic.primaryTopicId %>" class="breadcrumb-link"><%= topicTree[thirdTopic.primaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= thirdTopic.primaryTopicId %>/secondaryTopics/<%= thirdTopic.secondaryTopicId %>" class="breadcrumb-link"><%= topicTree[thirdTopic.primaryTopicId - 1].secondaryTopics[thirdTopic.secondaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= thirdTopic.primaryTopicId %>/secondaryTopics/<%= thirdTopic.secondaryTopicId %>/thirdTopics/<%= thirdTopic.id %>" class="breadcrumb-link"><%= thirdTopic.title %></a>
         </div>
         <hr>
         <div class="site-content">
@@ -24,6 +29,10 @@
               </li>
             <% }); %>
           </ul>
+          <hr>
+          <div class="site-footer">
+            <h3><span class="copyright-symbol">&#9400;</span><%= (new Date()).getFullYear() %> Komodo Platform</h3>
+          </div>
         </div>
       </main>
     </div>

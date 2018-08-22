@@ -7,6 +7,7 @@ const PrimaryTopic = require('../../src/db/models').PrimaryTopic;
 const SecondaryTopic = require('../../src/db/models').SecondaryTopic;
 const ThirdTopic = require('../../src/db/models').ThirdTopic;
 const FourthTopic = require('../../src/db/models').FourthTopic;
+const treeQueries = require('../../src/db/queries.tree');
 
 describe('routes : posts', () => {
 
@@ -47,7 +48,18 @@ describe('routes : posts', () => {
             })
             .then((fourthTopic) => {
               this.fourthTopic = fourthTopic;
-              done();
+              treeQueries.buildTree((err, res) => {
+                if (err) {
+                  console.error(err);
+                }
+                treeQueries.callTree((err, res) => {
+                  if (err) {
+                    console.error(err);
+                  }
+                  console.log(res[0].secondaryTopics[0].thirdTopics[0].fourthTopics[0].title);
+                  done();
+                });
+              });
             })
             .catch();
           })

@@ -2,7 +2,7 @@ html {
   width: 100%;
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
-  color: hsla(360,0%,100%,.9);
+  color: hsla(360,0%,100%,1);
 }
 
 body {
@@ -21,17 +21,52 @@ form {
 }
 
 a, a:link, a:hover, a:active {
-  color: hsla(0,0%,100%,.9);
+  color: hsla(0,0%,100%,1);
   text-decoration: underline;
 }
 
 a:visited {
-  color: hsla(0,0%,80%,.9);
+  color: hsla(0,0%,80%,1);
   text-decoration: underline;
 }
 
 hr {
   clear: both;
+}
+
+h2 {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+code {
+  background-color: hsla(360,0%,15%,1);
+  color: hsla(360,0%,100%,1);
+  padding: .1rem .4rem;
+  margin-left: .1rem;
+  margin-right: .1rem;
+  border-radius: .2rem;
+  font-family: 'Roboto-Mono', monospace;
+  font-weight: 400;
+}
+
+dl {
+  background-color: hsla(360, 0%, 15%, 1);
+  color: hsla(360,0%,100%,1);
+  padding: 0.5rem;
+  margin-bottom: 0rem;
+}
+
+dt {
+  margin-bottom: .3rem;
+}
+
+dd {
+  margin-bottom: .5rem;
+  padding: .3rem;
+  font-family: 'Roboto-Mono', monospace;
 }
 
 .sidebar {
@@ -123,13 +158,13 @@ hr {
 }
 
 .sidebar-links a, .sidebar-links a:hover, .sidebar-links a:focus, .sidebar-links a:visited {
-  color: hsla(360,0%,100%,.9);
+  color: hsla(360,0%,100%,1);
   text-decoration: none;
   transition: all 0.3s;
 }
 
 .sidebar-main-link:hover, .sidebar-main-link:focus, .sidebar-main-link:visited {
-  background-color: hsla(0,0%,0%,.9);
+  background-color: hsla(0,0%,0%,1);
 }
 
 .sidebar-main-link a.active {
@@ -159,7 +194,7 @@ hr {
 .sidebar-sub-link a:hover, .sidebar-sub-link a:active {
   border-bottom: .08rem;
   border-style: solid;
-  border-color: hsla(360,0%,80%,.9);
+  border-color: hsla(360,0%,80%,1);
 }
 
 .content {
@@ -177,16 +212,52 @@ hr {
   display: flex;
 }
 
+.note {
+  background-color: hsla(360,0%,25%,1);
+  color: hsla(360,0%,100%,1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.note dl p {
+  margin-bottom: 0rem;
+}
+
+.note .admonition-title p {
+  margin-bottom: 0rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 0rem;
+  text-align: center;
+}
+
+.admonition-title {
+  background-color: hsla(360, 50%, 35%, 1);
+  margin-bottom: .5rem;
+  padding: 1rem .5rem;
+}
+
 .unique-row {
   display: flex;
   clear: both;
 }
 
+.breadcrumb-link {
+  padding-right: .3rem;
+}
+
+.contents p {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .site-title {
   float: left;
-  margin: .5vw;
+  margin: 1rem;
   align-items: center;
   flex-direction: row;
+  font-weight: 700;
 
   /*
   flex-direction: row || column || row-reverse || column-reverse;
@@ -199,15 +270,8 @@ hr {
 }
 
 .site-title a:link, .site-title a:visited, .site-title a:hover {
-  color: hsla(360,0%,100%,.9);
+  color: hsla(360,0%,100%,1);
   text-decoration: underline;
-}
-
-h2 {
-  font-family: 'Roboto Condensed', sans-serif;
-  font-weight: 600;
-  text-align: center;
-  text-transform: uppercase;
 }
 
 .site-title button {
@@ -215,7 +279,7 @@ h2 {
 }
 
 .site-content {
-  margin: .5vw;
+  margin: .7rem;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   clear: both;
@@ -223,31 +287,57 @@ h2 {
 }
 
 .site-content h1, .site-content h2, .site-content h3, .site-content h4 {
-  margin-bottom: .5rem;
+  margin-bottom: 1.2rem;
   margin-top: 1.2rem;
   float: left;
   clear: both;
-  font-family: 'Roboto Condensed', serif;
+  font-family: 'Roboto', serif;
   font-weight: 700;
-  font-size: 2.2rem;
   text-align: left;
-  text-transform: uppercase;
+  text-transform: none;
+}
+
+.site-content h1 {
+  font-size: 2.2rem;
+}
+
+.site-content h2 {
+  font-size: 1.4rem;
+  margin-bottom: .5rem;
+}
+
+.site-content h3 {
+  font-size: 1.4rem;
+}
+
+.site-content h4 {
+  font-size: 1.2rem;
 }
 
 .site-content p {
   line-height: 1.3rem;
+  margin-bottom: 1rem;
   clear: both;
 }
 
 .site-content ul {
   clear: both;
+  line-height: 1.3rem;
 }
 
-.breadcrumb h1 small {
-  font-size:.8rem;
+.site-footer h1, .site-footer h2, .site-footer h3 {
+  font-family: 'Roboto-Medium', sans-serif;
+  font-weight: 700;
+  font-size: .7rem;
+  margin-bottom: 2.5rem;
 }
 
-.ist li {
+.copyright-symbol {
+  font-size: .6rem;
+  margin-right: .3rem;
+}
+
+.topic-list li {
   line-height: 1.5rem;
   margin: 0rem 0rem 0.1rem 0rem;
   padding: .5rem .5rem .5rem .5rem;

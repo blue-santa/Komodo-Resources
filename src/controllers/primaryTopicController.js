@@ -1,34 +1,18 @@
-const primaryTopicQueries = require('../db/queries.primaryTopics.js');
-const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
-const allTopicQueries = require('../db/queries.allTopics.js');
+const treeQueries = require('../db/queries.tree');
+const primaryTopicQueries = require('../db/queries.primaryTopics');
+const secondaryTopicQueries = require('../db/queries.secondaryTopics');
 const fs = require('fs');
 const path = require('path');
 
 const base = path.join(__dirname + '../../assets/docs/');
-
 let topicTree = [];
 
-function buildTree() {
-  allTopicQueries.buildTopicTree((err, topicTreeCall) => {
-    if (topicTreeCall === undefined ) {
-      topicTreeCall = [];
-      topicTreeCall.push({
-        title: `I'm a little teapot`,
-        primaryTopicId: 0
-      });
-    }
-    if (topicTreeCall[0].secondaryTopics === undefined) {
-      topicTreeCall[0].secondaryTopics = [];
-      topicTreeCall[0].secondaryTopics.push({
-        title: `short and stout`,
-        secondaryTopicId: 0
-      });
-    }
-    return topicTree = topicTreeCall;
-  });
-}
-
-buildTree();
+treeQueries.callTree((err, res) => {
+  if (err) {
+    return console.error(err);
+  }
+  return topicTree = res;
+});
 
 module.exports = {
   index(req, res, next) {
@@ -36,14 +20,15 @@ module.exports = {
       if (err) {
         res.redirect(500, 'static/index');
       } else {
-        buildTree();
+        treeQueries.callTree((newTree) => {
+          return tree = newTree;
+        });
         res.render('primaryTopics/index', { primaryTopics, topicTree });
       }
     });
   },
 
   new(req, res, next) {
-    buildTree();
     res.render('primaryTopics/new', { topicTree });
   },
 
@@ -66,7 +51,6 @@ module.exports = {
       if (err || primaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        buildTree();
         res.render('primaryTopics/show', { primaryTopic, topicTree });
       }
     });
@@ -77,7 +61,6 @@ module.exports = {
       if (err || primaryTopic == null) {
         res.redirect(404, '/');
       } else {
-        buildTree();
         res.render('primaryTopics/edit', { primaryTopic, topicTree });
       }
     });

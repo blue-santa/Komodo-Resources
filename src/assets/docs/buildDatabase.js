@@ -22,7 +22,10 @@ fs.readFile(path.join(__dirname + '/index.rst'), 'utf8', (err, res) => {
   return;
 });
 
+let directory = ['Configuration and Installation Instructions for coins supported on BarterDEX', 'Get your Coin/Token/Asset listed on barterDEX', 'BarterDEX API Summary by Category', 'Komodo - API - Documentation', 'Creating New Assetchains', 'Asset Chain Parameters', 'Example Asset Chains', 'Using the Key-Value feature', 'Add Komodo Assetchains in Agama Desktop', 'Add a Bitcoin Compatible coin to Agama Desktop', 'How zeroconf API was implemented in BarterDEX GUI', 'Marketmaker Error codes', 'Changes to Komodo Blockchain at Block Height 1 Million'];
+
 let navbarTreeArray = [];
+let currentIteration = 0;
 
 const parseContentIndex = function(indexFile, newCurrentCount, callback) {
   let captionMarker = ':caption: ';
@@ -138,38 +141,41 @@ setTimeout(() => {
   let newTreeThing = [];
   parseContentIndex(contentIndex, 0, (err, res) => {
     newTreeThing = res;
-  });
-
-  sequelize.sync({ force: true }).then((res) => {
-    this.primaryTopic;
-    this.secondaryTopic;
-    PrimaryTopic.create({
-      title: newTreeThing[0].title,
-      content: 'I\'m a little teapot'
-    }).then((primaryTopic) => {
-      this.primaryTopic = primaryTopic;
-      let options;
-      for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
-        getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
-          if (err) {
-            console.error(err);
-            process.exit();
-          }
-          options = {
-            title: newTreeThing[0].subbranches[i],
-            content: res,
-            primaryTopicId: this.primaryTopic.id
-          };
-          SecondaryTopic.create(options).then((secondaryTopic) => {
-            this.secondaryTopic = secondaryTopic;
-            setTimeout(() => { process.exit() }, 5000);
-          })
-          .catch((err) => {
-            console.error(err);
-            return process.exit();
+    sequelize.sync({ force: true }).then((res) => {
+      this.primaryTopic;
+      this.secondaryTopic;
+      PrimaryTopic.create({
+        title: newTreeThing[0].title,
+        content: '<h1>Welcome to Komodo Platform\'s documentation!</h1>'
+      }).then((primaryTopic) => {
+        this.primaryTopic = primaryTopic;
+        let options;
+        for (let i = 0; i < newTreeThing[0].subbranches.length; i++) {
+          getFileValue(path.join(base + '/' + newTreeThing[0].subbranches[i]), (err, res) => {
+            if (err) {
+              console.error(err);
+              process.exit();
+            }
+            options = {
+              title: directory[i],
+              content: res,
+              primaryTopicId: this.primaryTopic.id
+            };
+            SecondaryTopic.create(options).then((secondaryTopic) => {
+              this.secondaryTopic = secondaryTopic;
+              setTimeout(() => { process.exit() }, 5000);
+            })
+            .catch((err) => {
+              console.error(err);
+              return process.exit();
+            });
           });
-        });
-      }
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        return process.exit();
+      });
     })
     .catch((err) => {
       console.error(err);

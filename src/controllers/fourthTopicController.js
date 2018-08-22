@@ -1,18 +1,27 @@
-const allTopicQueries = require('../db/queries.allTopics.js');
-const primaryTopicQueries = require('../db/queries.primaryTopics.js');
-const secondaryTopicQueries = require('../db/queries.secondaryTopics.js');
-const thirdTopicQueries = require('../db/queries.thirdTopics.js');
-const fourthTopicQueries = require('../db/queries.fourthTopics.js');
+const treeQueries = require('../db/queries.tree');
+const primaryTopicQueries = require('../db/queries.primaryTopics');
+const secondaryTopicQueries = require('../db/queries.secondaryTopics');
+const thirdTopicQueries = require('../db/queries.thirdTopics');
+const fourthTopicQueries = require('../db/queries.fourthTopics');
 
 const fs = require('fs');
 const path = require('path');
 
 const base = path.join(__dirname + '../../assets/docs/');
 
+let topicTree = [];
+
+treeQueries.callTree((err, res) => {
+  if (err) {
+    return console.error(err);
+  }
+  return topicTree = res;
+});
+
 module.exports = {
 
   new(req, res, next) {
-    res.render('fourthTopics/new', { primaryTopicId: req.params.primaryTopicId, secondaryTopicId: req.params.secondaryTopicId, thirdTopicId: req.params.thirdTopicId });
+    res.render('fourthTopics/new', { primaryTopicId: req.params.primaryTopicId, secondaryTopicId: req.params.secondaryTopicId, thirdTopicId: req.params.thirdTopicId, topicTree });
   },
 
   create(req, res, next) {
@@ -37,7 +46,7 @@ module.exports = {
       if (err || fourthTopic === null) {
         res.redirect(404, '/');
       } else {
-        res.render('fourthTopics/show', { fourthTopic });
+        res.render('fourthTopics/show', { fourthTopic, topicTree });
       }
     });
   },
@@ -57,7 +66,7 @@ module.exports = {
       if (err || fourthTopic === null) {
         res.redirect(404, '/');
       } else {
-        res.render('fourthTopics/edit', { fourthTopic });
+        res.render('fourthTopics/edit', { fourthTopic, topicTree });
       }
     });
   },

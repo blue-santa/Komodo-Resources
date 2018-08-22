@@ -10,21 +10,15 @@
 
       <main class="content">
         <div class="site-title content-flex-container unique-row breadcrumb">
-          <h1><small>[insert breadcrumb]</small></h1>
-          <!-- <form action="/primaryTopics/<%= primaryTopic.id %>/edit" method="get">
-            <button type="submit" class="btn">Edit</button>
-          </form>
-          <form action="/primaryTopics/<%= primaryTopic.id %>/destroy" method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>-->
+          <i class="fas fa-angle-right breadcrumb-link"></i><a href="/primaryTopics/<%= primaryTopic.id %>" class="breadcrumb-link"><%= primaryTopic.title %></a>
         </div>
-        <hr>
         <div class="site-content">
-          <p><%- primaryTopic.content %></p>
+          <hr>
+          <%- primaryTopic.content %>
         </div>
-        <hr>
         <div class="site-content">
-          <h1>Secondary Topics</h1>
+          <hr>
+          <h2>Content Index</h2>
           <ul class="topic-list">
             <% primaryTopic.secondaryTopics.forEach((secondaryTopic) => { %>
               <li>
@@ -32,9 +26,13 @@
               </li>
             <% }) %>
           </ul>
-          <form action="/primaryTopics/<%= primaryTopic.id %>/secondaryTopics/new" method="get">
+          <hr>
+          <div class="site-footer">
+            <h3><span class="copyright-symbol">&#9400;</span><%= (new Date()).getFullYear() %> Komodo Platform</h3>
+          </div>
+          <!--<form action="/primaryTopics/<%= primaryTopic.id %>/secondaryTopics/new" method="get">
             <button type="submit" class="btn">New Secondary Topic</button>
-          </form>
+          </form>-->
         </div>
       </main>
 

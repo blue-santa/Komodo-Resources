@@ -1,8 +1,11 @@
 const PrimaryTopic = require('./models').PrimaryTopic;
 const SecondaryTopic = require('./models').SecondaryTopic;
+const ThirdTopic = require('./models').ThirdTopic;
+const FourthTopic = require('./models').FourthTopic;
+const FifthTopic = require('./models').FifthTopic;
 
 module.exports = {
-  
+
   getAllPrimaryTopics(callback) {
     return PrimaryTopic.all()
     .then((primarytopics) => {

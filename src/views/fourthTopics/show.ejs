@@ -8,11 +8,18 @@
     <div class="flex-container">
 
       <main class="content">
-        <div class="site-content content-flex-container unique-row">
-          <h1>[insert breadcrumb]</h1>
+        <div class="site-title content-flex-container unique-row breadcrumb">
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fourthTopic.primaryTopicId %>" class="breadcrumb-link"><%= topicTree[fourthTopic.primaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fourthTopic.primaryTopicId %>/secondaryTopics/<%= fourthTopic.secondaryTopicId %>" class="breadcrumb-link"><%= topicTree[fourthTopic.primaryTopicId - 1].secondaryTopics[fourthTopic.secondaryTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fourthTopic.primaryTopicId %>/secondaryTopics/<%= fourthTopic.secondaryTopicId %>/thirdTopics/<%= fourthTopic.thirdTopicId %>" class="breadcrumb-link"><%= topicTree[fourthTopic.primaryTopicId - 1].secondaryTopics[fourthTopic.secondaryTopicId - 1].thirdTopics[fourthTopic.thirdTopicId - 1].title %></a>
+            <i class="fas fa-angle-right breadcrumb-link"></i>
+          <a href="/primaryTopics/<%= fourthTopic.primaryTopicId %>/secondaryTopics/<%= fourthTopic.secondaryTopicId %>/thirdTopics/<%= fourthTopic.thirdTopicId %>/fourthTopics/<%= fourthTopic.id %>" class="breadcrumb-link"><%= fourthTopic.title %></a>
         </div>
-        <hr>
         <div class="site-content">
+          <hr>
           <p><%- fourthTopic.content %></p>
           <hr>
           <h1>Fifth Topics</h1>
@@ -23,6 +30,10 @@
               </li>
             <% }); %>
           </ul>
+          <hr>
+          <div class="site-footer">
+            <h3><span class="copyright-symbol">&#9400;</span><%= (new Date()).getFullYear() %> Komodo Platform</h3>
+          </div>
         </div>
       </main>
     </div>
