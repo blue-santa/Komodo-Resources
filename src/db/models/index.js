@@ -8,9 +8,11 @@ var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
-console.log(config);
-console.log(process.env.NODE_ENV);
-console.log(config.use_env_variable);
+console.log('\nNote to potential recruiters:\nMy current Heroku production environment does not support managed and password-protected roles within the Postgresql database itself.\nIn a normal production circumstance, I would utilize the dotenv module and the src>db>models>index.js file to manage psql passwords and protect the databse.\nPlease reach out if you have further questions. Thank you.\n');
+
+if (config.database === 'database_production') {
+  config.password = process.env.prod_db_password;
+}
 
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable], config);

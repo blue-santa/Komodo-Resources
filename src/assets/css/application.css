@@ -44,7 +44,7 @@ h2 {
 code {
   background-color: hsla(360,0%,15%,1);
   color: hsla(360,0%,100%,1);
-  padding: .2rem .4rem .1rem .4rem;
+  padding: .1rem .4rem .05rem .4rem;
   margin: .2rem .1rem;
   border-radius: .2rem;
   font-family: 'Roboto-Mono', monospace;
@@ -102,7 +102,7 @@ strong {
   font-weight: 700;
 }
 
-ul {
+.site-content ul {
   list-style-type: square;
   list-style-position: outside;
   clear: both;
@@ -178,9 +178,8 @@ blockquote a::before, blockquote a::after, blockquote a:link {
   counter-increment: none;
 }
 
-.sidebar-links-container ol {
-  list-style-type: upper-roman;
-  list-style-position: inside;
+.sidebar-links-container ul {
+  list-style-type: none;
 }
 
 .search-bar-placeholder {
@@ -207,6 +206,7 @@ blockquote a::before, blockquote a::after, blockquote a:link {
 
 .sidebar-main-link {
   font-family: 'Roboto Medium', serif;
+  text-align: center;
   font-weight: 400;
   background-color: hsla(0,0%,0%,.5);
   border-bottom: .05rem;
@@ -236,6 +236,7 @@ blockquote a::before, blockquote a::after, blockquote a:link {
 
 .sidebar-second-link {
   visibility: visible;
+  text-align: left;
   line-height: 1.3rem;
   opacity: 1;
   background-color: hsla(360,0%,50%,.7);
