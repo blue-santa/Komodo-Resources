@@ -7,6 +7,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
+
 function normalizePort(val) {
   const port = parseInt(val, 10);
   if (isNaN(port)) {
